@@ -1,7 +1,7 @@
 ---
 id: TASK-2
 title: "Confirm product scope and non-goals"
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-11-09 00:00'
 updated_date: '2026-11-09 00:00'
@@ -21,10 +21,10 @@ Confirm the intended audience, target student cohorts, first supported program/p
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Approve or revise the goals, non-goals, and first target profile in SPEC-SCOPE.
-- [ ] #2 Distinguish institution-wide rules from faculty/program-specific rules.
-- [ ] #3 Identify owners/reviewers for student-facing requirements.
-- [ ] #4 Confirm the two formats remain separate targets with separate support claims.
+- [ ] #1 Revise completed: SPEC-SCOPE v0.2 now states the first target profile (WNoZiGP, Geoinformatyka, 2025/26 rules, three thesis types). **Owner approval is outstanding.**
+- [x] #2 Recorded as SCOPE-005: everything in SPEC-SOURCE is faculty-level; the university instruments the source cites (study regulations, APD order 57/2015, antiplagiarism order 5/2019) are named as unreviewed and not satisfied.
+- [ ] #3 **Open.** SPEC-SCOPE's ownership table leaves student-facing review and release approval unassigned; only the technical maintainer is named.
+- [x] #4 Confirmed and strengthened as SCOPE-001: separate contracts and separate support claims, with the source's silence on LaTeX/Typst recorded as SRC-040.
 <!-- AC:END -->
 
 ## Implementation Plan
@@ -36,5 +36,5 @@ Review SPEC-SCOPE with TASK-1 evidence; resolve scope and audience questions, th
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-Current scope is a provisional UMCS WNoZiGP Geoinformatics target. No student-facing template behavior is approved.
+2026-11-21: SPEC-SCOPE v0.2 written from the verified SPEC-SOURCE evidence. Acceptance criteria 2 and 4 are met; 1 awaits owner approval and 3 awaits reviewer assignment. No student-facing template behavior is approved.
 <!-- SECTION:NOTES:END -->
