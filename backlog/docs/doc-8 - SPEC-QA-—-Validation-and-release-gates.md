@@ -34,7 +34,7 @@ updated_date: '2026-11-21 18:43'
 
 No CTAN or Typst registry submission is selected or approved. A GitHub tag-release workflow is configured at the user's request to publish source-only archives from `packages/latex/` and `packages/typst/`. A matching tag push is a publication action; the workflow configuration does not imply license clearance, UMCS approval, or package readiness. The current mains remain smoke placeholders. Resolve before pushing a release tag:
 
-- the project and per-package license, copyright holder, and third-party rule/font/logo provenance;
+- third-party rule/font/logo provenance and any per-package license deviation from the repository MIT grant (ADR-7);
 - supported artifact contents and whether the repository's package directories are appropriate for public distribution;
 - student-facing and institutional review, plus independent human approval;
 - a clean build, reproducible artifact inventory, checksums, and rollback/withdrawal procedure.

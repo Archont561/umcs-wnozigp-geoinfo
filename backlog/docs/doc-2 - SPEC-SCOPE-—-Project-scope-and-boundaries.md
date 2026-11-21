@@ -35,7 +35,7 @@ Specify a future library of separate LaTeX and Typst thesis-writing aids for stu
 - It is not a complete thesis template or a substitute for current faculty instructions.
 - It does not imply UMCS affiliation, endorsement, or compliance.
 - It does not promise Typst compatibility with Overleaf or any particular LaTeX editor.
-- It does not choose a citation style, bibliography workflow, license, or package registry, nor approve package-release readiness. A user-requested GitHub workflow publishes source-only archives for `v*` tags; this does not grant license clearance or institutional approval.
+- It does not choose a citation style, bibliography workflow, or package registry, nor approve package-release readiness. A user-requested GitHub workflow publishes source-only archives for `v*` tags; this does not grant license clearance or institutional approval.
 - It does not bundle logos, seals, fonts, student data, or other unreviewed assets.
 
 ## Requirements

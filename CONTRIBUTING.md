@@ -31,7 +31,7 @@ pixi run --locked build-typst
 
 The LaTeX smoke build uses Tectonic. It may download TeX resources the first time. The smoke PDFs are local verification artifacts under ignored `dist/`; they are not package releases.
 
-The GitHub workflow at `.github/workflows/release.yml` runs on `v*` tags, verifies the repository and both package smoke tests, then attaches separate source archives for `packages/latex/` and `packages/typst/` with a `SHA256SUMS` manifest. Pushing a matching tag publishes a GitHub Release. The workflow does not establish licensing, provenance, or institutional approval; review those release gates before pushing a tag.
+The GitHub workflow at `.github/workflows/release.yml` runs on `v*` tags, verifies the repository and both package smoke tests, then attaches separate source archives for `packages/latex/` and `packages/typst/` with a `SHA256SUMS` manifest. Pushing a matching tag publishes a GitHub Release. The workflow does not establish third-party provenance or institutional approval; review those release gates, and confirm the MIT grant holds for every shipped file, before pushing a tag.
 
 ## Pixi sandbox
 
@@ -60,7 +60,7 @@ Use the same `init` arguments without `--check` to regenerate generator-owned fi
 
 4. Add the task ID to the appropriate `backlog/milestones/` page.
 
-5. Record a durable choice under `backlog/decisions/` when one is made. Do not decide licensing or publication by implication.
+5. Record a durable choice under `backlog/decisions/` when one is made. Do not decide publication or third-party licensing by implication; original repository work is MIT-licensed per ADR-7, and that grant does not extend to supplied or third-party assets.
 
 6. Regenerate root overview documents after changing their templates:
 

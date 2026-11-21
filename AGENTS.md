@@ -7,7 +7,7 @@
 - Treat this repository as a specification-first scaffold. The LaTeX and Typst `main` files are dummy smoke fixtures only.
 - Do not imply UMCS endorsement, institutional approval, full compliance, or editor compatibility without verified evidence and an accepted decision.
 - Do not add a public package implementation, official logo/seal, or publisher without a scoped task and decision.
-- Keep CTAN and Typst registry decisions, licensing, and author/contact details open until reviewed. The explicitly requested GitHub workflow publishes source-only archives for `v*` tags; do not push such a tag without explicit release authorization and license/provenance review.
+- Keep CTAN and Typst registry decisions and author/contact details open until reviewed. The explicitly requested GitHub workflow publishes source-only archives for `v*` tags; do not push such a tag without explicit release authorization and provenance review.
 
 ## Specifications and backlog
 
@@ -15,7 +15,7 @@
 - Use the Backlog.md document commands (`backlog doc create`, `backlog doc update`, `backlog doc list`) to manage specification entries; do not edit their metadata files directly.
 - Cite primary source, edition/date, section/page, applicability, and confidence for every institutional requirement. Unverified items stay open in SPEC-SOURCE and linked backlog tasks.
 - `backlog/milestones/` groups task IDs. Keep dependencies and acceptance criteria on individual task records in `backlog/tasks/`.
-- Record durable choices in `backlog/decisions/`. A decision must say what it does not authorize; do not silently infer licensing, distribution, or compliance.
+- Record durable choices in `backlog/decisions/`. A decision must say what it does not authorize; do not silently infer distribution, third-party licensing, or compliance. The repository's own work is MIT-licensed per ADR-7; that grant does not extend to third-party assets.
 - Generated `README.md` and `AGENTS.md` come from `templates/`; edit templates and regenerate via `pixi run docs-write`.
 
 ## Vale and writing checks
@@ -23,7 +23,7 @@
 - Install Vale (`vale==3.26.0`) and rumdl through the root Pixi Conda environment. Use rumdl for Markdown linting via `.rumdl.toml`; do not reintroduce markdownlint-cli2.
 - The provided PLTechnical style rules are local under `.vale/styles/`; no network style sync is needed.
 - Keep the supplied rules' cautions: suggestions require human review, the sentence threshold is an editorial choice, and unit checking is partial. Vale is not a grammar or compliance oracle.
-- Preserve the `.vale.ini` and attribution/specification when changing the rules. Review preset licensing before redistribution.
+- Preserve the `.vale.ini` and attribution/specification when changing the rules. The MIT grant does not apply to the preset; keep its redistribution gate until its terms are reviewed.
 
 ## Tooling and validation
 

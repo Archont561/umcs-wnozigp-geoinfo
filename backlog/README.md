@@ -1,6 +1,6 @@
 # Backlog
 
-Backlog.md is the execution tracker and document registry. Normative product requirements are Backlog document entries under `docs/`; decisions live in `decisions/`. Milestones group task IDs and state phase goals, not dates or release commitments. ADR-1 and ADR-4 describe the original scaffold layout; the current specification and Vale-rule locations are `docs/` and root `.vale/styles/`, respectively. ADR-5 records the prior default against inferred publication; the explicitly requested `v*` workflow now publishes only source archives and does not resolve license or approval gates.
+Backlog.md is the execution tracker and document registry. Normative product requirements are Backlog document entries under `docs/`; decisions live in `decisions/`. Milestones group task IDs and state phase goals, not dates or release commitments. ADR-1 and ADR-4 describe the original scaffold layout; the current specification and Vale-rule locations are `docs/` and root `.vale/styles/`, respectively. ADR-5 records the prior default against inferred publication (ADR-7 later chose MIT for original work); the explicitly requested `v*` workflow now publishes only source archives and does not resolve license or approval gates.
 
 - `docs/` — draft specifications and the specification index; manage entries with `backlog doc` commands.
 - `milestones/` — grouped delivery phases.

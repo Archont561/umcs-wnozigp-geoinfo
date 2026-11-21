@@ -4,6 +4,8 @@ status: accepted
 date: 2026-11-09
 ---
 
+> **Partially superseded by [ADR-7](adr-7%20-%20MIT-license.md).** Point 3's licensing question is decided: the repository's own work is MIT-licensed. The publication, registry, and third-party-reuse boundaries below still apply.
+
 # ADR-5: Keep publication disabled and licensing unresolved
 
 ## Context
@@ -19,5 +21,5 @@ The repository currently contains dummy mains, draft specifications, and user-su
 
 ## Consequences
 
-- No `LICENSE` file is present yet. This is intentional, not a claim of proprietary or permissive terms.
+- No `LICENSE` file was present at the time of this decision. ADR-7 later added an MIT license for original repository work only.
 - The public repository scaffold remains non-releasing; all PDFs and test outputs stay in ignored `dist/`.

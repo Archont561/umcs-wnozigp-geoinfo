@@ -8,7 +8,7 @@
 
 Specification-first repository for an **unofficial** LaTeX and Typst thesis-template project aimed at UMCS WNoZiGP Geoinformatics.
 
-> **Scaffold status.** `packages/latex/main.tex` and `packages/typst/main.typ` are dummy mains used only to verify lint/build tooling. They are not usable thesis templates, are not institution-approved, and do not claim compliance with current requirements. The specification documents are drafts; publication and licensing decisions remain open.
+> **Scaffold status.** `packages/latex/main.tex` and `packages/typst/main.typ` are dummy mains used only to verify lint/build tooling. They are not usable thesis templates, are not institution-approved, and do not claim compliance with current requirements. The specification documents are drafts; publication decisions remain open. Repository code and documentation are MIT-licensed; see [License](#license).
 
 ## Specifications
 
@@ -111,12 +111,17 @@ scripts/restore.sh                 generated Pixi Sandbox restore launcher
 scripts/relock-workflow.yml.template inactive generator template (not a workflow)
 .github/workflows/                CI, sandbox publishing, and source-release workflows
 package.json / bun.lock   Backlog.md CLI and lock
+LICENSE                   MIT license for original repository work
 ```
 
 ## GitHub source releases
 
 `.github/workflows/release.yml` runs for tags matching `v*`. It first runs the repository checks and package-local smoke tests, then creates or updates a GitHub Release with separate LaTeX and Typst source archives plus a `SHA256SUMS` manifest. Each archive contains only its package directory, including its README and colocated tests; generated PDFs and local caches are not included. Pushing a matching tag is a publication action. This workflow has not been run as part of the local scaffold work.
 
+## License
+
+The repository's own code, tests, and documentation are released under the [MIT License](LICENSE), copyright (c) 2026 Archont561. The license covers original work in this repository only. It does not cover the supplied PLTechnical Vale rules, whose provenance and redistribution terms remain unreviewed (see [ADR-4](backlog/decisions/adr-4%20-%20Vale-PLTechnical-preset.md)), nor any future institution assets, fonts, or third-party dependencies. Third-party material keeps its own terms and must be recorded per ADR-7.
+
 ## Publication boundary
 
-No CTAN or Typst Universe submission is configured or approved. The GitHub workflow distributes only the current source directories; it does not make the dummy mains usable templates, establish UMCS approval, or claim compliance. Review licensing, ownership and source provenance, package contracts, and human release gates before pushing a release tag or describing the contents as an approved academic format.
+No CTAN or Typst Universe submission is configured or approved. The GitHub workflow distributes only the current source directories; it does not make the dummy mains usable templates, establish UMCS approval, or claim compliance. Review ownership, source and asset provenance, package contracts, the MIT grant's applicability to every shipped file, and human release gates before pushing a release tag or describing the contents as an approved academic format.

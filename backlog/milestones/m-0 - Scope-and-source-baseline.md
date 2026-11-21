@@ -14,7 +14,7 @@ Establish a reviewable specification-first baseline before implementing either f
 | TASK-0 | Scaffold the repository, dummy mains, specifications, and backlog structure. **Done** |
 | TASK-1 | Verify the current official guidance and its cohort applicability. |
 | TASK-2 | Confirm audience, scope, non-goals, and the first target profile. |
-| TASK-3 | Decide license, ownership, and provenance for the supplied Vale rules and future assets. |
+| TASK-3 | Decide license, ownership, and provenance for the supplied Vale rules and future assets. Repository work is MIT-licensed (ADR-7); preset terms remain open. |
 
 ## Exit criteria
 
