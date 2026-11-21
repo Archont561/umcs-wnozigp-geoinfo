@@ -39,7 +39,8 @@ Both open items were closed by decision, not by new evidence:
 ### Residual obligations carried into M-1
 
 1. Re-review SPEC-SOURCE against the 2026/27 edition on publication.
-2. Obtain Annexes 1–5, the normative form templates (SRC-041); without them a template can satisfy the prose rules but not the required forms.
-3. Obtain the faculty AI policy cited by the source (SRC-039).
+2. Obtain Annexes 1–5, the normative form templates (SRC-041); without them a template can satisfy the prose rules but not the required forms. Annexes 1 and 2 are now partly located (SRC-045, SRC-046).
+
+The faculty AI policy (SRC-039) is no longer a residual obligation: ADR-15 places it out of scope.
 
 **Verdict: M-0 closed on 2026-11-21** with the review and cohort criteria met by ADR-9 and ADR-10 respectively. Closure records a reviewed evidence baseline; it approves no template, no engine, and no release, and it does not constitute institutional approval.
