@@ -1,0 +1,21 @@
+[package]
+name = "umcs-wnozigp-thesis"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["Archont561"]
+license = "MIT"
+description = "Unofficial Typst thesis package for UMCS WNoZiGP Geoinformatics — prototype, not faculty-approved."
+repository = "https://github.com/Archont561/umcs-wnozigp-geoinfo"
+keywords = ["thesis", "university", "geoinformatics"]
+categories = ["thesis"]
+compiler = "0.15.1"
+exclude = ["main.typ", "tests"]
+
+# NOT PUBLISHED TO TYPST UNIVERSE.
+#
+# The manifest exists so the package can be consumed locally with
+# `typst compile --package-path`, and so its licence and minimum compiler
+# version are stated in the file a future publisher would need. Registry
+# publication is an undecided open question in SPEC-TYP: it needs an owner
+# account, a namespace, and a decision that the name is not misleading given
+# that the package is not faculty-approved (ADR-9).

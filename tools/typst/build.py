@@ -1,4 +1,4 @@
-"""Build the placeholder Typst main document for a smoke test."""
+"""Build the Typst demo thesis, which imports the package in lib.typ."""
 
 from __future__ import annotations
 
@@ -8,8 +8,13 @@ from tasknest import ToolContext, tool
 
 
 @tool(
-    description="Compile the Typst dummy main with the root-pinned Typst executable.",
-    inputs=["packages/typst/main.typ", "tools/typst/build.py"],
+    description="Compile the Typst demo thesis against lib.typ with the root-pinned Typst executable.",
+    inputs=[
+        "packages/typst/main.typ",
+        "packages/typst/lib.typ",
+        "packages/typst/typst.toml",
+        "tools/typst/build.py",
+    ],
     outputs=["dist/typst/main.pdf"],
 )
 def build(ctx: ToolContext) -> None:

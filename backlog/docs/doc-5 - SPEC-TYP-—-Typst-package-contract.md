@@ -8,8 +8,8 @@ updated_date: '2026-11-21 18:37'
 
 ## SPEC-TYP — Typst package contract
 
-**Status:** Draft (contract proposed, not implemented)  
-**Version:** 0.2  
+**Status:** Draft (contract implemented 2026-11-21; rendered output not independently reviewed)  
+**Version:** 0.3  
 **Related tasks:** TASK-5, TASK-8, TASK-10  
 **Related evidence:** SPEC-SOURCE v0.3 (SRC-001..SRC-044)  
 **Related decisions:** ADR-2, ADR-9, ADR-10, ADR-12  
@@ -21,7 +21,13 @@ Pin the public interface of the future Typst deliverable before any of it exists
 
 ## Current scaffold
 
-`packages/typst/main.typ` is a minimal compileable dummy. No `lib.typ`, no `typst.toml` manifest, and no registry entry exist. The dummy compiles to a valid PDF in CI, which proves the pipeline only (ADR-8).
+`packages/typst/lib.typ` implements this contract as of 2026-11-21, `packages/typst/typst.toml` declares the manifest, and `packages/typst/main.typ` is the demo fixture that exercises it. The package is not published to any registry.
+
+Measured against this environment (Typst 0.15.1):
+
+- The package compiles, and 8 BDD scenarios pass reading its own metadata via `typst query`.
+- The release tarball was built and inspected: `lib.typ`, `typst.toml`, `README.md`, `LICENSE` only.
+- The extracted tarball compiles standalone through `--package-path`, which required a `preview/` directory even for the `@preview` namespace; an `@local` namespace was rejected. This is recorded because SPEC-TYP previously called the local-package workflow "untested".
 
 ## Package shape
 
@@ -130,10 +136,11 @@ As with LaTeX, the release archive currently ships the whole `packages/typst/` d
 | Level | What it does | Status |
 | --- | --- | --- |
 | Compile the dummy | Typst builds `main.typ` in CI | Implemented (ADR-8) |
-| Compile the package | Build a fixture importing `lib.typ` | Not implemented |
-| Counter assertions | Query the document and assert three independent counters | Feasible: `typst query` works here |
-| Source coverage | Query for figures lacking a source element | Feasible once the API exists |
-| Visual | Human review against `SRC-004`–`SRC-021` | Manual, TASK-12 |
+| Compile the package | Build a fixture importing `lib.typ` | **Implemented** — 8 scenarios in `packages/typst/tests` |
+| Counter assertions | Query the document and assert three independent counters | **Implemented** — `<umcs-counters>` metadata |
+| Source coverage | Query for figures lacking a source element | **Implemented as an error**: a missing `source` fails the compile, and every registered illustration reports `has-source` |
+| Configuration rejection | Compile-time errors for an unknown key, a missing `cycle`, an empty title | **Implemented** — three scenarios assert the message names the offending key |
+| Visual | Human review against `SRC-004`–`SRC-021` | **Incomplete** — the pages were rendered and inspected by the implementer, which is not independent review |
 
 `typst query` is the leverage point: a custom `figure-with-source` element can be labelled and queried, turning `SRC-022` into an assertion instead of a reviewer's checklist.
 
@@ -142,10 +149,21 @@ As with LaTeX, the release archive currently ships the whole `packages/typst/` d
 1. **Font.** Times New Roman is proprietary and absent from this environment. Require the real font and fail loudly, or document a substitute and accept metric drift?
 2. **Registry.** Typst Universe publication needs an owner account, a package name, and a licence decision (ADR-12). None is decided.
 3. **Minimum compiler version.** Only decidable once the package exists.
-4. **Three illustration counters.** Typst does not provide this out of the box; confirm the counter model matches faculty practice, or collapse photographs into figures if the faculty does.
-5. **Annexes 1–5.** `SRC-041`: the normative layouts are still unobtained, so `coverpage` cannot be called correct.
+4. **Three illustration counters — implemented.** Typst's `figure` numbers per `kind`, but it offers no caption-position control, while the faculty requires the caption above for tables and below for figures and photographs (SRC-015 vs SRC-018). The package therefore uses three explicit counters plus `metadata`, not `figure`. This departs from the element model this specification originally assumed and is recorded here because it changes what `typst query` can assert.
+5. **Annexes 1–5.** Annex 1 and Annex 2 are recorded from the embedded samples (SRC-045, SRC-046), so `coverpage` and `contents` have a documented target. They are prose reproductions, not measurements, so exact spacing is still unverified.
 6. **Parity scope.** The two formats share an evidence base but not an implementation. Must their rendered output match, or is parity a documentation concern only (BIB-004)?
 
 ## Acceptance evidence
 
-Before Approval: implemented entry point, compiler version actually tested, dependency and licence records, a clean offline build, output review against `SRC-001`–`SRC-026`, and recorded limitations. TASK-5 records the contract; TASK-8 and TASK-10 supply the evidence.
+Recorded on 2026-11-21:
+
+| Evidence | Result |
+| --- | --- |
+| Implemented entry point | `umcs-thesis`, plus the 12 functions in the API table above |
+| Compiler version actually tested | 0.15.1, declared in `typst.toml` |
+| Dependencies | none; no third-party Typst package is imported (TYP-002, TYP-003) |
+| Offline build | yes — `typst compile` with no network |
+| Output review against `SRC-001`–`SRC-026` | partial: the implementer rendered and inspected the pages; no independent reviewer |
+| Recorded limitations | font substitution (TYP-006), approximated spacing, annex label placement |
+
+**Not yet approvable**: TASK-10 criterion 4 requires human review of the rendered output, and a reviewer cannot be the author of the code.
