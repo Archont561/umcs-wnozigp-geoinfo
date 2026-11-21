@@ -1,0 +1,21 @@
+schema = 1
+branch_prefix = "sandbox"
+cargo_vendor = false
+
+[budgets]
+max_blob_mib = 95
+max_transport_mib = 2048
+max_repository_push_mib = 2048
+max_restore_required_mib = 8192
+
+# Pin the workflow to this project's declared Pixi version and keep write
+# permission only on the job that force-pushes the sandbox transport branch.
+[workflow]
+pixi_version = "0.84.1"
+permissions = true
+setup_pixi_cache = false
+
+[[bundle]]
+name = "developer"
+environments = ["default"]
+platforms = ["linux-64"]

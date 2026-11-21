@@ -1,0 +1,6 @@
+[[discovery.roots]]
+path = "tools"
+
+[checks]
+require_description = true
+unknown_marks = "error"
