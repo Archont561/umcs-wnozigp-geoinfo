@@ -1,7 +1,7 @@
 ---
 id: TASK-8
 title: "Define the validation and test matrix"
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-11-09 00:00'
 updated_date: '2026-11-09 00:00'
@@ -26,10 +26,10 @@ Define which checks are static, unit, BDD, compile, visual, or human review. Kee
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Complete SPEC-QA with named check levels and owners.
-- [ ] #2 Record supported platforms/engines/compilers and distinguish tested from planned.
-- [ ] #3 Define representative content, rendering baselines, and regression evidence.
-- [ ] #4 Keep expensive builds and smoke tests opt-in unless explicitly approved for CI.
+- [ ] #1 SPEC-QA v0.2 defines eight check levels (L0-L7), an owner for each, and a 39-requirement traceability matrix. **Not approved**: TASK-7 is still open (Vale preset review and EDIT-004 licence question), and no owner sign-off is recorded.
+- [x] #2 Recorded in a tested-versus-declared table: linux-64 is tested, the other four declared platforms are not; Tectonic and Typst are tested against the dummy only; XeLaTeX/LuaLaTeX/pdfLaTeX and Biber are absent. QA-008 forbids claiming an untested combination.
+- [x] #3 Representative content enumerated against SRC-014..SRC-035. Baselines defined as structural assertions first, normalised text extraction second, human review with a recorded environment line third; byte-comparison of PDFs explicitly rejected (QA-010).
+- [x] #4 CI policy states the one approved exception (ADR-8's smoke job) and that multi-engine matrix runs stay opt-in. QA-001 is verified: the `check` task has 11 dependencies and none of them builds.
 <!-- AC:END -->
 
 ## Implementation Plan
@@ -41,5 +41,5 @@ Map each requirement in SPEC-SCOPE, SPEC-LTX, SPEC-TYP, and SPEC-BIB to a test o
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-A pytest-bdd smoke scenario exists for the two dummy PDFs. It proves only the build pipeline; the complete matrix remains open.
+2026-11-21: SPEC-QA rewritten to v0.2 with the traceability matrix. Two findings are recorded as failing checks: LTX-003 and TYP-004, because the release archive ships `tests/` and `main.*` with the package (confirmed by simulation), and QA-009 now requires the archive to exclude them. One fix in `release.yml` closes both. Criteria 2-4 met; criterion 1 blocked on TASK-7.
 <!-- SECTION:NOTES:END -->
