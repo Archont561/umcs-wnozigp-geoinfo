@@ -75,6 +75,11 @@ jobs:
             echo "::error::the latex archive still contains fixtures" >&2
             exit 1
           fi
+          # The archive must carry its own licence, or a consumer of the tarball has no terms.
+          if ! tar -tzf "dist/release/${REPOSITORY_NAME}-latex-${TAG_NAME}.tar.gz" | grep -qx 'latex/LICENSE'; then
+            echo "::error::the latex archive is missing its LICENSE" >&2
+            exit 1
+          fi
           # Fixtures are not part of the deliverable (QA-009, LTX-003, TYP-004):
           # the dummy main, the colocated tests and the caches stay out of the archive.
           tar --exclude='typst/main.*' --exclude='typst/tests' --exclude='typst/tests/*' \
@@ -83,6 +88,11 @@ jobs:
           # Assert the exclusion instead of trusting it.
           if tar -tzf "dist/release/${REPOSITORY_NAME}-typst-${TAG_NAME}.tar.gz" | grep -Eq '^(typst/main\.|typst/tests/)'; then
             echo "::error::the typst archive still contains fixtures" >&2
+            exit 1
+          fi
+          # The archive must carry its own licence, or a consumer of the tarball has no terms.
+          if ! tar -tzf "dist/release/${REPOSITORY_NAME}-typst-${TAG_NAME}.tar.gz" | grep -qx 'typst/LICENSE'; then
+            echo "::error::the typst archive is missing its LICENSE" >&2
             exit 1
           fi
           (

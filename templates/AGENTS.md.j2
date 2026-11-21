@@ -15,7 +15,7 @@
 - Use the Backlog.md document commands (`backlog doc create`, `backlog doc update`, `backlog doc list`) to manage specification entries; do not edit their metadata files directly.
 - Cite primary source, edition/date, section/page, applicability, and confidence for every institutional requirement. Unverified items stay open in SPEC-SOURCE and linked backlog tasks.
 - `backlog/milestones/` groups task IDs. Keep dependencies and acceptance criteria on individual task records in `backlog/tasks/`.
-- Record durable choices in `backlog/decisions/`. A decision must say what it does not authorize; do not silently infer distribution, third-party licensing, or compliance. The repository's own work is MIT-licensed per ADR-7; that grant does not extend to third-party assets.
+- Record durable choices in `backlog/decisions/`. A decision must say what it does not authorize; do not silently infer distribution, third-party licensing, or compliance. The repository's own work is MIT-licensed per ADR-7, with per-package copies per ADR-14; that grant does not extend to third-party assets.
 - Generated `README.md` and `AGENTS.md` come from `templates/`; edit templates and regenerate via `pixi run docs-write`.
 
 ## Vale and writing checks

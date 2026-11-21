@@ -60,7 +60,7 @@ Use the same `init` arguments without `--check` to regenerate generator-owned fi
 
 4. Add the task ID to the appropriate `backlog/milestones/` page.
 
-5. Record a durable choice under `backlog/decisions/` when one is made. Do not decide publication or third-party licensing by implication; original repository work is MIT-licensed per ADR-7, and that grant does not extend to supplied or third-party assets.
+5. Record a durable choice under `backlog/decisions/` when one is made. Do not decide publication or third-party licensing by implication; original repository work is MIT-licensed per ADR-7 and mirrored in each package per ADR-14, and that grant does not extend to supplied or third-party assets.
 
 6. Regenerate root overview documents after changing their templates:
 
