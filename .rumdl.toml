@@ -1,0 +1,4 @@
+[global]
+respect_gitignore = true
+exclude = [".pixi", "node_modules", "build", "dist", "out", "coverage"]
+disable = ["MD013", "MD033", "MD041"]
