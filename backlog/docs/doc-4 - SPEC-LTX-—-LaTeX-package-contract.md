@@ -216,7 +216,7 @@ The assertion level is the useful one: `geometry` values, `\theequation`, and ca
 3. **Bilingual titles.** `SRC-012` requires both titles. Should `title-en` be mandatory for a Polish-language thesis, or default to an empty placeholder?
 4. **Annexes 1–5.** The title-page and contents samples are embedded in the faculty PDF and are now recorded as SRC-045/SRC-046, so `\makecoverpage` and the contents style have a documented target. No separate editable template file was found, and the samples are reproduced in prose rather than measured, so exact spacing still needs the source PDF itself.
 5. **Photograph counter.** Is a third float class the right model, or does the faculty accept photographs under the figure index?
-6. **AI disclosure.** `SRC-039`: should the class offer a declaration environment, and does the faculty policy require a specific wording?
+6. **AI disclosure — decided, no.** The class offers no declaration environment (ADR-15). The faculty AI policy is out of scope, so there is no wording to implement and inventing one would fabricate institutional text.
 
 ## Acceptance evidence
 

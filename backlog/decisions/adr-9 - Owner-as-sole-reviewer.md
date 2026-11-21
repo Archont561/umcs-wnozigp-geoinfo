@@ -25,4 +25,4 @@ The repository owner asked what was needed to finish, was given two options — 
 - M-0's review criteria can be satisfied by owner review, and TASK-2 criterion 3 can be closed against this decision.
 - The repository states plainly that it is **not** institution-approved and has no external reviewer, so students must check the official faculty document before relying on any output.
 - The review is single-person; a single-reviewer ledger is weaker evidence than an independent one, and this is recorded as a residual risk rather than hidden.
-- Annexes 1–5 and the faculty AI policy remain unobtained (SRC-039, SRC-041). Owner review does not supply them, and they stay open.
+- Annexes 1–5 remain partly unobtained (SRC-041). Owner review does not supply them, and they stay open. The faculty AI policy (SRC-039) was dropped from scope by ADR-15 rather than left open.

@@ -77,7 +77,7 @@ These block nothing that is recorded, but they must be answered before any templ
 
 1. **Cohort window — decided, conditionally.** The first release targets the next academic period (2026/27) under ADR-10, using the 2025/26 rules as a proxy. The 2026/27 edition must be re-reviewed when published; this remains an obligation, not a settled fact.
 2. **Annexes 1–5.** The normative layout forms (title page, contents, illustrations, citations, bibliography) are referenced by the source but their exact designs were not extracted (SRC-041). Without them the template can satisfy the prose rules but not the normative forms.
-3. **Faculty AI policy.** The source permits AI tools under a faculty policy it does not reproduce (SRC-039).
+3. **Faculty AI policy — out of scope.** The source permits AI tools under a faculty policy it does not reproduce (SRC-039). That policy is deliberately not tracked (ADR-15), and neither package offers a declaration environment.
 4. **Institution-wide versus faculty-specific.** Only faculty-level rules are recorded so far; SCOPE-005 lists the university instruments still unreviewed.
 5. **Scope width.** Is Geoinformatyka a narrow first release or one profile among several WNoZiGP programmes?
 6. **Reviewer assignment — decided.** The repository owner is the sole reviewer (ADR-9). Assigning an independent faculty or student reviewer would strengthen the evidence and should be revisited.
