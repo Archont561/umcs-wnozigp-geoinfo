@@ -112,6 +112,7 @@ scripts/relock-workflow.yml.template inactive generator template (not a workflow
 .github/workflows/                CI, sandbox publishing, and source-release workflows
 package.json / bun.lock   Backlog.md CLI and lock
 LICENSE                   MIT license for original repository work
+packages/*/LICENSE        MIT, shipped inside each package tarball (ADR-14)
 ```
 
 ## GitHub source releases
@@ -120,7 +121,7 @@ LICENSE                   MIT license for original repository work
 
 ## License
 
-The repository's own code, tests, and documentation are released under the [MIT License](LICENSE), copyright (c) 2026 Archont561. The license covers original work in this repository only. It does not cover the supplied PLTechnical Vale rules, whose provenance and redistribution terms remain unreviewed (see [ADR-4](backlog/decisions/adr-4%20-%20Vale-PLTechnical-preset.md)), nor any future institution assets, fonts, or third-party dependencies. Third-party material keeps its own terms and must be recorded per ADR-7.
+The repository's own code, tests, and documentation are released under the [MIT License](LICENSE), copyright (c) 2026 Archont561. The license covers original work in this repository only. The same MIT terms are repeated at `packages/latex/LICENSE` and `packages/typst/LICENSE`, because the release workflow publishes those directories as standalone tarballs and a consumer of one must receive its licence (ADR-14). It does not cover the supplied PLTechnical Vale rules, whose provenance and redistribution terms remain unreviewed (see [ADR-4](backlog/decisions/adr-4%20-%20Vale-PLTechnical-preset.md)), nor any future institution assets, fonts, or third-party dependencies. Third-party material keeps its own terms and must be recorded per ADR-7.
 
 ## Publication boundary
 

@@ -22,7 +22,7 @@ Resolve ownership and licensing for repository code, the supplied PLTechnical Va
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [x] #1 Identify the copyright holder and select a repository/package license explicitly. MIT, holder Archont561, recorded in ADR-7.
+- [x] #1 Identify the copyright holder and select a repository/package license explicitly. MIT for the repository (ADR-7) and for each package (ADR-14), holder Archont561.
 - [ ] #2 Review the supplied Vale preset's redistribution rights; its archive has no license file.
 - [ ] #3 Record provenance and license notices for every future non-original asset.
 - [x] #4 Add a LICENSE only after the owner approves the choice; do not infer MIT or another license. Added after explicit owner instruction.
@@ -37,5 +37,5 @@ Review the attachment and source references, collect ownership facts, and record
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-ADR-7 selects MIT for original repository code and documentation, superseding ADR-5's licensing point. ADR-4 records the Vale provisioning choice and still gates public redistribution of the supplied rules, which MIT does not cover.
+ADR-14 mirrors MIT into each package so standalone tarballs carry terms. ADR-7 selects MIT for original repository code and documentation, superseding ADR-5's licensing point. ADR-4 records the Vale provisioning choice and still gates public redistribution of the supplied rules, which MIT does not cover.
 <!-- SECTION:NOTES:END -->

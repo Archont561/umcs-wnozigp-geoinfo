@@ -150,6 +150,7 @@ Every requirement maps to at least one check. `—` means no check exists yet, w
 | QA-003 (record environment for visual tests) | Template requires engine, version, platform, fonts | L6 | reviewer | Planned |
 | QA-004 (no PDFs as artifacts) | Assert `.gitignore` and release assets | L1 | maintainer | **Passing** |
 | QA-005 (release archives) | Inspect the release workflow | L1 | maintainer | **Passing config, never executed** |
+| QA-011 (licence in every artifact) | Release job asserts `LICENSE` is inside each tarball | L1 | maintainer | **Passing, verified by simulation** |
 
 ## Summary of the matrix
 
@@ -206,7 +207,7 @@ ADR-8 approved one exception to QA-001: the `smoke` job runs `test-smoke` in par
 
 No CTAN or Typst registry submission is selected or approved (ADR-12 leaves registry naming undecided). A GitHub tag-release workflow publishes source-only archives for `v*` tags. A tag push is a publication action and does not imply licence clearance, UMCS approval, or package readiness. Resolve before pushing a tag:
 
-- third-party rule/font/logo provenance and any per-package licence deviation from MIT (ADR-7);
+- third-party rule/font/logo provenance and any per-package licence deviation from MIT (ADR-7, ADR-14);
 - supported artifact contents — the archive now excludes fixtures (LTX-003, TYP-004), though the package itself does not exist yet;
 - student-facing and institutional review, plus independent human approval;
 - a clean build, reproducible artifact inventory, checksums, and a rollback/withdrawal procedure.
@@ -223,5 +224,6 @@ No CTAN or Typst registry submission is selected or approved (ADR-12 leaves regi
 - **QA-008:** Platform and engine support shall be claimed only for combinations with a recorded run.
 - **QA-009:** Release archives shall exclude test fixtures, so LTX-003 and TYP-004 are mechanically enforced.
 - **QA-010:** PDF byte-comparison shall not be used as a regression gate.
+- **QA-011:** Every published artifact shall contain its own licence file, asserted by the release job rather than assumed (ADR-14).
 
 This draft does not establish institutional endorsement or full compliance.

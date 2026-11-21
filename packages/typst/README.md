@@ -4,6 +4,10 @@ This directory currently contains only `main.typ`, a compileable placeholder. It
 
 The intended package contract is specified in [`SPEC-TYP`](../../backlog/docs/doc-5%20-%20SPEC-TYP-%E2%80%94-Typst-package-contract.md). The minimum compiler version, public API, package namespace, and registry policy remain undecided. The root Pixi environment uses Typst for a smoke build and Typstyle for a basic formatter check; neither proves institutional compliance or editor compatibility.
 
+## Licence
+
+This package is released under the [MIT License](LICENSE), copyright (c) 2026 Archont561 — the same terms as the repository root. The licence ships inside every release tarball (ADR-14). It covers this directory's original work only: it does not extend to institutional marks, fonts, or third-party dependencies, and none are bundled.
+
 From the repository root:
 
 ```sh
