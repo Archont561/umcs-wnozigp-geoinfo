@@ -71,11 +71,12 @@ Using a dictionary rather than positional arguments keeps the API stable as fiel
 | `abstract(body)` | Abstract with the 4000-character limit enforced | `SRC-014` |
 | `figure-with-source(...)` | Figure plus required source line below | `SRC-018`, `SRC-019`, `SRC-022` |
 | `table-with-source(...)` | Table title above, source below | `SRC-015`, `SRC-016` |
-| `photograph(...)` | Third illustration class with its own counter | `SRC-021`, `SRC-023` |
+| `listing(...)` | Third illustration class with its own counter (replaces the photograph class, see ADR-17) | `SRC-021`, `SRC-023` |
 | `appendices(body)` | `Załącznik N`, top right | `SRC-024` |
-| `list-of-photographs` | Separate photograph index | `SRC-023` |
+| `list-of-listings` | Separate listing index | `SRC-023` |
+| `annex-ref(n)` | Renders "Załącznik n"; not a live `ref`, see limitations | `SRC-024` |
 
-Typst has no `\listoffigures` equivalent that distinguishes three counters, so the package must maintain table, figure and photograph counters itself. That is the largest implementation risk in this contract and is called out for TASK-10.
+Typst has no `\listoffigures` equivalent that distinguishes three counters, so the package maintains table, figure and listing counters itself. That was the largest implementation risk in this contract and is now implemented and tested.
 
 ## Language and fonts
 
@@ -129,7 +130,7 @@ As with LaTeX, the release archive currently ships the whole `packages/typst/` d
 - **TYP-004:** Test fixtures shall remain separate from the distributable package files.
 - **TYP-005:** The minimum supported compiler version shall be stated only after the package's feature use is known, and shall then be tested.
 - **TYP-006:** A font substitution shall be documented wherever the default face is not Times New Roman, and no build shall claim `SRC-002` compliance on a substitute.
-- **TYP-007:** Table, figure and photograph counters shall be independent, matching `SRC-021`.
+- **TYP-007:** Table, figure and listing counters shall be independent. `SRC-021` names tables, figures and photographs; the photograph class is folded into figures by ADR-17, so this requirement now asserts the deviation rather than the source.
 
 ## Test plan
 
@@ -164,6 +165,6 @@ Recorded on 2026-11-21:
 | Dependencies | none; no third-party Typst package is imported (TYP-002, TYP-003) |
 | Offline build | yes — `typst compile` with no network |
 | Output review against `SRC-001`–`SRC-026` | partial: the implementer rendered and inspected the pages; no independent reviewer |
-| Recorded limitations | font substitution (TYP-006), approximated spacing, annex label placement |
+| Recorded limitations | font substitution (TYP-006), approximated spacing, deviations from SRC-021/SRC-023 (ADR-17), `annex-ref` is not a live reference |
 
 **Not yet approvable**: TASK-10 criterion 4 requires human review of the rendered output, and a reviewer cannot be the author of the code.

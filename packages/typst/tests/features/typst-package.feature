@@ -10,10 +10,10 @@ Feature: The Typst package renders the faculty's structural rules
     When I compile the demo main with Typst
     Then the compiled PDF has a valid header and trailer
 
-  Scenario: The three illustration counters run independently
+  Scenario: The illustration counters run independently
     Given the Typst package has a demo main
     When I query the document counters
-    Then the counters report one table, one figure and one photograph
+    Then the counters report one table, two figures and one listing
 
   Scenario: Every illustration carries a source
     Given the Typst package has a demo main
@@ -40,6 +40,11 @@ Feature: The Typst package renders the faculty's structural rules
     Given a document with an unsourced figure
     When I compile it with Typst
     Then the compiler fails and says the source is required
+
+  Scenario: Photographs have no separate class or index
+    Given the Typst package has a demo main
+    When I query the document counters
+    Then no photograph counter is reported
 
   Scenario: The contents numbering matches the body
     Given the Typst package has a demo main
