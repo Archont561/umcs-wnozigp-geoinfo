@@ -1,0 +1,8 @@
+extends: existence
+message: "Sprawdź zapis '%s': oddziel liczbę od symbolu jednostki spacją, najlepiej nierozdzielającą. Wyjątek: symbole kąta °, ′, ″."
+level: warning
+nonword: true
+# Deliberately excludes %, to avoid silently choosing between general editorial and SI conventions.
+# No matching inside variable names, decimal suffixes, code identifiers or longer unit strings.
+raw:
+  - '(?<![\p{L}\p{N}_,.])[-+−]?\d+(?:[,.]\d+)?(?:mm|cm|km|µm|μm|nm|kg|mg|g|ms|s|min|h|Hz|kHz|MHz|GHz|kPa|MPa|Pa|kW|MW|W|mV|kV|V|mA|A|°C|K|m)(?:[²³])?(?![\p{L}\p{N}_])'

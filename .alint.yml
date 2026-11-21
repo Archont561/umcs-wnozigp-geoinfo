@@ -1,0 +1,96 @@
+version: 1
+rules:
+  - id: specification-documents-live-in-backlog
+    kind: dir_exists
+    paths: backlog/docs
+    level: error
+    message: "Keep normative specifications as Backlog document entries under backlog/docs/."
+
+  - id: vale-rules-live-under-vale
+    kind: dir_exists
+    paths: .vale/styles/PLTechnical
+    level: error
+    message: "Keep the local PLTechnical Vale rules under .vale/styles/."
+
+  - id: backlog-milestones-exist
+    kind: dir_exists
+    paths: backlog/milestones
+    level: error
+    message: "Use Backlog.md milestones to group delivery tasks."
+
+  - id: both-format-packages-exist
+    kind: dir_exists
+    paths:
+      - packages/latex
+      - packages/typst
+    level: error
+    message: "Keep separate LaTeX and Typst package directories."
+
+  - id: package-tests-are-colocated
+    kind: dir_exists
+    paths:
+      - packages/latex/tests
+      - packages/typst/tests
+    level: error
+    message: "Keep each format's tests within its package directory."
+
+  - id: smoke-task-runs-package-tests
+    kind: toml_path_equals
+    paths: pixi.toml
+    path: "$['tasks']['test-smoke']"
+    equals: "pytest -q -m integration packages/latex/tests packages/typst/tests"
+    level: error
+    message: "Run the colocated format smoke tests through the root Pixi task."
+
+  - id: tag-release-workflow-exists
+    kind: file_exists
+    paths: .github/workflows/release.yml
+    level: error
+    message: "Keep the requested source-only tag release workflow in place."
+
+  - id: pixi-sandbox-files-exist
+    kind: file_exists
+    paths:
+      - pixi-sandbox.toml
+      - .github/workflows/publish-sandbox.yml
+      - scripts/relock-workflow.yml.template
+      - scripts/restore.sh
+    level: error
+    message: "Keep the Pixi sandbox config, generated workflows, and restore launcher."
+
+  - id: root-build-tools-use-tasknest
+    kind: toml_path_equals
+    paths: pixi.toml
+    path: "$.tasks.tools"
+    equals: "tasknest"
+    level: error
+    message: "Use Tasknest for repository automation."
+
+  - id: vale-is-a-root-conda-dependency
+    kind: toml_path_equals
+    paths: pixi.toml
+    path: "$.dependencies.vale"
+    equals: "==3.26.0"
+    level: error
+    message: "Install Vale 3.26.0 from the root Conda environment."
+
+  - id: root-pixi-uses-rumdl-for-markdown
+    kind: toml_path_equals
+    paths: pixi.toml
+    path: "$['tasks']['lint-markdown']"
+    equals: "rumdl check ."
+    level: error
+    message: "Use rumdl as the Markdown linter."
+
+  - id: rumdl-project-configuration-exists
+    kind: file_exists
+    paths: .rumdl.toml
+    level: error
+    message: "Keep the rumdl configuration in the repository root."
+
+  - id: markdownlint-cli2-is-removed
+    kind: json_path_absent
+    paths: package.json
+    path: "$['devDependencies']['markdownlint-cli2']"
+    level: error
+    message: "Do not keep markdownlint-cli2 in the Bun toolchain; use rumdl from Conda."

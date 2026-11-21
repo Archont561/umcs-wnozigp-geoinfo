@@ -1,0 +1,7 @@
+{
+  "name": "umcs-wnozigp-geoinfo-tooling",
+  "private": true,
+  "devDependencies": {
+    "backlog.md": "1.53.0"
+  }
+}

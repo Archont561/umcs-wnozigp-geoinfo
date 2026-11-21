@@ -1,0 +1,22 @@
+# Pixi environment and caches
+.pixi/
+.pixi-cache/
+
+# Bun dependencies
+node_modules/
+.bun/
+
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Local build and test outputs
+build/
+dist/
+coverage/
+.pytest_cache/
+
+# Linter/editor output
+.vale-cache/
+.rumdl_cache/
+*.log

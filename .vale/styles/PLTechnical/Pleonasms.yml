@@ -1,0 +1,12 @@
+extends: existence
+message: "Możliwy pleonazm '%s'. Usuń nadmiarowy wyraz, jeśli nie wprowadza zamierzonego rozróżnienia."
+level: suggestion
+ignorecase: true
+# Editorial examples implementing concision guidance; not quotations or a grammar parser.
+tokens:
+  - 'w okresie czasu'
+  - 'wzajemna współpraca'
+  - 'cofać się do tyłu'
+  - 'fakt autentyczny'
+  - 'końcowy rezultat'
+  - 'potencjalne możliwości'
