@@ -8,8 +8,8 @@ updated_date: '2026-11-21 20:11'
 
 ## SPEC-SOURCE — Source evidence and requirements traceability
 
-**Status:** Draft (evidence recorded; owner review outstanding)  
-**Version:** 0.2  
+**Status:** Draft (evidence recorded; reviewed by the repository owner under ADR-9)  
+**Version:** 0.3  
 **Related task:** TASK-1  
 **Milestone:** M-0
 
@@ -29,6 +29,8 @@ Prevent assumptions from becoming template behavior. This document is the eviden
 | Scope note (source's own words) | Preparation rules apply to students "rozpoczynających przygotowanie pracy dyplomowej w semestrze letnim 2025/2026"; examination rules apply from the 2025/26 winter session |
 | Superseded edition | 2017 edition at `phavi.umcs.pl/at/attachments/2017/0628/143302-zasady-dyplomowania-2017.pdf`; its differing figures (e.g. 25 MB file limit, 6-week examination deadline) are **not** used here |
 | Currentness | No 2026/27 edition found as of 2026-11-21; the 2025/26 edition is the newest published on the faculty facility page |
+| Target cohort | **Next academic period (2026/27)**, per ADR-10. The 2025/26 document is used as a proxy and must be re-verified when the next edition is published |
+| Review | Repository owner as sole reviewer, per ADR-9; no faculty, supervisor, or student reviewer has signed this ledger |
 
 Page numbers cannot be cited: the PDF is an unpaginated HTML extraction. Locators therefore use the document's section headings (`Ad …`, `Redakcja pracy dyplomowej`, `Zasady cytowania literatury`, `Sporządzanie bibliografii`).
 
@@ -93,10 +95,10 @@ Legend: **M** mandatory as written; **R** recommendation ("zalecany", "powinien"
 
 ## What this does not establish
 
-- **Cohort applicability beyond the source's own statement.** The 2025/26 rules bind students who began thesis preparation in the 2025/26 summer semester. Whether they still bind a 2026/27 cohort, or whether a newer edition will be issued, is not confirmed by the source and remains an owner question (TASK-2).
+- **Cohort applicability beyond the source's own statement.** The 2025/26 rules bind students who began thesis preparation in the 2025/26 summer semester. The first release targets the **2026/27** period (ADR-10), so these requirements are a proxy for that cohort, not authority over it. They must be re-checked when the 2026/27 edition is published; until then no claim of applicability to that cohort is made.
 - **Compliance.** Recording a rule is not evidence that any template implements it, and no template exists yet.
-- **Institutional approval.** No reviewer has signed this ledger off.
+- **Institutional approval.** The ledger was reviewed by the repository owner only (ADR-9). No faculty reviewer has signed it, and owner review is not institutional endorsement.
 
 ## Required task output
 
-TASK-1 is complete when the source set, applicability window, extracted requirement matrix, conflicts, and reviewer questions are recorded. All are now present; the remaining items are listed as Open above, and owner review is outstanding.
+TASK-1's evidence work is complete: the source set, applicability window, 44-record matrix, conflicts, and reviewer questions are recorded. The applicability answer is conditional (ADR-10) and the review is single-person (ADR-9). Annexes 1–5 (SRC-041) and the faculty AI policy (SRC-039) remain unobtained.

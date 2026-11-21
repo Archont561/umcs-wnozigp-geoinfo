@@ -8,9 +8,9 @@ updated_date: '2026-11-21 20:11'
 
 ## SPEC-SCOPE — Project scope and boundaries
 
-**Status:** Draft (scope confirmed from verified evidence; owner review outstanding)  
-**Version:** 0.2  
-**Related decisions:** ADR-1, ADR-2, ADR-7  
+**Status:** Draft (scope reviewed by the repository owner; no external reviewer)  
+**Version:** 0.3  
+**Related decisions:** ADR-1, ADR-2, ADR-7, ADR-9, ADR-10  
 **Related evidence:** SPEC-SOURCE (verified 2025/26 faculty rules)  
 **Milestone:** M-0
 
@@ -31,7 +31,8 @@ This scope is grounded in SPEC-SOURCE, which records the *Zasady dyplomowania na
 
 - **Unit:** Wydział Nauk o Ziemi i Gospodarki Przestrzennej (WNoZiGP), UMCS Lublin.
 - **Programme:** Geoinformatyka.
-- **Rule edition:** WNoZiGP 2025/2026, per SPEC-SOURCE.
+- **Rule edition:** WNoZiGP 2025/2026 as the proxy for the target period, per SPEC-SOURCE.
+- **Target cohort:** the next academic period (2026/27), per ADR-10; the requirements will be re-verified against the 2026/27 edition when published.
 - **Thesis types:** all three named in the source — licencjacka (first cycle), inżynierska (first cycle, engineering), magisterska (second cycle). Whether the first release supports all three or only one is deliberately **not** decided here; that is a maintainer choice recorded in TASK-9/TASK-10, not an institutional requirement.
 - **Language:** Polish is the default. The source permits a foreign-language thesis with approval, and then requires the title, captions, and abstract translated into Polish (SRC-037); that is a template concern, not a first-release commitment.
 
@@ -64,20 +65,22 @@ This scope is grounded in SPEC-SOURCE, which records the *Zasady dyplomowania na
 | Role | Status |
 | --- | --- |
 | Institutional/faculty rules | Faculty of WNoZiGP as publisher of the source; no individual faculty reviewer has confirmed this scope |
-| Student-facing behaviour | **Unassigned** — no student or supervisor reviewer has been identified |
+| Student-facing behaviour | Repository owner (Archont561) as sole reviewer, per ADR-9 — single-person review, not institutional sign-off |
 | Technical maintainer | Repository owner (Archont561) |
-| Release approval | Unassigned; gated by TASK-13 and SPEC-QA |
+| Release approval | Repository owner, gated by TASK-13 and SPEC-QA; still requires the release gates to be met |
+
+Owner review is recorded deliberately as a limitation: it satisfies the milestone, but it is not faculty endorsement, and a single reviewer is weaker evidence than an independent one.
 
 ## Open questions
 
 These block nothing that is recorded, but they must be answered before any template implementation is called correct.
 
-1. **Cohort window.** The source binds students who began thesis preparation in the 2025/26 summer semester. Does it still bind a 2026/27 cohort, and will a newer edition appear? Owner question for TASK-2.
+1. **Cohort window — decided, conditionally.** The first release targets the next academic period (2026/27) under ADR-10, using the 2025/26 rules as a proxy. The 2026/27 edition must be re-reviewed when published; this remains an obligation, not a settled fact.
 2. **Annexes 1–5.** The normative layout forms (title page, contents, illustrations, citations, bibliography) are referenced by the source but their exact designs were not extracted (SRC-041). Without them the template can satisfy the prose rules but not the normative forms.
 3. **Faculty AI policy.** The source permits AI tools under a faculty policy it does not reproduce (SRC-039).
 4. **Institution-wide versus faculty-specific.** Only faculty-level rules are recorded so far; SCOPE-005 lists the university instruments still unreviewed.
 5. **Scope width.** Is Geoinformatyka a narrow first release or one profile among several WNoZiGP programmes?
-6. **Reviewer assignment.** Who approves student-facing behaviour, per the ownership table above?
+6. **Reviewer assignment — decided.** The repository owner is the sole reviewer (ADR-9). Assigning an independent faculty or student reviewer would strengthen the evidence and should be revisited.
 
 ## What this scope does not authorize
 

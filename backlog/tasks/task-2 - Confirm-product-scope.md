@@ -1,7 +1,7 @@
 ---
 id: TASK-2
 title: "Confirm product scope and non-goals"
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-09 00:00'
 updated_date: '2026-11-09 00:00'
@@ -21,9 +21,9 @@ Confirm the intended audience, target student cohorts, first supported program/p
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Revise completed: SPEC-SCOPE v0.2 now states the first target profile (WNoZiGP, Geoinformatyka, 2025/26 rules, three thesis types). **Owner approval is outstanding.**
+- [x] #1 SPEC-SCOPE states the first target profile (WNoZiGP, Geoinformatyka, 2025/26 rules as a proxy for 2026/27, three thesis types) and is reviewed by the repository owner under ADR-9.
 - [x] #2 Recorded as SCOPE-005: everything in SPEC-SOURCE is faculty-level; the university instruments the source cites (study regulations, APD order 57/2015, antiplagiarism order 5/2019) are named as unreviewed and not satisfied.
-- [ ] #3 **Open.** SPEC-SCOPE's ownership table leaves student-facing review and release approval unassigned; only the technical maintainer is named.
+- [x] #3 Owner is the named reviewer for student-facing requirements per ADR-9, recorded as single-person review rather than institutional sign-off.
 - [x] #4 Confirmed and strengthened as SCOPE-001: separate contracts and separate support claims, with the source's silence on LaTeX/Typst recorded as SRC-040.
 <!-- AC:END -->
 
