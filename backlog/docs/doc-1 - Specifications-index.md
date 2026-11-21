@@ -15,8 +15,8 @@ These are the draft normative specifications for `umcs-wnozigp-geoinfo`, maintai
 | SPEC-SCOPE | [Project scope and boundaries](doc-2%20-%20SPEC-SCOPE-%E2%80%94-Project-scope-and-boundaries.md) | Draft v0.3 — profile recorded, owner review (ADR-9) | M-0 |
 | SPEC-SOURCE | [Source evidence and requirements traceability](doc-3%20-%20SPEC-SOURCE-%E2%80%94-Source-evidence-and-requirements-traceability.md) | Draft v0.3 — 44 rules from the verified 2025/26 source, owner review (ADR-9) | M-0 |
 | SPEC-LTX | [LaTeX package contract](doc-4%20-%20SPEC-LTX-%E2%80%94-LaTeX-package-contract.md) | Draft v0.2 — API proposed, no engine claimed | M-1 |
-| SPEC-TYP | [Typst package contract](doc-5%20-%20SPEC-TYP-%E2%80%94-Typst-package-contract.md) | Draft | M-1 |
-| SPEC-BIB | [Bibliography and citation behavior](doc-6%20-%20SPEC-BIB-%E2%80%94-Bibliography-and-citation-behavior.md) | Draft | M-1 |
+| SPEC-TYP | [Typst package contract](doc-5%20-%20SPEC-TYP-%E2%80%94-Typst-package-contract.md) | Draft v0.2 — package shape proposed, no editor claim | M-1 |
+| SPEC-BIB | [Bibliography and citation behavior](doc-6%20-%20SPEC-BIB-%E2%80%94-Bibliography-and-citation-behavior.md) | Draft v0.2 — repository-owned styles (ADR-12), Biber gap open | M-1 |
 | SPEC-EDIT | [Editorial quality and Vale](doc-7%20-%20SPEC-EDIT-%E2%80%94-Editorial-quality-and-Vale.md) | Draft | M-2 |
 | SPEC-QA | [Validation and release gates](doc-8%20-%20SPEC-QA-%E2%80%94-Validation-and-release-gates.md) | Draft | M-3, M-4 |
 
