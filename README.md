@@ -104,7 +104,9 @@ packages/typst/main.typ   compileable dummy main; no package implementation
 examples/vale/            short prose fixture for preset review
 packages/latex/tests/     LaTeX smoke/BDD tests
 packages/typst/tests/     Typst smoke/BDD tests
-tools/                    Tasknest build and generated-doc tools
+tools/                    Tasknest build, generated-doc, and release tools
+tools/release/            archive + publish logic used by the release workflow
+tests/release/            unit tests for those release tools
 pixi.toml / pixi.lock     root Conda/PyPI environment and lock
 pixi-sandbox.toml         Linux-64 offline sandbox bundle plan
 scripts/restore.sh                 generated Pixi Sandbox restore launcher
@@ -117,7 +119,7 @@ packages/*/LICENSE        MIT, shipped inside each package tarball (ADR-14)
 
 ## GitHub source releases
 
-`.github/workflows/release.yml` runs for tags matching `v*`. It first runs the repository checks and package-local smoke tests, then creates or updates a GitHub Release with separate LaTeX and Typst source archives plus a `SHA256SUMS` manifest. Each archive contains only its package directory, including its README and colocated tests; generated PDFs and local caches are not included. Pushing a matching tag is a publication action. This workflow has not been run as part of the local scaffold work.
+`.github/workflows/release.yml` runs for tags matching `v*`. It first runs the repository checks and package-local smoke tests, then builds the archives and creates or updates a GitHub Release. The archive and publishing logic lives in [`tools/release/archive.py`](tools/release/archive.py) and [`tools/release/publish.py`](tools/release/publish.py), not inline in the workflow, so the exclusion and presence rules are unit-tested in `tests/release/` without needing a tag or a token. Each archive contains only its package directory's deliverable files plus its README and `LICENSE`; the smoke mains, the colocated tests and local caches are excluded, and the build fails if a fixture leaks in or a required file goes missing. A `SHA256SUMS` manifest is published beside the archives. Pushing a matching tag is a publication action. This workflow has not been run end to end as part of the local scaffold work.
 
 ## License
 
