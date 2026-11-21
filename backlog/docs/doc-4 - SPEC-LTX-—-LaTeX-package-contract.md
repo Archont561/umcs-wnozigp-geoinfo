@@ -73,7 +73,7 @@ One key-value command, mapping onto the title-page fields in `SRC-012`:
 ```
 
 - `title` and `title-en` are both required: `SRC-012` mandates the title in Polish **and** English.
-- `department` maps to the source's "Zakład/Katedra, w którym praca była wykonana".
+- `department` maps to the source's "napisana w Katedrze (nazwa Katedry)" in the 2025/26 Annex 1 sample (SRC-045). The superseded 2017 edition used "Zakład", so the label is `Katedra` for the current edition.
 - The university, faculty and programme name are fixed by the class; overriding them is not offered.
 - Unknown keys raise an error. A missing required key raises an error at `\makecoverpage`, not at load time, so drafting can proceed.
 
@@ -214,7 +214,7 @@ The assertion level is the useful one: `geometry` values, `\theequation`, and ca
 1. **Font substitution.** Times New Roman is proprietary. Is a metric-compatible clone (`newtxtext`) acceptable for a submission, or must the class require the real font and fail loudly when it is absent? This affects every engine except a system that has the font installed.
 2. **Engine priority.** Which engine becomes the single supported target, and are the others best-effort or explicitly unsupported?
 3. **Bilingual titles.** `SRC-012` requires both titles. Should `title-en` be mandatory for a Polish-language thesis, or default to an empty placeholder?
-4. **Annexes 1–5.** `SRC-041` means the normative title-page and contents layouts are still unobtained. `\makecoverpage` cannot be called correct until they are.
+4. **Annexes 1–5.** The title-page and contents samples are embedded in the faculty PDF and are now recorded as SRC-045/SRC-046, so `\makecoverpage` and the contents style have a documented target. No separate editable template file was found, and the samples are reproduced in prose rather than measured, so exact spacing still needs the source PDF itself.
 5. **Photograph counter.** Is a third float class the right model, or does the faculty accept photographs under the figure index?
 6. **AI disclosure.** `SRC-039`: should the class offer a declaration environment, and does the faculty policy require a specific wording?
 

@@ -97,7 +97,8 @@ This is recorded as open question 1 and as the reason TASK-11 cannot start yet.
 | Language | Polish labels and connector words; English thesis still renders a Polish abstract | `SRC-037` |
 | Diacritics | Must survive unchanged: `Ż`, `ń`, `ó`, `ł`, `ś`, `ż`, `ź`, `ć`, `ą`, `ę` | implied by `SRC-035` examples |
 | Web sources | Separate *netografia* with access date; in-text truncation to five URL elements | `SRC-033`, `SRC-034` |
-| Missing fields | Leave the field out; never print `(n.d.)` or `[b.m.]` placeholders that the source does not use | maintainer choice, recorded |
+| Missing year | Print `b.r.` (bez roku), per SRC-048 — not `(n.d.)` or `[b.m.]` | `SRC-048` |
+| Other missing fields | Omit the element; do not invent a placeholder the source does not use | maintainer choice, recorded |
 | Page ranges | En dash in chapter entries (`128–156`), comma-separated volume/issue/pages for articles | `SRC-035` |
 | Italics | Title only | `SRC-035` |
 
