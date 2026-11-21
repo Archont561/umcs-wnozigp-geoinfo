@@ -65,9 +65,9 @@ jobs:
             exit 1
           fi
           mkdir -p dist/release
-          tar --exclude='*/__pycache__' --exclude='*.py[co]' --exclude='*/.pytest_cache' \\
+          tar --exclude='*/__pycache__' --exclude='*.py[co]' --exclude='*/.pytest_cache' \
             -czf "dist/release/${REPOSITORY_NAME}-latex-${TAG_NAME}.tar.gz" -C packages latex
-          tar --exclude='*/__pycache__' --exclude='*.py[co]' --exclude='*/.pytest_cache' \\
+          tar --exclude='*/__pycache__' --exclude='*.py[co]' --exclude='*/.pytest_cache' \
             -czf "dist/release/${REPOSITORY_NAME}-typst-${TAG_NAME}.tar.gz" -C packages typst
           (
             cd dist/release
