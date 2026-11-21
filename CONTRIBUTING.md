@@ -22,7 +22,7 @@ pixi run --locked lint-typst
 pixi run --locked test-smoke
 ```
 
-Format-specific pytest-bdd tests live under `packages/latex/tests/` and `packages/typst/tests/`. `test-smoke` runs both tests; each invokes its package-specific Tasknest build and validates that format's dummy PDF. To build each format directly:
+Format-specific pytest-bdd tests live under `packages/latex/tests/` and `packages/typst/tests/`. `test-smoke` runs both tests; each invokes its package-specific Tasknest build and validates that format's dummy PDF. CI runs it in a separate `smoke` job next to the static `check` job, so a dummy main that stops compiling fails the pull request. A first Tectonic build downloads its bundle and is the slow run. To build each format directly:
 
 ```sh
 pixi run --locked build-latex

@@ -52,7 +52,7 @@ pixi run --locked bun-install
 pixi run --locked check
 ```
 
-The check gate validates repository structure, TOML, Tasknest discovery, generated docs, rumdl Markdown lint, Vale warnings, and source linters. It does **not** compile either dummy main. rumdl is installed from Conda by the root Pixi environment; configuration lives in `.rumdl.toml`.
+The check gate validates repository structure, TOML, Tasknest discovery, generated docs, rumdl Markdown lint, Vale warnings, and source linters. It does **not** compile either dummy main; CI runs `test-smoke` in a separate `smoke` job alongside it, so both dummy mains are compiled on every push and pull request. rumdl is installed from Conda by the root Pixi environment; configuration lives in `.rumdl.toml`.
 
 Run the Markdown linter directly with:
 

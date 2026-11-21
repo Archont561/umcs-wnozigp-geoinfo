@@ -15,7 +15,7 @@ The repository needs Vale from Conda, two format smoke builds, and generated doc
 1. Maintain one root `pixi.toml` and `pixi.lock` for Conda, PyPI, and repository tools.
 2. Install Vale from Conda in that root environment; keep PLTechnical style files in the repository.
 3. Use one Tasknest build tool per format and a root aggregate depending on both.
-4. Keep smoke builds and pytest-bdd build scenarios opt-in and outside the root `check` gate.
+4. Keep smoke builds and pytest-bdd build scenarios opt-in and outside the root `check` gate; CI runs them in a separate `smoke` job so the aggregate gate stays fast and network-light (see ADR-8).
 5. Keep user-facing template tests distinct from scaffold smoke tests. The latter only test the build pipeline.
 
 ## Consequences
