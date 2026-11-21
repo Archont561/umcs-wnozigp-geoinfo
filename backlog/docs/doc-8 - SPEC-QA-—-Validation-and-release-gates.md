@@ -99,7 +99,7 @@ Every requirement maps to at least one check. `—` means no check exists yet, w
 | --- | --- | --- | --- | --- |
 | LTX-001 (documented entry point) | Compile a fixture using the class | L3 | maintainer | Planned |
 | LTX-002 (dependency inventory) | Manual against SPEC-LTX table | L7 | reviewer | Open |
-| LTX-003 (fixtures separate) | Assert the release archive excludes `tests/` and `main.tex` | L1 | maintainer | **Failing — not enforced** |
+| LTX-003 (fixtures separate) | Assert the release archive excludes `tests/` and `main.tex` | L1 | maintainer | **Fixed — enforced in `release.yml`** |
 | LTX-004 (engine matrix evidence) | Run the matrix, record results | L3 | maintainer | Open |
 | LTX-005 (output vs requirements) | Visual comparison to SPEC-SOURCE | L6 | reviewer | Planned |
 | LTX-006 (single title-page command) | `\typeout` field list, grep log | L5 | maintainer | Planned |
@@ -114,7 +114,7 @@ Every requirement maps to at least one check. `—` means no check exists yet, w
 | TYP-001 (entry point, reject unknown keys) | Compile a fixture; a bad key must error | L3 | maintainer | Planned |
 | TYP-002 (offline build) | Build with network disabled | L3 | maintainer | Planned |
 | TYP-003 (dependency licence record) | Manual against the dependency table | L7 | reviewer | Open |
-| TYP-004 (fixtures separate) | Same archive assertion as LTX-003 | L1 | maintainer | **Failing — not enforced** |
+| TYP-004 (fixtures separate) | Same archive assertion as LTX-003 | L1 | maintainer | **Fixed — enforced in `release.yml`** |
 | TYP-005 (minimum version tested) | Matrix run on the declared minimum | L3 | maintainer | Blocked: undecided |
 | TYP-006 (font substitution documented) | grep the docs for the substitution note | L1 | maintainer | Planned |
 | TYP-007 (independent counters) | `typst query` the three counters | L5 | maintainer | Planned, feasible |
@@ -156,12 +156,12 @@ Every requirement maps to at least one check. `—` means no check exists yet, w
 | Status | Count |
 | --- | --- |
 | Passing | 9 |
-| **Failing** | 2 (LTX-003, TYP-004: archives still ship fixtures) |
+| Passing (newly) | 2 — LTX-003 and TYP-004, closed by the archive fix |
 | Planned | 18 |
 | Open / manual | 12 |
 | Blocked | 1 (TYP-005, minimum version undecided) |
 
-The two failing items are the same defect seen from two sides and need one fix in the release workflow, not two.
+The two former failures were one defect seen from two sides: `release.yml` now excludes `main.*` and `tests/` and asserts the exclusion after writing each archive, so a regression fails the release job instead of shipping silently.
 
 ## Representative content and baselines
 
@@ -207,7 +207,7 @@ ADR-8 approved one exception to QA-001: the `smoke` job runs `test-smoke` in par
 No CTAN or Typst registry submission is selected or approved (ADR-12 leaves registry naming undecided). A GitHub tag-release workflow publishes source-only archives for `v*` tags. A tag push is a publication action and does not imply licence clearance, UMCS approval, or package readiness. Resolve before pushing a tag:
 
 - third-party rule/font/logo provenance and any per-package licence deviation from MIT (ADR-7);
-- supported artifact contents — **currently wrong**, since fixtures and tests ship with the package (LTX-003, TYP-004);
+- supported artifact contents — the archive now excludes fixtures (LTX-003, TYP-004), though the package itself does not exist yet;
 - student-facing and institutional review, plus independent human approval;
 - a clean build, reproducible artifact inventory, checksums, and a rollback/withdrawal procedure.
 
