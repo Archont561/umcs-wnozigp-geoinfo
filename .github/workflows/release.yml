@@ -65,10 +65,26 @@ jobs:
             exit 1
           fi
           mkdir -p dist/release
-          tar --exclude='*/__pycache__' --exclude='*.py[co]' --exclude='*/.pytest_cache' \
+          # Fixtures are not part of the deliverable (QA-009, LTX-003, TYP-004):
+          # the dummy main, the colocated tests and the caches stay out of the archive.
+          tar --exclude='latex/main.*' --exclude='latex/tests' --exclude='latex/tests/*' \
+            --exclude='*/__pycache__' --exclude='*.py[co]' --exclude='*/.pytest_cache' \
             -czf "dist/release/${REPOSITORY_NAME}-latex-${TAG_NAME}.tar.gz" -C packages latex
-          tar --exclude='*/__pycache__' --exclude='*.py[co]' --exclude='*/.pytest_cache' \
+          # Assert the exclusion instead of trusting it.
+          if tar -tzf "dist/release/${REPOSITORY_NAME}-latex-${TAG_NAME}.tar.gz" | grep -Eq '^(latex/main\.|latex/tests/)'; then
+            echo "::error::the latex archive still contains fixtures" >&2
+            exit 1
+          fi
+          # Fixtures are not part of the deliverable (QA-009, LTX-003, TYP-004):
+          # the dummy main, the colocated tests and the caches stay out of the archive.
+          tar --exclude='typst/main.*' --exclude='typst/tests' --exclude='typst/tests/*' \
+            --exclude='*/__pycache__' --exclude='*.py[co]' --exclude='*/.pytest_cache' \
             -czf "dist/release/${REPOSITORY_NAME}-typst-${TAG_NAME}.tar.gz" -C packages typst
+          # Assert the exclusion instead of trusting it.
+          if tar -tzf "dist/release/${REPOSITORY_NAME}-typst-${TAG_NAME}.tar.gz" | grep -Eq '^(typst/main\.|typst/tests/)'; then
+            echo "::error::the typst archive still contains fixtures" >&2
+            exit 1
+          fi
           (
             cd dist/release
             sha256sum *.tar.gz > SHA256SUMS

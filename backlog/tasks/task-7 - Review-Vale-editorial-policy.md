@@ -1,7 +1,7 @@
 ---
 id: TASK-7
 title: "Review Vale preset and editorial policy"
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-11-09 00:00'
 updated_date: '2026-11-09 00:00'
@@ -22,10 +22,10 @@ Review the supplied PLTechnical Vale preset, its rule scope, sample behavior, an
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Confirm the enabled rules and severity threshold with Polish-language reviewers.
-- [ ] #2 Add positive/negative examples for suggestions, unit spacing, code spans, and URLs.
-- [ ] #3 Confirm license/provenance before public redistribution; the supplied archive has no license file.
-- [ ] #4 Document how maintainers override alerts without weakening the project-wide checks silently.
+- [ ] #1 Rules and thresholds are documented and measured (SPEC-EDIT v0.2, ADR-13), but **no Polish-language reviewer has confirmed them**. Owner review under ADR-9 covers the repository, not Polish linguistic judgement, so this stays open.
+- [x] #2 `examples/vale/rule-cases.md` adds all four with stated expected counts, plus a clean control. Verified: 14 findings, and the fixture's own first draft was corrected against the run when it disagreed.
+- [ ] #3 **Open.** Provenance is documented and the position is unchanged: no licence file, MIT does not cover the preset, `.vale/` is not in the release archives. Reuse rights still need the supplier's confirmation (EDIT-004).
+- [x] #4 SPEC-EDIT documents four override methods, names the one that is repository-wide, and ADR-13 requires an ADR for any threshold change.
 <!-- AC:END -->
 
 ## Implementation Plan
@@ -37,5 +37,5 @@ Run the local Vale binary against a reviewed Polish sample, inspect JSON finding
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-Vale `3.26.0` is pinned from Conda in `pixi.toml`. The user-provided `.vale.ini` and five `PLTechnical` rules are installed locally; the root task uses a warning threshold. Review remains open.
+2026-11-21: measured all five rules against the fixtures. Found that UnitSpacing flags `20°C` even though its message calls `°` an exception, and that headings are scanned as sentences (so each phrase yields two findings). Both recorded. Criteria 2 and 4 met; 1 needs a Polish-language reviewer, 3 needs the supplier's rights confirmation.
 <!-- SECTION:NOTES:END -->

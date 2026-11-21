@@ -17,7 +17,7 @@ These are the draft normative specifications for `umcs-wnozigp-geoinfo`, maintai
 | SPEC-LTX | [LaTeX package contract](doc-4%20-%20SPEC-LTX-%E2%80%94-LaTeX-package-contract.md) | Draft v0.2 — API proposed, no engine claimed | M-1 |
 | SPEC-TYP | [Typst package contract](doc-5%20-%20SPEC-TYP-%E2%80%94-Typst-package-contract.md) | Draft v0.2 — package shape proposed, no editor claim | M-1 |
 | SPEC-BIB | [Bibliography and citation behavior](doc-6%20-%20SPEC-BIB-%E2%80%94-Bibliography-and-citation-behavior.md) | Draft v0.2 — repository-owned styles (ADR-12), Biber gap open | M-1 |
-| SPEC-EDIT | [Editorial quality and Vale](doc-7%20-%20SPEC-EDIT-%E2%80%94-Editorial-quality-and-Vale.md) | Draft | M-2 |
+| SPEC-EDIT | [Editorial quality and Vale](doc-7%20-%20SPEC-EDIT-%E2%80%94-Editorial-quality-and-Vale.md) | Draft v0.2 — rules measured, licence open | M-2 |
 | SPEC-QA | [Validation and release gates](doc-8%20-%20SPEC-QA-%E2%80%94-Validation-and-release-gates.md) | Draft v0.2 — 8 check levels, 39-requirement matrix | M-2, M-3, M-4 |
 
 ## Normative status and change control
