@@ -31,7 +31,7 @@ check-tool-versions = "python --version && tasknest --version && chktex --versio
 lint-alint = "alint check"
 lint-toml = "taplo fmt --check pixi.toml pixi-sandbox.toml tasknest.toml .rumdl.toml"
 lint-latex = { cmd = "chktex main.tex", cwd = "packages/latex" }
-lint-typst = { cmd = "typstyle --check main.typ", cwd = "packages/typst" }
+lint-typst = { cmd = "typstyle --check main.typ lib.typ", cwd = "packages/typst" }
 lint-vale = "vale --config=.vale.ini --minAlertLevel=warning README.md CONTRIBUTING.md backlog packages/latex packages/typst"
 check-pixi-lock = "pixi lock --check --offline"
 bun-install = "bun install --frozen-lockfile --ignore-scripts"

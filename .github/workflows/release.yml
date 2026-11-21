@@ -95,6 +95,14 @@ jobs:
             echo "::error::the typst archive is missing its LICENSE" >&2
             exit 1
           fi
+          # The deliverable is lib.typ plus its manifest. Asserting only the
+          # absences would let a broken package ship as an archive of READMEs.
+          for required in typst/lib.typ typst/typst.toml; do
+            if ! tar -tzf "dist/release/${REPOSITORY_NAME}-typst-${TAG_NAME}.tar.gz" | grep -qx "$required"; then
+              echo "::error::the typst archive is missing $required" >&2
+              exit 1
+            fi
+          done
           (
             cd dist/release
             sha256sum *.tar.gz > SHA256SUMS
