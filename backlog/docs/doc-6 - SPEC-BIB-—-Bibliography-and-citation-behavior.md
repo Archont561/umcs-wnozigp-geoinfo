@@ -64,16 +64,17 @@ Verified in the restored sandbox, not assumed:
 
 | Tool | Present | Consequence |
 | --- | --- | --- |
-| `biber` | **No** | BibLaTeX/Biber cannot run in this environment today |
-| `bibtex` | **No** | Classic BibTeX cannot run either |
-| Tectonic | Yes | Embeds support for `tectonic-biber`, but Biber itself is absent from the Pixi environment |
+| `biber` | **No, and not installable** | Not a conda-forge package (no feedstock, no `feedstock-outputs` entry); no `tectonic-biber` release asset exists |
+| `bibtex` (binary) | **No** | No standalone binary, but see the next row |
+| Tectonic 0.17.0 | Yes | **Embeds a full BibTeX engine** (`crates/engine_bibtex`) — `.bst` + `.bib` processing needs no external binary |
+| Sandbox egress | **No** | `conda.anaconda.org` and `prefix.dev` both time out, so no package can be added and re-locked from here |
 | Typst 0.15.1 | Yes | Hayagriva YAML compiles; `#cite` resolves |
 | Custom CSL file | **Yes, loads from disk** | A missing file fails loudly (`file not found`); a present file changes rendered output |
 | Built-in CSL styles | Yes, offline | No network needed |
 
 ## Selected approach
 
-**LaTeX:** BibLaTeX with **Biber**, formatting driven by a **repository-owned `.bbx`/`.cbx` pair** rather than an off-the-shelf style, because no stock style produces `Surname B., 2003. Title.` — they all place the year in parentheses or after a colon.
+**LaTeX:** classic **BibTeX with a repository-owned `.bst`** (ADR-16), run by the engine Tectonic already embeds. Formatting is still repository-owned rather than an off-the-shelf style, because no stock style produces `Surname B., 2003. Title.` — they all place the year in parentheses or after a colon. ADR-12's `.bbx`/`.cbx` choice is withdrawn: it needed Biber, which does not exist here.
 
 **Typst:** Hayagriva YAML with a **repository-owned CSL file**, which is confirmed to load from disk offline.
 
@@ -81,13 +82,13 @@ Verified in the restored sandbox, not assumed:
 
 ## Dependency gap that blocks implementation
 
-Biber is **not in the Pixi environment**. Choosing BibLaTeX/Biber therefore adds a dependency the repository does not currently install, while the release and CI paths must build it. Options, none yet decided:
+The gap is **closed, and the answer is not Biber.** Measured on 2026-11-21, two of the three options previously listed here were wrong:
 
-1. Add `biber` to `pixi.toml` (Conda-forge provides it) and re-lock.
-2. Use Tectonic's bundled Biber support, which still expects a `tectonic-biber` binary that is absent here.
-3. Fall back to classic BibTeX with a hand-written `.bst`, which avoids Biber but constrains field handling and Unicode/diacritics.
+1. ~~Add `biber` to `pixi.toml` (Conda-forge provides it)~~ — **false.** There is no `conda-forge/biber-feedstock`, and `feedstock-outputs` has no `biber` output among its 33,918 entries.
+2. ~~Use Tectonic's `tectonic-biber` integration~~ — **not viable.** Tectonic searches for that binary but no release asset or feedstock produces it; `tectonic -X biber` errors out.
+3. **Fall back to classic BibTeX** — chosen, via the engine Tectonic embeds, so no external binary and no Perl are needed (ADR-16).
 
-This is recorded as open question 1 and as the reason TASK-11 cannot start yet.
+This is no longer a blocker for TASK-11. It is a recorded limitation instead: BibTeX's 8-bit string model and `.bst` language are weaker than BibLaTeX's, so raw UTF-8 Polish diacritics in `.bib` must be **measured** before BIB-003 is claimed.
 
 ## Behaviour to specify (TASK-6 criterion 3)
 
@@ -95,7 +96,7 @@ This is recorded as open question 1 and as the reason TASK-11 cannot start yet.
 | --- | --- | --- |
 | Sorting | Alphabetical by surname, Polish collation | `SRC-034` |
 | Language | Polish labels and connector words; English thesis still renders a Polish abstract | `SRC-037` |
-| Diacritics | Must survive unchanged: `Ż`, `ń`, `ó`, `ł`, `ś`, `ż`, `ź`, `ć`, `ą`, `ę` | implied by `SRC-035` examples |
+| Diacritics | Must survive unchanged: `Ż`, `ń`, `ó`, `ł`, `ś`, `ż`, `ź`, `ć`, `ą`, `ę`. **Mechanism differs by format:** Typst/Hayagriva takes UTF-8 directly; BibTeX's 8-bit model may require `{\'z}`-style escapes, so this is a test to run, not an assumption | implied by `SRC-035`; ADR-16 |
 | Web sources | Separate *netografia* with access date; in-text truncation to five URL elements | `SRC-033`, `SRC-034` |
 | Missing year | Print `b.r.` (bez roku), per SRC-048 — not `(n.d.)` or `[b.m.]` | `SRC-048` |
 | Other missing fields | Omit the element; do not invent a placeholder the source does not use | maintainer choice, recorded |
@@ -115,11 +116,11 @@ This is recorded as open question 1 and as the reason TASK-11 cannot start yet.
 
 ## Decision gate
 
-Approved in principle by ADR-12 (repository-owned styles, one per format). Implementation is blocked on the Biber dependency decision above. No bibliography commands or dependencies have been added to either `main` file, and neither format's main imports a style yet.
+Approved by ADR-12 (repository-owned styles, one per format) and amended by ADR-16 (BibTeX on Tectonic's embedded engine for LaTeX; Hayagriva plus CSL for Typst). **TASK-11 is no longer blocked by a dependency**: it is blocked only on writing the `.bst` and the CSL and measuring their output. No bibliography commands have been added to either `main` file, and neither main imports a style yet.
 
 ## Open questions
 
-1. **Biber availability.** Add it to Pixi, rely on Tectonic's integration, or fall back to BibTeX?
+1. **Biber availability — answered, no.** Not installable here; ADR-16 selects BibTeX-on-Tectonic.
 2. **Style fidelity.** A hand-written `.bbx`/`.cbx` and a hand-written CSL are both non-trivial. Which subset of entry types is in the first release — book, chapter, article, web only?
 3. ***Netografia* separation.** Is a separate authored section acceptable, or must web sources appear in the single alphabetical list with access dates?
 4. **CSL rendering.** Custom CSL files load, but whether Typst's CSL engine reproduces the exact punctuation of the faculty examples is **unverified**; a rendered comparison is required before claiming compliance.

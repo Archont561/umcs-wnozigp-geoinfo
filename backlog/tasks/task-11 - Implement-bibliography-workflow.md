@@ -24,7 +24,7 @@ Implement bibliography support only after a citation workflow is selected and it
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Follow the accepted SPEC-BIB decision and accepted source requirements.
+- [ ] #1 Follow the accepted SPEC-BIB decision and accepted source requirements. The processor is fixed by ADR-16: `.bst` through Tectonic's embedded BibTeX for LaTeX, CSL for Typst.
 - [ ] #2 Test Polish names/diacritics, sorting, incomplete references, and representative source types.
 - [ ] #3 Record external tools, package versions, and editor/engine constraints.
 - [ ] #4 Provide no fake or unlicensed example records.
@@ -39,5 +39,5 @@ Complete TASK-6 first. Implement separate LaTeX and Typst workflows with fixture
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-No `.bib` database, Biber command, or Typst bibliography package has been selected or implemented.
+No `.bib` database, `.bst`, CSL file or bibliography command has been implemented. The processor question is closed: Biber is not installable here, so ADR-16 selects BibTeX on Tectonic's embedded engine. This task no longer waits on a dependency, only on writing the style files and measuring their output.
 <!-- SECTION:NOTES:END -->

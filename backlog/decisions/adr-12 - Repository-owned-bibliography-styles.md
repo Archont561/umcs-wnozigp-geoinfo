@@ -28,5 +28,5 @@ Testing in this repository confirmed the tooling: Hayagriva YAML compiles under 
 
 - A future student gets the faculty's format without knowing CSL or BibLaTeX, because the style ships with the package.
 - The repository now owns two non-trivial style files that must be maintained, and a faculty rule change means editing both.
-- BibLaTeX/Biber is the LaTeX choice, but **Biber is not currently installed** in the Pixi environment. Implementation of TASK-11 is blocked until the dependency question in SPEC-BIB is answered.
+- ~~BibLaTeX/Biber is the LaTeX choice~~ — **superseded by ADR-16.** Point 1's LaTeX half (a `.bbx`/`.cbx` pair) is replaced by a repository-owned `.bst` run through Tectonic's embedded BibTeX engine, because Biber cannot be installed here. The Typst half stands: Hayagriva plus a repository-owned CSL file.
 - Cross-format rendering differences are expected and must be documented rather than papered over; a test that compares the two outputs would encode a false guarantee.
