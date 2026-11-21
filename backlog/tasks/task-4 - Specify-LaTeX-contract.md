@@ -1,7 +1,7 @@
 ---
 id: TASK-4
 title: "Specify the LaTeX package contract"
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-11-09 00:00'
 updated_date: '2026-11-09 00:00'
@@ -23,10 +23,10 @@ Define the future LaTeX API, supported engines/editors, dependencies, build inst
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Complete SPEC-LTX with approved API and input/output behavior.
-- [ ] #2 Decide the engine matrix and test plan; distinguish Tectonic smoke builds from native engine support.
-- [ ] #3 State Overleaf/editor compatibility precisely and support it with tests, or make no compatibility claim.
-- [ ] #4 Define future fixture/package separation and runtime dependency policy.
+- [ ] #1 SPEC-LTX v0.2 defines the API (options, `\umcssetup` keys, structure commands, floats, equations) with source citations per element. **Not approved**: the API is proposed, Annexes 1-5 are unobtained, and the owner has not signed it off.
+- [x] #2 Engine matrix recorded: Tectonic is smoke-only evidence (ADR-8), XeLaTeX/LuaLaTeX/pdfLaTeX are candidates with their Times-font constraints stated, and no engine is claimed as supported. The test plan is defined in SPEC-LTX and owned by TASK-8.
+- [x] #3 No editor compatibility claim is made, per ADR-11. SPEC-LTX records the conditions a future Overleaf test must satisfy before any claim.
+- [x] #4 SPEC-LTX defines the path table separating `umcswnozigp.cls` from fixtures and tests, plus a five-point dependency policy with an anticipated dependency table. It also records that the release archive does not yet enforce the separation.
 <!-- AC:END -->
 
 ## Implementation Plan
@@ -38,5 +38,5 @@ Use verified requirements from TASK-1 and scope from TASK-2; consult TASK-6 for 
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-SPEC-LTX is drafted. `packages/latex/main.tex` is only a compileable dummy. No class/style API exists.
+2026-11-21: SPEC-LTX rewritten to v0.2 against the verified SRC-001..SRC-044 evidence, with ADR-11 choosing a document class and declining engine/editor claims. `packages/latex/main.tex` is still only a compileable dummy and no class exists. Criteria 2-4 met; criterion 1 awaits approval and the normative annexes.
 <!-- SECTION:NOTES:END -->
