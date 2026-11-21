@@ -1,0 +1,7 @@
+extends: occurrence
+message: "Długie zdanie: rozważ podział. Próg 30 tokenów jest ustawieniem tego profilu, nie normą poprawności. Zachowaj warunki i zastrzeżenia."
+level: suggestion
+scope: sentence
+max: 30
+# Regex token count is approximate, not a Polish linguistic word count.
+token: '[\p{L}\p{N}]+(?:[–-][\p{L}\p{N}]+)*'

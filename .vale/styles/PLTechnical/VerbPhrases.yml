@@ -1,0 +1,7 @@
+extends: existence
+message: "Rozważ czasownik zamiast konstrukcji '%s', np. 'oceniono' zamiast 'dokonano oceny'. Zachowaj czas, aspekt i informację o wykonawcy."
+level: suggestion
+ignorecase: true
+tokens:
+  - 'dokona(?:no|ć|liśmy|łem|ła|ł) (?:oceny|analizy|porównania|pomiaru|sprawdzenia|wyboru)'
+  - 'przeprowadzo(?:no|na) została (?:analiza|ocena|weryfikacja)'

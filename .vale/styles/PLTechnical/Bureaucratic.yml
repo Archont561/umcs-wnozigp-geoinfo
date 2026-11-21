@@ -1,0 +1,12 @@
+extends: existence
+message: "Rozważ uproszczenie '%s'. Zastąp konkretną informacją lub usuń zbędny wstęp; nie zmieniaj znaczenia."
+level: suggestion
+ignorecase: true
+tokens:
+  - 'w dniu dzisiejszym'
+  - 'na chwilę obecną'
+  - 'na dzień dzisiejszy'
+  - 'niniejszym informuj(?:ę|emy)'
+  - 'w przedmiotowej sprawie'
+  - 'należy nadmienić,? że'
+  - 'warto w tym miejscu zaznaczyć,? że'
