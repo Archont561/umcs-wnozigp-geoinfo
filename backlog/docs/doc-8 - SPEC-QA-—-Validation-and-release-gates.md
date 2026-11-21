@@ -74,7 +74,8 @@ Typst compiles text to paths in SVG, so PDF *text* extraction is unreliable for 
 | XeLaTeX | Candidate | **No** | not installed |
 | LuaLaTeX | Candidate | **No** | not installed |
 | pdfLaTeX | Candidate | **No** | not installed |
-| Biber / BibTeX | Required by ADR-12 LaTeX path | **No** | absent from the environment |
+| Biber | Superseded LaTeX path (ADR-12) | **No, and unavailable** | no conda-forge package, no `tectonic-biber` asset; ADR-16 removes the requirement |
+| BibTeX (embedded) | Required by ADR-16 LaTeX path | **Yes, in Tectonic** | ships inside Tectonic 0.17.0; a `.bst` build has not yet been run |
 | Overleaf | No claim | **No** | never tested (ADR-11) |
 
 A platform or engine appears as "supported" only after a run is recorded against it. Declaring five platforms in `pixi.toml` is not evidence of four of them working.
