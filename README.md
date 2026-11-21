@@ -1,1 +1,122 @@
-# umcs-wnozigp-geoinfo
+<!--
+  Generated file - edit templates/README.md.j2, not README.md.
+  Regenerate with: pixi run docs-write
+  Verify with:     pixi run docs-check
+-->
+
+# UMCS WNoZiGP Geoinformatics thesis templates
+
+Specification-first repository for an **unofficial** LaTeX and Typst thesis-template project aimed at UMCS WNoZiGP Geoinformatics.
+
+> **Scaffold status.** `packages/latex/main.tex` and `packages/typst/main.typ` are dummy mains used only to verify lint/build tooling. They are not usable thesis templates, are not institution-approved, and do not claim compliance with current requirements. The specification documents are drafts; publication and licensing decisions remain open.
+
+## Specifications
+
+Draft product requirements are maintained as Backlog.md `specification` document entries under `backlog/docs/`. The [specification index](backlog/docs/doc-1%20-%20Specifications-index.md) summarizes their status and milestone coverage.
+
+- [`SPEC-SCOPE`](backlog/docs/doc-2%20-%20SPEC-SCOPE-%E2%80%94-Project-scope-and-boundaries.md) — audience, goals, non-goals, and project boundaries.
+- [`SPEC-SOURCE`](backlog/docs/doc-3%20-%20SPEC-SOURCE-%E2%80%94-Source-evidence-and-requirements-traceability.md) — source evidence and a requirements traceability matrix.
+- [`SPEC-LTX`](backlog/docs/doc-4%20-%20SPEC-LTX-%E2%80%94-LaTeX-package-contract.md) — proposed LaTeX package contract and engine questions.
+- [`SPEC-TYP`](backlog/docs/doc-5%20-%20SPEC-TYP-%E2%80%94-Typst-package-contract.md) — proposed Typst package contract and compiler questions.
+- [`SPEC-BIB`](backlog/docs/doc-6%20-%20SPEC-BIB-%E2%80%94-Bibliography-and-citation-behavior.md) — bibliography and citation requirements to decide.
+- [`SPEC-EDIT`](backlog/docs/doc-7%20-%20SPEC-EDIT-%E2%80%94-Editorial-quality-and-Vale.md) — Polish technical prose checks and the attached PLTechnical Vale preset.
+- [`SPEC-QA`](backlog/docs/doc-8%20-%20SPEC-QA-%E2%80%94-Validation-and-release-gates.md) — test levels, assets, license, release, and approval boundaries.
+
+Every specification is marked Draft until reviewed. Do not turn a source observation into a requirement without recording its evidence and applicability.
+
+## Backlog and decisions
+
+`backlog/milestones/` groups tasks into delivery phases. Each milestone lists its task IDs; tasks record dependencies and acceptance criteria. `backlog/decisions/` contains durable decisions. Specifications state the intended product behavior; they do not approve publication or institutional compliance.
+
+Use `pixi run --locked backlog-list` to view open work after setup, and `pixi run --locked bunx --no-install backlog doc list --plain` to list document entries. The initial scaffold task is marked complete; requirements and implementation tasks remain open.
+
+## Vale and the PLTechnical preset
+
+Vale is installed from Conda by the root Pixi environment (`vale==3.26.0`). The user-provided PLTechnical rules are stored locally in `.vale.ini` and `.vale/styles/PLTechnical/`; no `vale sync` or remote style download is required. Install the environment, then run:
+
+```sh
+pixi install --locked
+pixi run --locked vale --version
+pixi run --locked lint-vale
+```
+
+The lint task uses a warning-level threshold so advisory suggestions do not fail the gate. To inspect intentional findings in the included Polish sample, run `pixi run --locked vale-demo`; `--no-exit` is used only for this report. The preset is a conservative aid, not a Polish grammar checker or an academic compliance validator. Its provenance and limitations are specified in [`SPEC-EDIT`](backlog/docs/doc-7%20-%20SPEC-EDIT-%E2%80%94-Editorial-quality-and-Vale.md). Review license/redistribution terms for the supplied preset before any public release.
+
+## Maintainer checks
+
+Requires Pixi `0.84.1` in the declared range. From the repository root:
+
+```sh
+pixi install --locked
+pixi run --locked bun-install
+pixi run --locked check
+```
+
+The check gate validates repository structure, TOML, Tasknest discovery, generated docs, rumdl Markdown lint, Vale warnings, and source linters. It does **not** compile either dummy main. rumdl is installed from Conda by the root Pixi environment; configuration lives in `.rumdl.toml`.
+
+Run the Markdown linter directly with:
+
+```sh
+pixi run --locked lint-markdown
+```
+
+Build the smoke PDFs manually:
+
+```sh
+pixi run --locked build-latex   # dist/latex/main.pdf, via Tectonic
+pixi run --locked build-typst   # dist/typst/main.pdf
+pixi run --locked build         # both PDFs
+```
+
+`test-smoke` runs one BDD test colocated under each format package. Each test builds its own dummy main through the matching Tasknest task and checks that the resulting PDF under `dist/` has a valid header and trailer:
+
+```sh
+pixi run --locked test-smoke
+```
+
+A first Tectonic build may download TeX resources. Smoke builds and BDD checks do not establish font compliance, visual equivalence, engine/editor compatibility, or academic correctness. They are not part of any release offering.
+
+## Pixi sandbox
+
+The global `pixi-sandbox` CLI (0.9.0 from the Prefix channel `archont561/archont561`) is separate from the repository's locked Pixi environment. `pixi-sandbox.toml` defines one `developer` bundle: the `default` environment for `linux-64`, published to `sandbox/developer-linux-64`.
+
+The generated `.github/workflows/publish-sandbox.yml` publishes that transport branch on matching `main` changes (the sandbox config, Pixi manifests/locks, or Bun manifests) and on a manual dispatch with `upgrade` left blank. Its weekly schedule runs the tool self-update job; it does not publish a sandbox branch. The workflow is read-only by default; the publish job gets `contents: write` to update the branch, and the self-update job gets the additional write scopes needed to open an upgrade pull request.
+
+No relock workflow is active. Pixi Sandbox 0.9.0 generates a PR lock-repair workflow pinned to Pixi 0.81.0, which conflicts with this project's `requires-pixi` range. Its generator-owned template is kept at `scripts/relock-workflow.yml.template`, outside `.github/workflows/`, so GitHub does not run it. The publisher is pinned to Pixi 0.84.1 via the sandbox config.
+
+`scripts/restore.sh` fetches the matching sandbox branch if needed and restores it into the current checkout. It uses `--force`; by default, restore may replace the target environment and register `pixi` and `pixi-sandbox` launchers in the user PATH. Set `PIXI_SANDBOX_USER_TOOLS=skip` to prevent those user-level changes. The first fetch requires access to the repository's `origin` remote.
+
+The workflows and launcher are generated by Pixi Sandbox. Check for drift with the same generation paths used here:
+
+```sh
+pixi-sandbox init --project-root . --github-workflow-path .github/workflows/publish-sandbox.yml --relock-workflow-path scripts/relock-workflow.yml.template --relock-ci-workflow ci.yml --script-path scripts/restore.sh --config pixi-sandbox.toml --check
+pixi-sandbox plan --config pixi-sandbox.toml --json
+```
+
+## Repository layout
+
+```text
+backlog/docs/             draft product specifications as Backlog document entries
+backlog/                  document registry, milestones, tasks, and decisions
+packages/latex/main.tex   compileable dummy main; no package implementation
+packages/typst/main.typ   compileable dummy main; no package implementation
+.vale/styles/PLTechnical/ local Vale rules from the supplied preset
+examples/vale/            short prose fixture for preset review
+packages/latex/tests/     LaTeX smoke/BDD tests
+packages/typst/tests/     Typst smoke/BDD tests
+tools/                    Tasknest build and generated-doc tools
+pixi.toml / pixi.lock     root Conda/PyPI environment and lock
+pixi-sandbox.toml         Linux-64 offline sandbox bundle plan
+scripts/restore.sh                 generated Pixi Sandbox restore launcher
+scripts/relock-workflow.yml.template inactive generator template (not a workflow)
+.github/workflows/                CI, sandbox publishing, and source-release workflows
+package.json / bun.lock   Backlog.md CLI and lock
+```
+
+## GitHub source releases
+
+`.github/workflows/release.yml` runs for tags matching `v*`. It first runs the repository checks and package-local smoke tests, then creates or updates a GitHub Release with separate LaTeX and Typst source archives plus a `SHA256SUMS` manifest. Each archive contains only its package directory, including its README and colocated tests; generated PDFs and local caches are not included. Pushing a matching tag is a publication action. This workflow has not been run as part of the local scaffold work.
+
+## Publication boundary
+
+No CTAN or Typst Universe submission is configured or approved. The GitHub workflow distributes only the current source directories; it does not make the dummy mains usable templates, establish UMCS approval, or claim compliance. Review licensing, ownership and source provenance, package contracts, and human release gates before pushing a release tag or describing the contents as an approved academic format.
