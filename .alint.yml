@@ -94,3 +94,17 @@ rules:
     path: "$['devDependencies']['markdownlint-cli2']"
     level: error
     message: "Do not keep markdownlint-cli2 in the Bun toolchain; use rumdl from Conda."
+
+  - id: release-tooling-lives-in-tools
+    kind: file_exists
+    paths:
+      - tools/release/archive.py
+      - tools/release/publish.py
+    level: error
+    message: "Keep release archive and publish logic in tools/release/, not inline in the workflow."
+
+  - id: release-tool-tests-exist
+    kind: file_exists
+    paths: tests/release/test_release_tools.py
+    level: error
+    message: "Keep unit tests for the release tools beside the rest of the repository tests."
