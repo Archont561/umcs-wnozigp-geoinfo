@@ -1,7 +1,7 @@
 ---
 id: TASK-1
 title: "Verify official guidance and cohort applicability"
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-09 00:00'
 updated_date: '2026-11-09 00:00'
@@ -22,9 +22,9 @@ Verify which official UMCS/WNoZiGP rules apply to the intended student cohort. T
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 Identify the current official source set and record edition/date, URL, and section locators. Pages cannot be cited: the PDF is an unpaginated HTML extraction; the reason is recorded in SPEC-SOURCE.
-- [x] #2 Recorded the source's own applicability wording (thesis preparation from 2025/26 summer semester; examination rules from 2025/26 winter session) and left the 2026/27 cohort window as an open owner question.
+- [x] #2 Recorded the source's own applicability wording and settled the target: the next academic period (2026/27), using 2025/26 as a proxy, per ADR-10.
 - [x] #3 Extracted 44 entries (SRC-001..SRC-044) into SPEC-SOURCE, each typed mandatory, recommendation, source-silent, or open.
-- [ ] #4 Conflicts and superseded editions are recorded (the 2017 edition's divergent 25 MB and 6-week figures are explicitly not used). **Reviewers are still unassigned**, so this criterion stays open.
+- [x] #4 Conflicts and superseded editions are recorded (the 2017 edition's divergent 25 MB and 6-week figures are explicitly not used). Reviewer recorded: repository owner as sole reviewer, per ADR-9.
 <!-- AC:END -->
 
 ## Implementation Plan
