@@ -30,7 +30,7 @@
 - Keep a single root Pixi manifest and lock. Do not add package-local environments.
 - Keep format-specific tests under `packages/<name>/tests/`; `pixi run --locked test-smoke` runs both package-local BDD tests.
 - Use Tasknest for per-format smoke builds and the root build aggregate. Preserve `dist/latex/main.pdf` and `dist/typst/main.pdf` paths.
-- Manual builds and `test-smoke` stay outside the root `check` gate. The `v*` GitHub release workflow runs the checks and smoke tests before packaging source archives; it does not publish PDFs.
+- Manual builds and `test-smoke` stay outside the root `check` gate; CI runs `test-smoke` in its own `smoke` job instead. The `v*` GitHub release workflow runs the checks and smoke tests before packaging source archives; it does not publish PDFs.
 - Pixi Sandbox is a separate global tool, not a project dependency. Its reviewed bundle plan is `pixi-sandbox.toml` (`default` environment, `linux-64` only), with Pixi pinned to `0.84.1` for the publisher.
 - The active `.github/workflows/publish-sandbox.yml` and `scripts/restore.sh` are generated. Keep the relock template at `scripts/relock-workflow.yml.template`, outside `.github/workflows/`; no PR-triggered lock-repair workflow is enabled because Pixi Sandbox 0.9.0 generates it with an incompatible `0.81.0` pin.
 - To regenerate/check, preserve these custom paths: `pixi-sandbox init --project-root . --github-workflow-path .github/workflows/publish-sandbox.yml --relock-workflow-path scripts/relock-workflow.yml.template --relock-ci-workflow ci.yml --script-path scripts/restore.sh --config pixi-sandbox.toml` (add `--check` to verify without writing). Also validate with `pixi-sandbox plan --config pixi-sandbox.toml --json`.
