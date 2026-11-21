@@ -40,10 +40,12 @@ Then write chapters with `= Chapter` and `== Section`. Illustrations use the wra
   #table(columns: 2, [a], [b])
 ]
 
-#photograph(caption: [Punkt kontrolny], source: after("dokumentacja własna"))[
-  #image("photo.jpg")
+#listing(caption: [Obliczenie wskaźnika], source: own-work("skrypt własny"))[
+  #raw(lang: "python", block: true, "delta = (a2 - a1) / a1 * 100")
 ]
 ```
+
+A photograph is inserted as an ordinary figure: `figure-with-source(caption: [...], source: [...])[#image("photo.jpg")]`.
 
 ## API
 
@@ -53,24 +55,26 @@ Then write chapters with `= Chapter` and `== Section`. Illustrations use the wra
 | `coverpage(meta, cycle)` | title page, no page number | SRC-012, SRC-045 |
 | `contents()` | contents from the same counter as the body | SRC-013 |
 | `abstract(body, limit: 4000)` | abstract with the character limit enforced | SRC-014 |
-| `figure-with-source(body, source:, caption:)` | figure, caption below, source below | SRC-018–SRC-022 |
+| `figure-with-source(body, source:, caption:)` | figure, caption below, source below. Photographs use this too | SRC-018–SRC-022 |
 | `table-with-source(body, source:, caption:)` | table, title above, source below | SRC-015, SRC-016 |
-| `photograph(body, source:, caption:)` | third illustration class, own counter | SRC-021, SRC-023 |
-| `list-of-figures()` / `list-of-tables()` / `list-of-photographs()` | per-type indexes | SRC-023 |
-| `appendix(body, title:)` / `appendices(body)` / `list-of-annexes()` | annex pages and their list | SRC-024, SRC-025 |
+| `listing(body, source:, caption:)` | listing, caption above, source below, own counter | SRC-021, SRC-023 |
+| `list-of-figures()` / `list-of-tables()` / `list-of-listings()` | per-type indexes | SRC-023 |
+| `appendix(body, title:)` / `appendices(body)` | annex pages, "Załącznik N" in the page header | SRC-024 |
+| `annex-ref(n)` | renders "Załącznik n"; not a live cross-reference | SRC-024 |
 | `equation-numbered(body)` | equation numbered `(2.1.)` per chapter | SRC-026 |
 | `front-matter-heading(text)` | unnumbered heading that does not consume a chapter number | SRC-010 |
 | `own-work(base)` / `after(work)` | attribution strings | SRC-020, SRC-047 |
 
 `cycle` is required and has no default; unknown `meta` keys are rejected with an error naming the key; `title-en` is required.
 
-## Three deliberate limitations
+## Four deliberate limitations
 
 These are decisions, not oversights. Each is recorded in the specification.
 
-1. **The font is a substitute.** Times New Roman is proprietary and cannot ship here (TYP-006). The default is `"New Computer Modern"`. Set `font: "Times New Roman"` if you have it installed; **no build of this package claims SRC-002 compliance on the substitute.**
-2. **Some spacing is approximated.** The source says "two line spaces" and "1.5 lines above", not a measurable unit. Those values are marked `APPROXIMATED` in `lib.typ` and are the first things to check against a printed copy of the guidelines.
-3. **The annex label is not in the page margin.** SRC-024 says "top right of the page"; the package right-aligns the label at the top of the text block instead, because a nested `page()` container interacted badly with the heading show rule in Typst 0.15.1.
+1. **Photographs have no separate class, and two indexes are absent.** The faculty document names three illustration classes — tables, figures and *photographs* — and asks for a "Spis fotografii" and a "Spis załączników". By owner decision (ADR-17) the package keeps **Rycina, Tabela and Listing**, folds photographs into figures, and ships **neither** of those two indexes. A student comparing this output with the guidelines will find those three differences.
+2. **The font is a substitute.** Times New Roman is proprietary and cannot ship here (TYP-006). The default is `"New Computer Modern"`. Set `font: "Times New Roman"` if you have it installed; **no build of this package claims SRC-002 compliance on the substitute.**
+3. **Some spacing is approximated.** The source says "two line spaces" and "1.5 lines above", not a measurable unit. Those values are marked `APPROXIMATED` in `lib.typ` and are the first things to check against a printed copy of the guidelines.
+4. **`annex-ref` is not a live reference.** Typst refuses to reference a label applied to a multi-element function result, and every single-element wrapper either floated the content or rejected the page break. `annex-ref(n)` therefore renders the right text but does not renumber itself when annexes are reordered. The "Załącznik N" label itself is in the page header, top right, as the faculty asks.
 
 ## Not published
 

@@ -34,13 +34,12 @@
     abstract: "Streszczenie",
     tables: "Spis tabel",
     figures: "Spis rycin",
-    photographs: "Spis fotografii",
-    annexes: "Spis załączników",
+    listings: "Spis listingów",
     annex: "Załącznik",
     appendix-heading: "Załączniki",
     table: "Tabela",
     figure: "Rycina",
-    photograph: "Fotografia",
+    listing: "Listing",
     bibliography: "Bibliografia",
     cycle-name: "magisterska",
   ),
@@ -59,13 +58,12 @@
     abstract: "Abstract",
     tables: "List of tables",
     figures: "List of figures",
-    photographs: "List of photographs",
-    annexes: "List of annexes",
+    listings: "List of listings",
     annex: "Annex",
     appendix-heading: "Annexes",
     table: "Table",
     figure: "Figure",
-    photograph: "Photograph",
+    listing: "Listing",
     bibliography: "Bibliography",
     cycle-name: "master's thesis",
   ),
@@ -176,12 +174,21 @@
 // ---------------------------------------------------------------------------
 // Counters (SRC-021, SRC-021 → TYP-007)
 //
-// Three independent sequences, one per illustration class. A `figure` element
-// cannot do this alone: Typst numbers figures per `kind`, but it puts every
-// caption in one place and offers no caption-position control, while the
-// faculty requires the caption above for tables and below for figures and
-// photographs (SRC-015 vs SRC-018). Explicit counters make all three
-// sequences queryable, which is what turns SRC-021 into an assertion.
+// Three independent sequences, one per registered class: tables, figures and
+// listings. A `figure` element cannot do this alone: Typst numbers figures per
+// `kind`, but it puts every caption in one place and offers no
+// caption-position control, while the caption belongs above for tables and
+// listings and below for figures (SRC-015 vs SRC-018). Explicit counters make
+// every sequence queryable, which is what turns a numbering rule into a
+// tested assertion.
+//
+// OWNER DECISION (2026-11-21), diverges from SRC-021: the faculty document
+// names three classes — tables, figures and *photographs* — each with its own
+// index. The repository owner directed that photographs be folded into figures
+// and that "Spis fotografii" not exist, so a photograph is inserted as an
+// ordinary `figure-with-source` and numbered with the figures. Listings are
+// added as the third class in their place. This is a deliberate deviation, not
+// an oversight, and it must be re-checked if the faculty text is revised.
 // ---------------------------------------------------------------------------
 
 #let kind-counter(kind) = counter("umcs-illustration-" + kind)
@@ -366,29 +373,36 @@
   source-line("tabela", source)
 }
 
-/// A photograph: its own counter (SRC-021, SRC-023), caption below (SRC-018).
-#let photograph(
+/// A listing: source code or a data extract, numbered with its own sequence.
+///
+/// The caption sits above the block, the way a table's does, because a listing
+/// is read top-down and the reader needs to know what it is before the code.
+#let listing(
   body,
   source: none,
   caption: none,
 ) = {
-  kind-counter("fotografia").step()
+  kind-counter("listing").step()
   context {
-    let n = kind-counter("fotografia").get().first()
-    let s = strings.pl.photograph
-    register-illustration("fotografia", n, caption)
+    let n = kind-counter("listing").get().first()
+    let s = strings.pl.listing
+    register-illustration("listing", n, caption)
     block(breakable: false)[
-      #block(width: 100%)[#body]
       #if caption != none {
-        block(above: 0.5em, below: 0cm)[
+        block(above: 1.5em, below: 0.5em)[
           #set text(size: 10pt, weight: "bold")
           #set par(first-line-indent: 0pt, leading: 0.65em)
           #s #n: #caption
         ]
       }
+      #block(width: 100%)[
+        #set text(size: 9pt)
+        #set par(first-line-indent: 0pt, leading: 0.65em)
+        #body
+      ]
     ]
   }
-  source-line("fotografia", source)
+  source-line("listing", source)
 }
 
 /// Attribution strings from SRC-020 / SRC-047, so the punctuation is not a
@@ -428,10 +442,10 @@
   strings.pl.figures,
   strings.pl.figure,
 )
-#let list-of-photographs() = illustration-index(
-  "fotografia",
-  strings.pl.photographs,
-  strings.pl.photograph,
+#let list-of-listings() = illustration-index(
+  "listing",
+  strings.pl.listings,
+  strings.pl.listing,
 )
 
 // ---------------------------------------------------------------------------
@@ -440,24 +454,29 @@
 
 #let appendix-counter = counter("umcs-appendix")
 
-/// One annex: "Załącznik N" at the top right (SRC-024).
+/// A reference to an annex, e.g. `#annex-ref(2)` renders "Załącznik 2".
 ///
-/// APPROXIMATED — "top right of the page" is rendered as right-aligned text
-/// at the top of the text block rather than in the page margin. A running
-/// header was tried and rejected: a `page()` container nested inside the
-/// show rule's context silently dropped its body in Typst 0.15.1, which is a
-/// worse defect than a margin offset.
+/// Typst's `ref` cannot target a label applied to a function that returns
+/// several elements ("cannot reference sequence"), and every attempt to wrap
+/// the annex in a single element either floated the content or refused the
+/// page break inside a container. A counter-driven helper is the honest
+/// workaround: it renders the right text and is testable, at the cost of not
+/// being a live `ref` that renumbers itself. Recorded as a limitation.
+#let annex-ref(n) = [#strings.pl.annex #n]
+
+/// One annex. The label sits in the page header, top right (SRC-024), and the
+/// annex starts on a new page.
 #let appendix(title: none, body) = {
   appendix-counter.step()
-  // A level-1 `heading` cannot be used here: its show rule starts a new page,
-  // and a page break emitted inside a `page()` container produced a blank
-  // page carrying only the running header. The annex title is therefore a
-  // styled block, and the page break happens before the container.
+  // The header is applied by a page break followed by a `page()` wrapper. That
+  // combination previously emitted a blank page when a level-1 heading was
+  // also inside the wrapper, so the annex title is a styled block, not a
+  // heading, and the break happens outside the container.
   pagebreak(weak: true)
   context [
     #let n = appendix-counter.get().first()
     #let label = strings.pl.annex
-    #page(header: align(right)[#text(size: 12pt)[#label #n]])[
+    #page(header: align(right)[#text(size: 10pt)[#label #n]])[
       #metadata((n: n, title: title)) <umcs-appendix>
       #if title != none {
         block(above: 0cm, below: 2em)[
@@ -475,24 +494,6 @@
 #let appendices(body) = {
   appendix-counter.update(0)
   body
-}
-
-/// The annex list, with titles (SRC-025). Omitted when there are no annexes.
-#let list-of-annexes() = {
-  context {
-    let items = query(<umcs-appendix>)
-    if items.len() == 0 {
-      return
-    }
-    heading(level: 1, outlined: false)[#strings.pl.annexes]
-    for item in items {
-      par(first-line-indent: 0pt)[
-        #strings.pl.annex #item.value.n
-        #if item.value.title != none [: #item.value.title]
-        #box(width: 1fr, align(right)[#str(item.location().page())])
-      ]
-    }
-  }
 }
 
 // ---------------------------------------------------------------------------
@@ -628,7 +629,7 @@
       font: font,
       tables: kind-counter("tabela").get().first(),
       figures: kind-counter("rycina").get().first(),
-      photographs: kind-counter("fotografia").get().first(),
+      listings: kind-counter("listing").get().first(),
       abstracts: query(<umcs-abstract>).len(),
       annexes: appendix-counter.get().first(),
     )) <umcs-counters>]

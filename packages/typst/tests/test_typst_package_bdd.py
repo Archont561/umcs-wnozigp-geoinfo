@@ -162,12 +162,22 @@ def pdf_is_well_formed(compiled: subprocess.CompletedProcess[str]) -> None:
     assert "warning" not in compiled.stderr.lower(), compiled.stderr
 
 
-@then("the counters report one table, one figure and one photograph")
+@then("the counters report one table, two figures and one listing")
 def counters_are_independent(counters: dict) -> None:
-    # SRC-021: each illustration class is numbered independently.
+    # Each registered class is numbered independently. The photograph on the
+    # demo page is deliberately a figure: the owner removed the separate
+    # photograph class (recorded in SPEC-TYP as a deviation from SRC-021).
     assert counters["tables"] == 1
-    assert counters["figures"] == 1
-    assert counters["photographs"] == 1
+    assert counters["figures"] == 2
+    assert counters["listings"] == 1
+
+
+@then("no photograph counter is reported")
+def no_photograph_counter(counters: dict) -> None:
+    # The owner directed that photographs be folded into figures and that
+    # "Spis fotografii" not exist, so the counter must be gone rather than
+    # merely unused.
+    assert "photographs" not in counters, counters
 
 
 @then("every illustration reports a source and a caption")

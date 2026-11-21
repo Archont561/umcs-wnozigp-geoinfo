@@ -86,13 +86,27 @@ Zestawienie zbiorów danych przedstawia tabela poniżej.
   )
 ]
 
-Fotografia poniżej dokumentuje punkt kontrolny.
+Zdjęcie dokumentuje punkt kontrolny. Jest wstawione jako rycina, bo osobna
+klasa „fotografia” i jej spis nie są w tej wersji przewidziane.
 
-#photograph(
+#figure-with-source(
   caption: [Punkt kontrolny nr 3 w dolinie Bystrzycy],
   source: after("dokumentacja własna"),
 )[
   #rect(width: 100%, height: 3cm, stroke: 0.5pt, fill: luma(245))
+]
+
+Listing poniżej pokazuje fragment kodu obliczeniowego.
+
+#listing(
+  caption: [Obliczenie wskaźnika zmiany pokrycia],
+  source: own-work("skrypt własny"),
+)[
+  #raw(
+    lang: "python",
+    block: true,
+    "delta = (a2 - a1) / a1 * 100",
+  )
 ]
 
 #heading(level: 2)[Modelowanie]
@@ -115,15 +129,15 @@ Dyskusja odnosi wyniki do literatury przedmiotu.
 
 #list-of-figures()
 #list-of-tables()
-#list-of-photographs()
+#list-of-listings()
 
 #appendices[
   #appendix(title: [Wykaz punktów kontrolnych])[
     Wszystkie punkty kontrolne zestawiono w tabeli w wersji elektronicznej.
   ]
   #appendix(title: [Skrypt obliczeniowy])[
-    Kod źródłowy obliczeń wskaźnika zmiany.
+    Kod źródłowy obliczeń wskaźnika zmiany. Patrz listing 1.
   ]
 ]
 
-#list-of-annexes()
+Odwołanie do załączników: #annex-ref(1) i #annex-ref(2).
