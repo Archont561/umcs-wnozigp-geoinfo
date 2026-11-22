@@ -67,14 +67,15 @@ A photograph is inserted as an ordinary figure: `figure-with-source(caption: [..
 
 `cycle` is required and has no default; unknown `meta` keys are rejected with an error naming the key; `title-en` is required.
 
-## Four deliberate limitations
+## Five deliberate limitations
 
 These are decisions, not oversights. Each is recorded in the specification.
 
 1. **Photographs have no separate class, and two indexes are absent.** The faculty document names three illustration classes — tables, figures and *photographs* — and asks for a "Spis fotografii" and a "Spis załączników". By owner decision (ADR-17) the package keeps **Rycina, Tabela and Listing**, folds photographs into figures, and ships **neither** of those two indexes. A student comparing this output with the guidelines will find those three differences.
 2. **The font is a substitute.** Times New Roman is proprietary and cannot ship here (TYP-006). The default is `"New Computer Modern"`. Set `font: "Times New Roman"` if you have it installed; **no build of this package claims SRC-002 compliance on the substitute.**
 3. **Some spacing is approximated.** The source says "two line spaces" and "1.5 lines above", not a measurable unit. Those values are marked `APPROXIMATED` in `lib.typ` and are the first things to check against a printed copy of the guidelines.
-4. **`annex-ref` is not a live reference.** Typst refuses to reference a label applied to a multi-element function result, and every single-element wrapper either floated the content or rejected the page break. `annex-ref(n)` therefore renders the right text but does not renumber itself when annexes are reordered. The "Załącznik N" label itself is in the page header, top right, as the faculty asks.
+4. **Illustrations are centred, and the guidelines do not say so.** The faculty document does not state any alignment for figures, tables or listings, so centring the object and its caption is a maintainer decision (see SPEC-TYP). A listing's code stays left aligned, because centring it would misalign the code's own indentation. If your supervisor's printed copy shows illustrations flush left, that one line in `lib.typ` is what to change.
+5. **`annex-ref` is not a live reference.** Typst refuses to reference a label applied to a multi-element function result, and every single-element wrapper either floated the content or rejected the page break. `annex-ref(n)` therefore renders the right text but does not renumber itself when annexes are reordered. The "Załącznik N" label itself is in the page header, top right, as the faculty asks.
 
 ## Not published
 
