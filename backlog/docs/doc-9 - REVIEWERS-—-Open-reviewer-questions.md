@@ -136,24 +136,31 @@ and is the only party known to have it.
 ### V-1. Confirm the licence reading for the PLTechnical rules
 
 **Updated 2026-11-22.** The maintainer states the preset is custom-made from
-the Polish plain-language guidance published on `gov.pl`. That changes this from
-an unknown into a reading that needs one confirmation.
+the Polish plain-language guidance published on `gov.pl`, and that **there is no
+second source**: the gov.pl pages are the preset's only external basis. That
+changes this from an unknown into a reading that needs one confirmation, and it
+removes the last part of the question — there is nothing else to check.
 
 The reading: the gov.pl pages state no licence, and they do not need to,
 because what was taken from them is *guidance* — advice about how to write.
-Advice is not copyrightable subject matter; only its expression is. The six YAML
+Advice is not copyrightable subject matter; only its expression is. The five rule
 files hold tokens and regular expressions written for this repository, with
 rule messages in our own words, so the files are original work and MIT can
 cover them. The guidance is cited as the basis, in SPEC-EDIT.
 
 > Does that reading hold — were the rule tokens and messages written for this
-> preset rather than copied from a gov.pl document or a third party's
-> checklist — and is there any source other than the gov.pl pages that the
-> preset draws on?
+> preset rather than transcribed from a gov.pl document or a third party's
+> checklist?
 
 **Why it matters:** if the tokens were transcribed from someone else's list,
 the MIT grant over them is wrong and the rules need rewriting or removing. The
 answer is one sentence and closes the question; it does not need a lawyer.
+The source question is already answered, so an answer of "no, they were written
+here" closes this entirely.
+
+One rule is unaffected by the answer either way: `UnitSpacing` derives from
+nothing outside this repository (SPEC-EDIT), so it is unambiguously original —
+and it is the only rule that can fail CI.
 **Closes:** TASK-3 criterion 2, ADR-4's fifth decision.
 
 Note that this is now the *only* file in the repository whose terms rest on a

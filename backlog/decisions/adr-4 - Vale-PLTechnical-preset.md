@@ -21,10 +21,12 @@ The user supplied `Vale_PLTechnical_preset.zip.txt` and specified that Vale must
 ## Provenance (recorded 2026-11-22)
 
 The maintainer states that the preset is custom-made from the Polish
-plain-language guidance on `gov.pl`. SPEC-EDIT records the five pages, and one
-finding matters for this decision: **none of them states a licence**, and none
-needs to, because what the preset takes from them is advice about writing rather
-than text. The rule tokens and messages are original to this repository.
+plain-language guidance on `gov.pl`, and that **there is no second source** —
+those pages are its only external basis. SPEC-EDIT records the five pages, and
+one finding matters for this decision: **none of them states a licence**, and
+none needs to, because what the preset takes from them is advice about writing
+rather than text. The rule tokens and messages are original to this
+repository.
 
 That underwrites decision 5 — the rules can ship under MIT — but it is a
 maintainer's reading rather than a licence text, so it is put to the author for

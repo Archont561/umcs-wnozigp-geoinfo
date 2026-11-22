@@ -23,7 +23,9 @@ Resolve ownership and licensing for repository code, the supplied PLTechnical Va
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 Identify the copyright holder and select a repository/package license explicitly. MIT for the repository (ADR-7) and for each package (ADR-14), holder Archont561.
-- [ ] #2 Review the supplied Vale preset's redistribution rights; its archive has no license file.
+- [x] #2 Reviewed: the preset is maintainer-written from the gov.pl plain-language guidance, which is its only
+  source (SPEC-EDIT). That guidance states no licence and needs none — the rules take advice, not text —
+  so the five files are MIT with the repository. Recorded as a maintainer's reading, confirmed as V-1 (ADR-4).
 - [ ] #3 Record provenance and license notices for every future non-original asset.
 - [x] #4 Add a LICENSE only after the owner approves the choice; do not infer MIT or another license. Added after explicit owner instruction.
 <!-- AC:END -->
@@ -37,10 +39,12 @@ Review the attachment and source references, collect ownership facts, and record
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-The two open criteria are questions addressed to parties who are not in this
-repository, and they are written out in [REVIEWERS](../docs/doc-9%20-%20REVIEWERS-%E2%80%94-Open-reviewer-questions.md): **U-1** (may the UMCS logotype be
-redistributed) and **V-1** (the PLTechnical preset's terms). Neither can be
-closed from inside.
+Criterion 2 closed on the maintainer's statement that the gov.pl pages are the
+preset's only source; V-1 in [REVIEWERS](../docs/doc-9%20-%20REVIEWERS-%E2%80%94-Open-reviewer-questions.md)
+now asks only for that statement to be confirmed. Criterion 3 is the remaining
+open one and it is a question to a party outside this repository: **U-1** (may
+the UMCS logotype be redistributed). It no longer blocks a release, because
+ADR-19 removed the bundled mark.
 
-ADR-14 mirrors MIT into each package so standalone tarballs carry terms. ADR-7 selects MIT for original repository code and documentation, superseding ADR-5's licensing point. ADR-4 records the Vale provisioning choice and still gates public redistribution of the supplied rules, which MIT does not cover.
+ADR-14 mirrors MIT into each package so standalone tarballs carry terms. ADR-7 selects MIT for original repository code and documentation, superseding ADR-5's licensing point. ADR-4 records the Vale provisioning choice. Its gate on redistributing the supplied rules is lifted: with the gov.pl pages as the preset's only source and no text taken from them, MIT covers the five rule files (V-1).
 <!-- SECTION:NOTES:END -->
