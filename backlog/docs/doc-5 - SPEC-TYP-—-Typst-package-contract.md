@@ -67,7 +67,7 @@ Using a dictionary rather than positional arguments keeps the API stable as fiel
 | Function / element | Behaviour | Source |
 | --- | --- | --- |
 | `umcs-thesis(...)` | The `show` rule: geometry, fonts, headings, page numbering | `SRC-001`–`SRC-008` |
-| `coverpage(...)` | Normalised title page, no page number | `SRC-008`, `SRC-012` |
+| `coverpage(...)` | Title page in the faculty sample's measured form: logo, sans heading, vertical rule, indented fields; no page number | `SRC-008`, `SRC-012`, `SRC-045` |
 | `abstract(body)` | Abstract with the 4000-character limit enforced | `SRC-014` |
 | `figure-with-source(...)` | Figure plus required source line below | `SRC-018`, `SRC-019`, `SRC-022` |
 | `table-with-source(...)` | Table title above, source below | `SRC-015`, `SRC-016` |
@@ -75,6 +75,8 @@ Using a dictionary rather than positional arguments keeps the API stable as fiel
 | `appendices(body)` | `Załącznik N`, top right | `SRC-024` |
 | `list-of-listings` | Separate listing index | `SRC-023` |
 | `annex-ref(n)` | Renders "Załącznik n"; not a live `ref`, see limitations | `SRC-024` |
+
+The title page reproduces the sample's form rather than only its field list: the geometry (logo position, the 1 pt rule, the 13.5 pt indent, the city and year below the rule) is measured from the sample the faculty supplies and pinned by `packages/typst/tests/test_typst_titlepage_bdd.py`. The logo it embeds is third-party artwork with unresolved redistribution terms, recorded in ADR-18 and in `packages/typst/assets/README.md`.
 
 Horizontal placement is not in the source: SPEC-SOURCE states no alignment rule for illustrations, and the only alignment it fixes is `SRC-016`'s left-aligned table source line. The package therefore centres the object and its caption inside the text column as a maintainer decision, and keeps the source line left aligned. A `listing`'s code stays left aligned too, because centring a code block would misalign its own indentation; only its caption is centred. The decision is pinned by `packages/typst/tests/test_typst_centring_bdd.py`, which renders a page and measures the ink rather than trusting the source.
 

@@ -67,15 +67,30 @@ A photograph is inserted as an ordinary figure: `figure-with-source(caption: [..
 
 `cycle` is required and has no default; unknown `meta` keys are rejected with an error naming the key; `title-en` is required.
 
-## Five deliberate limitations
+## Six deliberate limitations
 
 These are decisions, not oversights. Each is recorded in the specification.
 
 1. **Photographs have no separate class, and two indexes are absent.** The faculty document names three illustration classes — tables, figures and *photographs* — and asks for a "Spis fotografii" and a "Spis załączników". By owner decision (ADR-17) the package keeps **Rycina, Tabela and Listing**, folds photographs into figures, and ships **neither** of those two indexes. A student comparing this output with the guidelines will find those three differences.
 2. **The font is a substitute.** Times New Roman is proprietary and cannot ship here (TYP-006). The default is `"New Computer Modern"`. Set `font: "Times New Roman"` if you have it installed; **no build of this package claims SRC-002 compliance on the substitute.**
 3. **Some spacing is approximated.** The source says "two line spaces" and "1.5 lines above", not a measurable unit. Those values are marked `APPROXIMATED` in `lib.typ` and are the first things to check against a printed copy of the guidelines.
-4. **Illustrations are centred, and the guidelines do not say so.** The faculty document does not state any alignment for figures, tables or listings, so centring the object and its caption is a maintainer decision (see SPEC-TYP). A listing's code stays left aligned, because centring it would misalign the code's own indentation. If your supervisor's printed copy shows illustrations flush left, that one line in `lib.typ` is what to change.
-5. **`annex-ref` is not a live reference.** Typst refuses to reference a label applied to a multi-element function result, and every single-element wrapper either floated the content or rejected the page break. `annex-ref(n)` therefore renders the right text but does not renumber itself when annexes are reordered. The "Załącznik N" label itself is in the page header, top right, as the faculty asks.
+4. **The title page is a copy of one sample.** The faculty supplies a single sample page, so the reproduction is exact for that page and says nothing about how the form should adapt when a field is longer than the sample's placeholder. A long title wraps where the sample's does not.
+5. **Illustrations are centred, and the guidelines do not say so.** The faculty document does not state any alignment for figures, tables or listings, so centring the object and its caption is a maintainer decision (see SPEC-TYP). A listing's code stays left aligned, because centring it would misalign the code's own indentation. If your supervisor's printed copy shows illustrations flush left, that one line in `lib.typ` is what to change.
+6. **`annex-ref` is not a live reference.** Typst refuses to reference a label applied to a multi-element function result, and every single-element wrapper either floated the content or rejected the page break. `annex-ref(n)` therefore renders the right text but does not renumber itself when annexes are reordered. The "Załącznik N" label itself is in the page header, top right, as the faculty asks.
+
+## The title page
+
+The title page reproduces the form of the sample the faculty supplies, not
+just its list of fields: the logo in the corner, the university and faculty in
+a sans face, a vertical rule beside the fields, and the city and year below it.
+The geometry is measured from that sample and pinned by a test that renders the
+page and measures the ink, so it cannot drift silently.
+
+Two things about it are worth knowing. The heading is set in **Ubuntu**, which
+the root Pixi environment ships; a build outside that environment needs
+`TYPST_FONT_PATHS` pointing at a directory with Ubuntu or DejaVu Sans, or the
+cover falls back to a serif. And the embedded logo is **third-party artwork** —
+see `assets/README.md` — which the package's MIT licence does not cover.
 
 ## Not published
 
@@ -97,8 +112,10 @@ pixi run --locked lint-typst     # typstyle --check
 pixi run --locked test-smoke     # 8 BDD scenarios for this package
 ```
 
-`main.typ` is a **fixture**, not part of the deliverable: it is excluded from the release tarball, which ships only `lib.typ`, `typst.toml`, `README.md` and `LICENSE`.
+`main.typ` is a **fixture**, not part of the deliverable: it is excluded from the release tarball, which ships only `lib.typ`, `typst.toml`, `assets/`, `README.md` and `LICENSE`.
 
 ## Licence
 
-This package is released under the [MIT License](LICENSE), copyright (c) 2026 Archont561 — the same terms as the repository root (ADR-14). It covers this directory's original work only. It does not extend to institutional marks, fonts, or third-party dependencies, and none are bundled.
+This package is released under the [MIT License](LICENSE), copyright (c) 2026 Archont561 — the same terms as the repository root (ADR-14). It covers this directory's original work only.
+
+One third-party file **is** bundled: `assets/umcs-logo.png`, the university's logo, needed because the title page reproduces the faculty's sample form. The MIT grant does not extend to it, and its redistribution terms are unresolved — see `assets/README.md` and ADR-18.
