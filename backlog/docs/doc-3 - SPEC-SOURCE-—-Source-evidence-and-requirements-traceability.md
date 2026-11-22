@@ -90,6 +90,32 @@ Legend: **M** mandatory as written; **R** recommendation ("zalecany", "powinien"
 | SRC-044 | Binding / cover | — | S | The source describes electronic submission only; any binding or cover requirement is not stated | Recorded (silent) |
 | SRC-049 | Institutional mark on the title page | UMCS *Księga Identyfikacji Wizualnej* (2024, v02), §4.7 *Praca dyplomowa – strona tytułowa*; §2.1.1 *Loga wydziałów* | — | The university's identity book is the university's authority on the mark, not the faculty's on the thesis. It defines the logotype's construction and variants (§Logo manual), sets a 45 mm minimum print width, lists misuse — including distorting the mark and placing the university and faculty logos side by side — and carries a title-page application at §4.7. `packages/typst/assets/` uses the **shortened** logotype in university grey. Not a faculty requirement; recorded as the provenance and usage rules for a bundled asset, and as a separate source from SRC-045. | Recorded — provenance only, no new template behavior |
 
+## Conflicts within the source
+
+**SRC-002 sets targets that its own typography cannot reach.** The requirement
+names Times New Roman 12 pt, 1.5 line spacing, and then "~30 lines per page at
+~70 characters". SRC-003 fixes the margins at 2.5 cm on all four sides, which
+leaves a 160 × 247 mm text area. Measured against Times metrics:
+
+| Quantity | Source target | What SRC-002 + SRC-003 actually give |
+| --- | --- | --- |
+| Characters per line | ~70 | **~91** — Times at 12 pt advances ~4.95 pt per character, and 453.5 pt ÷ 4.95 pt = 91.5 |
+| Lines per page | ~30 | **~39** — 1.5 spacing at 12 pt is 18 pt = 6.35 mm, and 247 mm ÷ 6.35 mm = 38.9 |
+
+Hitting ~70 characters would need a face about **31 % wider than Times**, and
+~30 lines would need ~1.94× leading, i.e. more than "1.5". Neither is available
+without contradicting the face, the size, or the margins — all of which the
+source states more precisely than the approximations it hedges with "~".
+
+**Consequence, recorded rather than resolved.** The 12 pt, 1.5 spacing and the
+2.5 cm margins are treated as the normative instructions, and the ~30/~70
+figures as a description of the page the author had in mind. A build that makes
+**either** approximation exact must break a stated rule, so the package keeps
+the rules and records the resulting ~91 × ~39 in SPEC-TYP and TASK-10. The
+alternative reading — shrink the margins to widen nothing, since narrower
+margins *increase* characters per line — is not merely unattractive but
+arithmetically backwards, and was rejected on that basis.
+
 ## Evidence rules
 
 1. Prefer the current official faculty/university document over secondary summaries.

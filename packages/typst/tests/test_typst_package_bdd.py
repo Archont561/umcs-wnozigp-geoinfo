@@ -314,3 +314,25 @@ def characters_per_line_is_about_92(line: dict) -> None:
         "changed, confirm SRC-002's ~70-character target is still as close as "
         "it was and update this number deliberately"
     )
+
+
+#: Lines per page, from the same arithmetic as the line length. SRC-002 asks
+#: for ~30; 12 pt at 1.5 spacing is 18 pt, and SRC-003's 2.5 cm margins leave
+#: 247 mm of height, so ~39 is what the rules produce.
+LINES_PER_PAGE = 39
+
+#: The text area's height in points: A4 less the 2.5 cm margins.
+TEXT_HEIGHT_PT = (297 - 50) / 10 / 2.54 * 72
+
+
+@then("a page holds about 39 lines")
+def lines_per_page_is_about_39(line: dict) -> None:
+    # 1.5 spacing over a 12 pt body, the two figures SRC-002 states precisely.
+    leading = 12 * 1.5
+    lines = TEXT_HEIGHT_PT / leading
+    assert abs(lines - LINES_PER_PAGE) <= 2, (
+        f"a page holds {lines:.1f} lines at 12 pt and 1.5 spacing, not the "
+        f"pinned {LINES_PER_PAGE}; if the size, leading or margins changed, "
+        "re-derive both this and the line length from SPEC-SOURCE's conflict "
+        "table rather than adjusting one of them"
+    )
