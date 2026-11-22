@@ -7,26 +7,28 @@ created_date: '2026-11-22 16:35'
 
 ## REVIEWERS — Open reviewer questions
 
-**Status:** Living document
-**Version:** 0.1
+**Status:** Living document (one question answered, five open)
+**Version:** 0.2
 **Related tasks:** TASK-1, TASK-3, TASK-7, TASK-13
 **Milestones:** M-0, M-2, M-4
 
 ## Purpose
 
-Four things block work in this repository not because nobody has done them but
+Five things block work in this repository not because nobody has done them but
 because nobody outside it has answered a question. This document is where those
-questions live, so they are asked rather than remembered.
+questions live, so they are asked rather than remembered. A sixth question, V-1,
+was answered on 2026-11-22 and is kept below as a record rather than a request.
 
-They come in three kinds, and the difference matters:
+They come in two kinds, and the difference matters:
 
 - **Questions to the faculty** decide what the template should do. Until they
   are answered, the package follows the source's prose and records the gap
   (SPEC-SOURCE's conflicts section).
 - **Questions to the university** decide whether an asset may ship. The logo is
   the only one; the fonts are already clear.
-- **Questions to the preset's author** decide whether a dependency may ship.
-  The Vale rules are the only one.
+
+A third kind — questions to the author of a dependency — applied only to the
+Vale rules, and those were settled from inside: see *Answered* below.
 
 Nothing here is a request to change this repository's code. Each is a question
 whose answer changes a decision that is currently recorded as open, and each
@@ -128,44 +130,45 @@ Note that the file the package used to ship was a re-encoding of the sample's
 embedded copy, so "use the official file" is itself an answer worth having.
 **Closes:** TASK-3 criterion 3, ADR-18's open question, if the answer is yes.
 
-## To the author of the Vale preset
+## Answered
 
-Address: the repository owner, who supplied `Vale_PLTechnical_preset.zip.txt`
-and is the only party known to have it.
+### V-1. The licence reading for the PLTechnical rules — answered 2026-11-22
 
-### V-1. Confirm the licence reading for the PLTechnical rules
+The question was whether the five rule files could ship under MIT, given an
+archive that arrived with no licence file and no provenance note.
 
-**Updated 2026-11-22.** The maintainer states the preset is custom-made from
-the Polish plain-language guidance published on `gov.pl`, and that **there is no
-second source**: the gov.pl pages are the preset's only external basis. That
-changes this from an unknown into a reading that needs one confirmation, and it
-removes the last part of the question — there is nothing else to check.
+**The answer, from the author:** the rules were written by the repository owner
+from the `gov.pl` plain-language guidance, and there is no other source. That
+settles both halves of what was asked — the tokens were not transcribed from a
+third party's checklist, and there is nothing else to check.
 
-The reading: the gov.pl pages state no licence, and they do not need to,
-because what was taken from them is *guidance* — advice about how to write.
-Advice is not copyrightable subject matter; only its expression is. The five rule
-files hold tokens and regular expressions written for this repository, with
-rule messages in our own words, so the files are original work and MIT can
-cover them. The guidance is cited as the basis, in SPEC-EDIT.
+**What that establishes.** The rules are original work by the person who holds
+the repository's copyright, and MIT therefore covers them. The gov.pl pages
+state no licence and need none: what the preset takes from them is *advice about
+writing*, not text. Advice is not copyrightable subject matter; only its
+expression is. SPEC-EDIT cites the five pages as the basis and records every
+place the preset departs from them.
 
-> Does that reading hold — were the rule tokens and messages written for this
-> preset rather than transcribed from a gov.pl document or a third party's
-> checklist?
+**What it does not establish.** The author and the maintainer are the same
+person, so this is an assertion of authorship, not third-party review. It is
+stronger than the unknown it replaces — a dated statement on the record, from the
+only party able to make it — but it rests on that statement being true, and no
+check inside this repository could contradict it. That is the same single-person
+limitation ADR-9 records for the rest of the evidence ledger, and it is recorded
+here rather than smoothed over: MIT's validity over these files depends on the
+author's account, not on a licence text.
 
-**Why it matters:** if the tokens were transcribed from someone else's list,
-the MIT grant over them is wrong and the rules need rewriting or removing. The
-answer is one sentence and closes the question; it does not need a lawyer.
-The source question is already answered, so an answer of "no, they were written
-here" closes this entirely.
+**Closes:** TASK-3 criterion 2; ADR-4 decision 5 and its Consequences entry;
+TASK-7 criterion 3. No further action is possible, so the question is retired
+rather than left open awaiting an answer that cannot be bettered.
 
-One rule is unaffected by the answer either way: `UnitSpacing` derives from
-nothing outside this repository (SPEC-EDIT), so it is unambiguously original —
-and it is the only rule that can fail CI.
-**Closes:** TASK-3 criterion 2, ADR-4's fifth decision.
+One rule was never in doubt: `UnitSpacing` derives from nothing outside this
+repository (SPEC-EDIT), so it was original regardless of the answer. It is also
+the only rule at `warning` level, i.e. the only one that can fail CI.
 
-Note that this is now the *only* file in the repository whose terms rest on a
-reading rather than a licence text, because the logotype is no longer bundled
-(ADR-19).
+Note that this was the last dependency in the repository whose terms rested on a
+reading rather than a licence text; ADR-19 had already removed the logotype,
+which was the other.
 
 ## What this document does not do
 

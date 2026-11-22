@@ -8,8 +8,8 @@ updated_date: '2026-11-21 18:37'
 
 ## SPEC-EDIT — Editorial quality and Vale
 
-**Status:** Draft (rules measured, provenance and departures documented, no second source, licence reading recorded for confirmation)  
-**Version:** 0.4  
+**Status:** Draft (rules measured, provenance and departures documented, no second source, licence reading confirmed by the author)  
+**Version:** 0.5  
 **Related decisions:** ADR-4, ADR-5, ADR-9, ADR-13  
 **Related tasks:** TASK-7, TASK-10  
 **Milestone:** M-2
@@ -53,9 +53,14 @@ cited here as the basis for rules that are themselves original to this
 repository: the tokens and regular expressions were written here, the examples
 the guidance gives were not copied wholesale, and the rule messages are our own
 sentences. That is what makes the five rule files MIT-licensable while the
-guidance stays a citation — but it is a maintainer's reading, not a legal
-opinion, and it is why V-1 in the reviewer ledger asks the author to confirm
-it rather than assuming it.
+guidance stays a citation.
+
+**Confirmed by the author, 2026-11-22:** the rules were written by them from this
+guidance. That is an assertion of authorship by the repository's copyright
+holder, not third-party review — the single-person limitation ADR-9 records —
+but the reading carries an explicit statement behind it now. V-1 in the reviewer
+ledger is closed; see its *Answered* section for what the confirmation does and
+does not establish.
 
 ### Where the preset departs from the guidance it cites
 
