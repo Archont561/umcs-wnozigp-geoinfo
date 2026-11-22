@@ -49,11 +49,14 @@ PACKAGE_EXTRAS = {
     "latex": (),
     # The cover page embeds the logo and sets its fields in a vendored face, so
     # a tarball without either compiles to a headerless page typeset in the
-    # wrong serif rather than failing loudly.
+    # wrong serif rather than failing loudly. Each third-party asset travels
+    # with its terms, because a consumer who receives the tarball receives the
+    # mark and must be told whose it is.
     "typst": (
         "lib.typ",
         "typst.toml",
         "assets/umcs-logo.png",
+        "assets/UMCS-LOGO-NOTICE.md",
         "assets/fonts/TeXGyreTermes-Regular.otf",
         "assets/fonts/LICENSE-GUST.txt",
     ),

@@ -3,13 +3,13 @@ id: doc-3
 title: SPEC-SOURCE — Source evidence and requirements traceability
 type: specification
 created_date: '2026-11-21 18:33'
-updated_date: '2026-11-21 20:11'
+updated_date: '2026-11-22 16:20'
 ---
 
 ## SPEC-SOURCE — Source evidence and requirements traceability
 
 **Status:** Draft (evidence recorded; reviewed by the repository owner under ADR-9)  
-**Version:** 0.3  
+**Version:** 0.4  
 **Related task:** TASK-1  
 **Milestone:** M-0
 
@@ -88,6 +88,7 @@ Legend: **M** mandatory as written; **R** recommendation ("zalecany", "powinien"
 | SRC-047 | Illustration source-string forms | Opracowanie materiału ilustracyjnego, pt. 2 | M | Own work: `(opracowanie własne na podstawie: <source>)`; copied: `(według: <source>)`. Source lines sit below the object and before any footnote. | Recorded |
 | SRC-048 | Bibliography: no year of publication | Sporządzanie bibliografii, pt. 7 | M | When the year is unknown the entry reads `b.r.` (bez roku), e.g. `Lubelszczyzna zaprasza, b.r., Wschodni Bank Cukrownictwa, Lublin.` Long titles are truncated with an ellipsis. | Recorded |
 | SRC-044 | Binding / cover | — | S | The source describes electronic submission only; any binding or cover requirement is not stated | Recorded (silent) |
+| SRC-049 | Institutional mark on the title page | UMCS *Księga Identyfikacji Wizualnej* (2024, v02), §4.7 *Praca dyplomowa – strona tytułowa*; §2.1.1 *Loga wydziałów* | — | The university's identity book is the university's authority on the mark, not the faculty's on the thesis. It defines the logotype's construction and variants (§Logo manual), sets a 45 mm minimum print width, lists misuse — including distorting the mark and placing the university and faculty logos side by side — and carries a title-page application at §4.7. `packages/typst/assets/` uses the **shortened** logotype in university grey. Not a faculty requirement; recorded as the provenance and usage rules for a bundled asset, and as a separate source from SRC-045. | Recorded — provenance only, no new template behavior |
 
 ## Evidence rules
 
@@ -105,4 +106,4 @@ Legend: **M** mandatory as written; **R** recommendation ("zalecany", "powinien"
 
 ## Required task output
 
-TASK-1's evidence work is complete: the source set, applicability window, 48-record matrix, conflicts, and reviewer questions are recorded. The applicability answer is conditional (ADR-10) and the review is single-person (ADR-9). A 2026-11-21 review of the embedded samples upgraded SRC-041 from unobtained to partly located and added SRC-045..SRC-048. SRC-039 is recorded but deliberately not pursued (ADR-15): the source delegates AI conditions to a faculty policy this repository does not track, so the template stays silent on AI-use compliance.
+TASK-1's evidence work is complete: the source set, applicability window, 49-record matrix, conflicts, and reviewer questions are recorded. The applicability answer is conditional (ADR-10) and the review is single-person (ADR-9). A 2026-11-21 review of the embedded samples upgraded SRC-041 from unobtained to partly located and added SRC-045..SRC-048. SRC-049 records the university's identity book as the authority for the bundled logo asset, which is provenance rather than a faculty requirement: SRC-045 governs the page's form, SRC-049 governs the mark on it. SRC-039 is recorded but deliberately not pursued (ADR-15): the source delegates AI conditions to a faculty policy this repository does not track, so the template stays silent on AI-use compliance.

@@ -71,6 +71,7 @@ def test_required_entries_include_licence_and_declared_extras() -> None:
         "typst/lib.typ",
         "typst/typst.toml",
         "typst/assets/umcs-logo.png",
+        "typst/assets/UMCS-LOGO-NOTICE.md",
         "typst/assets/fonts/TeXGyreTermes-Regular.otf",
         "typst/assets/fonts/LICENSE-GUST.txt",
     )
@@ -108,6 +109,8 @@ def test_built_archives_exclude_fixtures_and_keep_the_deliverable(
     assert "typst/typst.toml" in typst_entries
     assert "typst/LICENSE" in typst_entries
     assert "typst/assets/umcs-logo.png" in typst_entries
+    # The mark ships with the statement of whose it is, not only with the file.
+    assert "typst/assets/UMCS-LOGO-NOTICE.md" in typst_entries
     assert "typst/assets/fonts/TeXGyreTermes-Regular.otf" in typst_entries
     assert "typst/assets/fonts/LICENSE-GUST.txt" in typst_entries
     assert not any(entry.startswith("typst/tests/") for entry in typst_entries)
@@ -165,3 +168,25 @@ def test_command_updates_when_present() -> None:
     # An update must not re-create the release or regenerate its notes.
     assert "--verify-tag" not in command
     assert "--generate-notes" not in command
+
+
+def test_the_logo_notice_names_the_rightsholder() -> None:
+    """The bundled mark must say whose it is, in the same directory.
+
+    Attribution is a claim that can rot: the image can outlive the sentence
+    that identifies it. This ties the notice to the university and to the
+    identity book, so replacing the image with an unattributed copy fails here
+    rather than in a release review nobody performs.
+    """
+    package = Path(__file__).resolve().parents[2] / "packages" / "typst"
+    notice = (package / "assets" / "UMCS-LOGO-NOTICE.md").read_text(encoding="utf-8")
+    lower = notice.lower()
+
+    assert "Uniwersytet Marii Curie-Skłodowskiej w Lublinie" in notice
+    assert "rights reserved by the university" in lower
+    assert "not** covered by the mit licence" in lower
+    # The notice must point at the rules, not merely at the owner.
+    assert "księga identyfikacji wizualnej" in lower
+    assert "umcs.pl" in lower
+    # And at the asset it describes, which is how a reader finds it.
+    assert "`umcs-logo.png`" in notice

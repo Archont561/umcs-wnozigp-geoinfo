@@ -2,30 +2,58 @@
 
 ## `umcs-logo.png`
 
-The university's eagle-and-wordmark logo, placed on the title page.
+**The UMCS logotype** — the official mark of Uniwersytet Marii
+Curie-Skłodowskiej w Lublinie (Maria Curie-Skłodowska University, Lublin,
+Poland) — placed on the title page as the faculty's sample requires.
+
+| | |
+| --- | --- |
+| Rightsholder | Uniwersytet Marii Curie-Skłodowskiej w Lublinie, Pl. M. Curie-Skłodowskiej 5, 20-031 Lublin |
+| Mark | the **shortened** logotype (`wersja skrócona`): sygnet, dividing rule, `UMCS` wordmark |
+| Colour | university grey, 70 % black tint (`#4D4D4D`) — the book's monochrome variant |
+| Official download | <https://www.umcs.pl/pl/materialy-ogolnouniwersyteckie,20069.htm> → *Logotyp UMCS - skrócony* |
+| Rules | UMCS *Księga Identyfikacji Wizualnej* (2024, v02), <https://phavi.umcs.pl/at/attachments/2024/0726/085914-kiw-umcs-2024v02.pdf> |
 
 **This file is not MIT-licensed.** The MIT grant recorded in ADR-7 covers the
 repository's own code and documentation; it does not extend to this image, and
-nothing here relicenses it. ADR-18 records the decision to include it and the
-open question below. `fonts/` is third-party too, but under a licence that does
-permit redistribution — see below.
+nothing here relicenses it. `fonts/` is third-party too, but under a licence
+that does permit redistribution — see below.
 
-### Provenance
+### What was reproduced, and what was copied
 
-Extracted on 2026-11-21 from the one-page title-page sample the faculty supplies
-with its own guidelines (the sample is cited in SPEC-SOURCE as SRC-045). The
-image is the sample's embedded logo XObject, decoded, cropped to its ink, and
-downsampled by half. Nothing was redrawn, recoloured, or traced.
+Extracted on 2026-11-21 from the one-page title-page sample the faculty
+supplies with its own guidelines (the sample is cited in SPEC-SOURCE as
+SRC-045). The image is the sample's embedded logo XObject, decoded, cropped to
+its ink, and downsampled by half. **Nothing was redrawn, recoloured, or
+traced**: the grey is the mark's own 70 % black tint and the proportions are
+the logotype's.
 
-Dimensions: 409 × 115 px, drawn 245.4 pt wide on the title page.
+Consequently this file is a *re-encoding* of UMCS's artwork, not a copy of the
+university's download archive, and it will not be byte-identical to the PNG or
+SVG in that archive.
 
-### Open question
+Dimensions: 409 × 115 px, drawn 245.4 pt (86.6 mm) wide on the title page. The
+book sets a minimum print width of 45 mm, so the cover is inside the rule, and
+the mark is neither distorted nor rearranged.
 
-The sample embeds the logo so that a student can reproduce the required title
-page; it does not state a redistribution licence. This repository is public and
-its release archives would carry the file, so **redistribution permission is
-unresolved**. Settle it before the first release that includes this asset, or
-replace the image with a placeholder that carries no institutional mark.
+### Licence status
+
+The university publishes the logotype for download and states how it is to be
+used, including a section for a thesis title page (§4.7 *Praca dyplomowa –
+strona tytułowa*). **Publishing a file for download is not a redistribution
+licence**, and the site reserves all rights, so this repository's right to
+redistribute the mark remains **unresolved** — but the question is now routed
+correctly: the rightsholder is UMCS and the contact is Centrum Promocji UMCS,
+which supplies the identity system. Settle it before the first release that
+includes this asset, or replace the image with a placeholder that carries no
+institutional mark.
+
+Two things this asset is *not*. It is the **university** mark, not the
+faculty's: the book treats them as separate marks in one family (§2.1.1) and
+lists "placing the university and faculty logos side by side" as a misuse, so
+if the faculty ever requires its own mark that is a second asset and a second
+decision. And it carries no tagline, because the design in use here is the
+shortened logotype rather than the primary one.
 
 A submission that uses the package is reproducing a form the faculty requires,
 which is a different question from this repository redistributing the artwork.
