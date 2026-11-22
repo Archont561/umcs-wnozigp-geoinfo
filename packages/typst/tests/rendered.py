@@ -13,6 +13,7 @@ here avoids adding Pillow to the environment for one assertion.
 
 from __future__ import annotations
 
+import os
 import struct
 import subprocess
 import zlib
@@ -23,6 +24,20 @@ from pathlib import Path
 # truecolour/greyscale variants cost three lines and make the helper robust to
 # a change of default.
 _CHANNELS = {0: 1, 2: 3, 4: 2, 6: 4}
+
+#: The root Pixi environment ships DejaVu Sans and Ubuntu under its own
+#: ``fonts/`` directory. Typst only looks there when told to, and a render
+#: without them silently substitutes a serif — which changes the title page's
+#: metrics, so every measurement below would be taken from the wrong document.
+FONT_DIR = Path(__file__).resolve().parents[3] / ".pixi" / "envs" / "default" / "fonts"
+
+
+def typst_env() -> dict[str, str]:
+    """Return an environment that lets Typst find the fonts this repo ships."""
+    env = dict(os.environ)
+    if FONT_DIR.is_dir():
+        env["TYPST_FONT_PATHS"] = str(FONT_DIR)
+    return env
 
 
 def decode_png(data: bytes) -> tuple[int, int, int, bytes]:
@@ -118,8 +133,17 @@ class Band:
         return self.right - self.left
 
 
-def ink_bands(data: bytes, threshold: int = 128, gap: int = 6) -> list[Band]:
+def ink_bands(
+    data: bytes,
+    threshold: int = 128,
+    gap: int = 6,
+    exclude_columns: tuple[int, int] | None = None,
+) -> list[Band]:
     """Group the page's inked rows into vertical bands.
+
+    ``exclude_columns`` drops an inclusive pixel range before grouping, which
+    is what makes a page with a full-height rule measurable: the rule would
+    otherwise join every band it crosses into one.
 
     A band is a run of rows with at least one dark pixel, merged across gaps of
     up to ``gap`` blank rows. At 72 ppi a 12 pt line is about 12 rows and the
@@ -134,6 +158,8 @@ def ink_bands(data: bytes, threshold: int = 128, gap: int = 6) -> list[Band]:
         base = y * width * channels
         left = right = None
         for x in range(width):
+            if exclude_columns is not None and exclude_columns[0] <= x <= exclude_columns[1]:
+                continue
             index = base + x * channels
             if min(pixels[index], pixels[index + 1], pixels[index + 2]) < threshold:
                 if left is None:
@@ -177,6 +203,7 @@ def render_bands(
         capture_output=True,
         text=True,
         check=False,
+        env=typst_env(),
     )
     if result.returncode != 0:
         raise AssertionError(result.stderr)

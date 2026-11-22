@@ -16,6 +16,8 @@ from pathlib import Path
 import pytest
 from pytest_bdd import given, scenarios, then, when
 
+from rendered import typst_env
+
 ROOT = Path(__file__).resolve().parents[3]
 PACKAGE = ROOT / "packages" / "typst"
 MAIN = PACKAGE / "main.typ"
@@ -25,12 +27,16 @@ scenarios(str(Path(__file__).parent / "features" / "typst-package.feature"))
 
 
 def run_typst(*args: str, cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
+    # The font path matters: the title page sets its heading in a sans face the
+    # environment ships, and Typst only finds it when told where to look. Without
+    # this the compiler warns and substitutes a serif.
     return subprocess.run(
         ["typst", *args],
         cwd=cwd or PACKAGE,
         capture_output=True,
         text=True,
         check=False,
+        env=typst_env(),
     )
 
 
