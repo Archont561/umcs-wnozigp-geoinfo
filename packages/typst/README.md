@@ -52,7 +52,7 @@ A photograph is inserted as an ordinary figure: `figure-with-source(caption: [..
 | Function | Purpose | Source |
 | --- | --- | --- |
 | `umcs-thesis(cycle:, meta:, language:, font:)` | the `show` rule: page, fonts, spacing, headings | SRC-001–SRC-008 |
-| `coverpage(meta, cycle)` | title page, no page number | SRC-012, SRC-045 |
+| `coverpage(meta, cycle)` | title page, no page number | SRC-012, SRC-045, SRC-049 |
 | `contents()` | contents from the same counter as the body | SRC-013 |
 | `abstract(body, limit: 4000)` | abstract with the character limit enforced | SRC-014 |
 | `figure-with-source(body, source:, caption:)` | figure, caption below, source below. Photographs use this too | SRC-018–SRC-022 |
@@ -128,4 +128,15 @@ pixi run --locked test-smoke     # 8 BDD scenarios for this package
 
 This package is released under the [MIT License](LICENSE), copyright (c) 2026 Archont561 — the same terms as the repository root (ADR-14). It covers this directory's original work only.
 
-Third-party files **are** bundled: `assets/umcs-logo.png`, the university's logo, and `assets/fonts/`, TeX Gyre Termes. The MIT grant extends to neither. The fonts' GUST licence permits redistribution; the logo's terms are unresolved — see `assets/README.md` and ADR-18.
+Third-party files **are** bundled, and the MIT grant extends to neither:
+
+- `assets/fonts/` — TeX Gyre Termes, under the GUST Font Licence, which permits
+  redistribution.
+- `assets/umcs-logo.png` — the **UMCS logotype** (shortened variant, university
+  grey, `#4D4D4D`), the official mark of Uniwersytet Marii
+  Curie-Skłodowskiej w Lublinie and © that university. Its terms of
+  redistribution are unresolved, so a release must settle them. Whose mark it
+  is, which variant it is, and which rules govern it are recorded in
+  `assets/UMCS-LOGO-NOTICE.md`, which ships beside the image; the provenance
+  and the open question are in `assets/README.md` and ADR-18, and the
+  university's own source is SRC-049.

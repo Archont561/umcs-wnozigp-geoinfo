@@ -292,6 +292,11 @@
     #set par(first-line-indent: 0pt, leading: 1.2em, justify: false)
     #set text(size: 11.96pt, font: cover-serif)
 
+    // The UMCS logotype (shortened variant, university grey). It is the
+    // university's mark, not this package's: its attribution, the identity
+    // rules that govern it, and its unresolved redistribution terms are in
+    // assets/UMCS-LOGO-NOTICE.md. 86.6 mm wide, which is inside the identity
+    // book's 45 mm minimum print width.
     #place(top + left, dx: 52pt, dy: 70.5pt, image(
       "assets/umcs-logo.png",
       width: 245.4pt,

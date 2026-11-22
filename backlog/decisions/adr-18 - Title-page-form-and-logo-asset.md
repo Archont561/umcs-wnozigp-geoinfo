@@ -19,7 +19,17 @@ This engages two existing rules. ADR-7 clause 4 says not to infer a licence for 
 
 ## Decision
 
-1. **Add the logo as a package asset.** `packages/typst/assets/umcs-logo.png` is the eagle-and-wordmark image extracted from the faculty's own sample PDF, cropped to its ink, and downsampled. Nothing is redrawn or recoloured.
+1. **Add the university's logotype as a package asset.**
+   `packages/typst/assets/umcs-logo.png` is the UMCS logotype — the shortened
+   variant, sygnet and `UMCS` wordmark in university grey — extracted from the
+   faculty's own sample PDF, cropped to its ink, and downsampled. Nothing is
+   redrawn or recoloured. It is the *university's* mark, not the faculty's, and
+   it is attributed to UMCS as its rightsholder rather than left as an
+   unattributed image: the university publishes the logotype for download and
+   governs its use in the *Księga Identyfikacji Wizualnej* (SRC-049), so a
+   bundled copy needs to say whose it is and which rules apply. Its terms ship
+   beside it as `assets/UMCS-LOGO-NOTICE.md`, which the release archive
+   requires for the same reason it requires the file itself.
 2. **Record provenance and do not relicense it.** The asset is third-party material. The MIT grant from ADR-7 covers the repository's own code and does not extend to this file. Its provenance and the unresolved question of permission to redistribute it are recorded in `packages/typst/assets/README.md` and in the asset's own licence note.
 3. **Copy the geometry from the sample.** The title page is laid out at absolute positions taken from the sample's content stream: logo ink at (52, 70.5) pt, a 1 pt rule at x = 118 pt from 292.9 pt to 709.2 pt below the top edge, heading at x = 119.5 pt, fields indented to x = 132.5 pt, city and year at 736.7 pt. `test_typst_titlepage_bdd.py` measures a render against those numbers.
 4. **Vendor the sample's serif.** `packages/typst/assets/fonts/` carries
@@ -41,7 +51,7 @@ This engages two existing rules. ADR-7 clause 4 says not to infer a licence for 
 
 ## Consequences
 
-- The title page now matches the faculty's sample page for page, but the sample is a *form*, not a licence: the logo's redistribution terms are unresolved and a release must settle them before the asset ships in an archive.
+- The title page now matches the faculty's sample page for page, but the sample is a *form*, not a licence: the logo's redistribution terms are unresolved and a release must settle them before the asset ships in an archive. Attribution is now correct and specific — UMCS, shortened logotype, university grey, identity book 2024 v02 — which is what the question to Centrum Promocji UMCS needs, and it does not itself grant permission: publishing a download is not a redistribution licence and the site reserves all rights.
 - The archive and build task lists now include the asset, because a tarball without it compiles to a title page with no header rather than failing loudly.
 - `TYPST_FONT_PATHS` is now part of the build contract and must list two
   directories: the package's vendored fonts and the environment's. Changing
