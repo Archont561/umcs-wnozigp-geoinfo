@@ -52,7 +52,7 @@ A photograph is inserted as an ordinary figure: `figure-with-source(caption: [..
 | Function | Purpose | Source |
 | --- | --- | --- |
 | `umcs-thesis(cycle:, meta:, language:, font:)` | the `show` rule: page, fonts, spacing, headings | SRC-001–SRC-008 |
-| `coverpage(meta, cycle)` | title page, no page number | SRC-012, SRC-045, SRC-049 |
+| `coverpage(meta, cycle, logo: none)` | title page, no page number; `logo` is a path to your own mark | SRC-012, SRC-045, SRC-049 |
 | `contents()` | contents from the same counter as the body | SRC-013 |
 | `abstract(body, limit: 4000)` | abstract with the character limit enforced | SRC-014 |
 | `figure-with-source(body, source:, caption:)` | figure, caption below, source below. Photographs use this too | SRC-018–SRC-022 |
@@ -97,10 +97,10 @@ Because two font directories are involved, `TYPST_FONT_PATHS` must list both.
 `pixi.toml` and the Typst build tool set it; a build outside Pixi needs it set
 by hand or the cover silently falls back and the geometry drifts.
 
-The embedded logo is **third-party artwork** whose redistribution terms are
-unresolved, and the vendored fonts are third-party too but under a licence that
-permits redistribution — see `assets/README.md`. Neither is covered by the
-package's MIT licence.
+The vendored fonts are third-party material under the GUST Font Licence, which
+permits redistribution — see `assets/README.md`. The package ships **no
+institutional mark**, so the package's MIT licence no longer has an artwork
+exception to carve out.
 
 ## Not published
 
@@ -132,11 +132,9 @@ Third-party files **are** bundled, and the MIT grant extends to neither:
 
 - `assets/fonts/` — TeX Gyre Termes, under the GUST Font Licence, which permits
   redistribution.
-- `assets/umcs-logo.png` — the **UMCS logotype** (shortened variant, university
-  grey, `#4D4D4D`), the official mark of Uniwersytet Marii
-  Curie-Skłodowskiej w Lublinie and © that university. Its terms of
-  redistribution are unresolved, so a release must settle them. Whose mark it
-  is, which variant it is, and which rules govern it are recorded in
-  `assets/UMCS-LOGO-NOTICE.md`, which ships beside the image; the provenance
-  and the open question are in `assets/README.md` and ADR-18, and the
-  university's own source is SRC-049.
+- **No institutional mark is bundled.** The title page draws the university's
+  logotype from a path *you* supply — a copy of the file UMCS publishes — and
+  otherwise a placeholder box of the same size. UMCS does not license its mark
+  for redistribution, so shipping it would be a question this package cannot
+  answer; not shipping it is the answer. Pass `logo: "umcs-logo.png"` to
+  `umcs-thesis` or `coverpage`.

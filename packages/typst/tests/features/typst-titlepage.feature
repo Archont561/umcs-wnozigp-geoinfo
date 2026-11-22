@@ -7,10 +7,10 @@ Feature: The title page reproduces the faculty's sample form
   measure where the ink lands, because the claim is about the page a reader
   gets rather than about the source that produces it.
 
-  Scenario: The logo sits in the top-left corner
+  Scenario: The mark's box sits in the top-left corner
     Given the demo thesis compiled to a PDF
     When I render the title page and measure its bands of ink
-    Then the first band of ink is the logo, at the sample's position
+    Then the first band of ink occupies the mark's box at the sample's position
 
   Scenario: The rule divides the heading from the fields
     Given the demo thesis compiled to a PDF
@@ -41,3 +41,8 @@ Feature: The title page reproduces the faculty's sample form
     Given the demo thesis compiled to a PDF
     When I render the title page and measure its bands of ink
     Then the last band of ink is the city and year, near the bottom
+
+  Scenario: A supplied mark replaces the placeholder
+    Given a document supplying its own mark
+    When I render its title page and measure the bands of ink
+    Then the first band is the supplied image, not the placeholder

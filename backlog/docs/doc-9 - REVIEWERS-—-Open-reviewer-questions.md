@@ -118,11 +118,15 @@ reserves all rights.
 > a particular attribution statement, an unmodified copy of the official file,
 > or a specific colour variant?
 
-**Why it matters:** this is the last blocker on TASK-3's asset criterion and on
-ADR-18's open question, and it gates any release that includes the asset. Note
-that the file currently shipped is a re-encoding, so "use the official file"
-may itself be an answer. **Closes:** TASK-3 criterion 3, ADR-18's open
-question.
+**Status: no longer blocking.** ADR-19 removed the bundled mark and made it a
+`logo` parameter, so a release no longer includes the artwork and this question
+no longer gates it. It stays here because a bundled official file would still
+be more convenient than asking every student to fetch one, and because the
+answer decides whether that convenience is available.
+
+Note that the file the package used to ship was a re-encoding of the sample's
+embedded copy, so "use the official file" is itself an answer worth having.
+**Closes:** TASK-3 criterion 3, ADR-18's open question, if the answer is yes.
 
 ## To the author of the Vale preset
 
@@ -141,8 +145,9 @@ under `.vale/styles/PLTechnical/`. Five files, all small: `Bureaucratic`,
 > private-use repository) or be removed and replaced with a short note telling a
 > reader how to supply their own preset?
 
-**Why it matters:** it is the only remaining non-MIT file in the repository
-whose terms are unknown, and it gates TASK-3 criterion 2. **Closes:** TASK-3
+**Why it matters:** it is now the *only* remaining file in the repository whose
+terms are unknown — with the logotype no longer bundled, nothing else is — and
+it gates TASK-3 criterion 2. **Closes:** TASK-3
 criterion 2, ADR-4's fifth decision.
 
 ## What this document does not do
