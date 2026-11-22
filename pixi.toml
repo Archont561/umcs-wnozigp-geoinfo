@@ -19,6 +19,13 @@ typstyle = "==0.15.2"
 vale = "==3.26.0"
 rumdl = ">=0.3.5,<0.4"
 
+# The cover page sets the university and the faculty in a sans face, as the
+# faculty's sample does. Typst only discovers fonts through this variable, and
+# the environment ships DejaVu Sans and Ubuntu under its own `fonts/`; without
+# it every build silently falls back to a serif and the cover's metrics drift.
+[activation.env]
+TYPST_FONT_PATHS = "$PIXI_PROJECT_ROOT/.pixi/envs/default/fonts"
+
 [pypi-dependencies]
 alint = ">=0.22,<1"
 jinja2 = ">=3.1,<4"
