@@ -76,6 +76,8 @@ Using a dictionary rather than positional arguments keeps the API stable as fiel
 | `list-of-listings` | Separate listing index | `SRC-023` |
 | `annex-ref(n)` | Renders "Załącznik n"; not a live `ref`, see limitations | `SRC-024` |
 
+Horizontal placement is not in the source: SPEC-SOURCE states no alignment rule for illustrations, and the only alignment it fixes is `SRC-016`'s left-aligned table source line. The package therefore centres the object and its caption inside the text column as a maintainer decision, and keeps the source line left aligned. A `listing`'s code stays left aligned too, because centring a code block would misalign its own indentation; only its caption is centred. The decision is pinned by `packages/typst/tests/test_typst_centring_bdd.py`, which renders a page and measures the ink rather than trusting the source.
+
 Typst has no `\listoffigures` equivalent that distinguishes three counters, so the package maintains table, figure and listing counters itself. That was the largest implementation risk in this contract and is now implemented and tested.
 
 ## Language and fonts
@@ -166,5 +168,6 @@ Recorded on 2026-11-21:
 | Offline build | yes — `typst compile` with no network |
 | Output review against `SRC-001`–`SRC-026` | partial: the implementer rendered and inspected the pages; no independent reviewer |
 | Recorded limitations | font substitution (TYP-006), approximated spacing, deviations from SRC-021/SRC-023 (ADR-17), `annex-ref` is not a live reference |
+| Illustration centring | measured on the rendered page, not quoted from the source: `test_typst_centring_bdd.py` asserts an object and its caption sit within 2 px of the column centre and that a listing's code keeps the left margin |
 
 **Not yet approvable**: TASK-10 criterion 4 requires human review of the rendered output, and a reviewer cannot be the author of the code.
