@@ -8,8 +8,8 @@ updated_date: '2026-11-21 18:37'
 
 ## SPEC-EDIT — Editorial quality and Vale
 
-**Status:** Draft (rules measured, provenance and departures documented, licence reading recorded for confirmation)  
-**Version:** 0.3  
+**Status:** Draft (rules measured, provenance and departures documented, no second source, licence reading recorded for confirmation)  
+**Version:** 0.4  
 **Related decisions:** ADR-4, ADR-5, ADR-9, ADR-13  
 **Related tasks:** TASK-7, TASK-10  
 **Milestone:** M-2
@@ -41,11 +41,18 @@ official artefact of any ministry. The relevant pages, all retrieved
 | <https://www.gov.pl/web/cyfryzacja-badania-i-projektowanie/proste-jak-jezyk> | The CIO's 10 rules, incl. the four-syllable/foreign-origin definition of a hard word |
 | <https://www.gov.pl/web/redakcyjne-abc/prosty-jezyk> | Editorial practice for administrative text |
 
+**There is no second source.** The maintainer confirms that these pages are the
+preset's only external basis: nothing was taken from a third party's checklist, a
+commercial style guide, or another Vale style. That is worth stating because the
+archive `Vale_PLTechnical_preset.zip.txt` arrived with no licence file and no
+provenance note, so until now the absence of a second source was an assumption
+rather than a fact.
+
 **None of these pages states a licence.** They are public guidance and are
 cited here as the basis for rules that are themselves original to this
 repository: the tokens and regular expressions were written here, the examples
 the guidance gives were not copied wholesale, and the rule messages are our own
-sentences. That is what makes the six YAML files MIT-licensable while the
+sentences. That is what makes the five rule files MIT-licensable while the
 guidance stays a citation — but it is a maintainer's reading, not a legal
 opinion, and it is why V-1 in the reviewer ledger asks the author to confirm
 it rather than assuming it.
@@ -101,7 +108,7 @@ Every row below was observed by running Vale 3.26.0 against the fixtures on 2026
 | --- | --- | --- | --- |
 | Bureaucratic | suggestion | `w dniu dzisiejszym`, `na chwilę obecną`, `niniejszym informujemy`, `w przedmiotowej sprawie` | Only the seven listed phrases; ordinary bureaucratic prose passes |
 | Pleonasms | suggestion | `w okresie czasu`, `wzajemna współpraca`, `cofać się do tyłu`, `fakt autentyczny` | Fixed list of six; it is not a redundancy parser |
-| VerbPhrases | suggestion | `Dokonano analizy`, `przeprowadzono analizę` | Pattern-based; correct nominalisations may still be flagged |
+| VerbPhrases | suggestion | `Dokonano analizy`, `Została przeprowadzona analiza`, `Zostały przeprowadzone analizy` | `Przeprowadzono analizę` passes — that is the active form, which the rule is not meant to catch |
 | LongSentences | suggestion | One sentence above 30 tokens | 29 tokens passes; the count is a regex token count, not a linguistic word count |
 | UnitSpacing | warning | `20cm`, `5kg`, `20°C`, `3,5cm`, `3.5cm`, `-5°C` | `20 m`, `45°`, `45°30′`, and anything inside a code span or URL |
 
