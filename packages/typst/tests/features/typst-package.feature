@@ -50,3 +50,15 @@ Feature: The Typst package renders the faculty's structural rules
     Given the Typst package has a demo main
     When I query the chapters
     Then the first chapter is numbered one
+
+  Scenario: The body is set in the vendored Times substitute
+    Given the Typst package has a demo main
+    When I query the document counters
+    Then the body face is the vendored Times substitute
+    And the body face is not the wider Computer Modern
+
+  Scenario: Body text fits about 92 characters on a line
+    Given the Typst package has a demo main
+    When I query the document counters
+    And I measure a line of body text at the document's own settings
+    Then the measured characters per line is about 92

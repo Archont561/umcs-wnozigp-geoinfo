@@ -81,6 +81,12 @@ Typst's `New Computer Modern`, is about 14 % wider for the same string.
   repository's MIT grant does not cover. Unlike the logo, their licence
   *does* permit redistribution, so there is no open question here.
 
+The package also sets the **body** in Termes rather than `New Computer Modern`,
+because SRC-002 asks for Times New Roman and Termes is its metric-compatible
+clone. That substitution has a cost the package records rather than hides:
+Termes is narrower, so a line of body text holds about 92 characters where the
+source asks for ~70. A test pins the measured value.
+
 The package does not vendor a sans: the sample's heading face (LMSans10-Bold)
 cannot be selected through Typst 0.15, which exposes only the wider
 `New Computer Modern`. The cover uses the narrowest sans the Pixi environment

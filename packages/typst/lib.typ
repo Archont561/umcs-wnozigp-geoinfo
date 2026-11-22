@@ -126,6 +126,20 @@
 #let cover-sans = "Ubuntu"
 #let cover-serif = "TeXGyreTermes"
 
+/// The body face. SRC-002 asks for Times New Roman 12 pt; Times New Roman is
+/// proprietary and cannot ship here, so the package sets the body in TeX Gyre
+/// Termes, the metric-compatible Times clone it already vendors for the cover
+/// (TYP-006: a substitution must be documented, and no build may claim SRC-002
+/// compliance on a substitute).
+///
+/// Termes is narrower than the `New Computer Modern` it replaced, so a fixed
+/// text width carries *more* characters per line, not fewer: about 92 against
+/// New Computer Modern's 84 at A4 with 2.5 cm margins. SRC-002 also asks for
+/// ~70, which no available face reaches at 12 pt and 16 cm; a test pins the
+/// measured value so narrowing the measure becomes a deliberate decision
+/// rather than an accident.
+#let body-font = "TeXGyreTermes"
+
 #let validate-meta(meta) = {
   if type(meta) != dictionary {
     panic("umcs-thesis: `meta` must be a dictionary, got " + str(type(meta)))
@@ -675,7 +689,7 @@
   cycle: none,
   language: "pl",
   meta: (:),
-  font: "New Computer Modern",
+  font: body-font,
 ) = {
   if cycle == none {
     panic("umcs-thesis: `cycle` is required; one of " + str(cycles))

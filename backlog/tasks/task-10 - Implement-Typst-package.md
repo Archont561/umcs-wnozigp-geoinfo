@@ -45,5 +45,5 @@ No reusable Typst package exists. `packages/typst/main.typ` was a dummy smoke fi
 
 Three defects were found by rendering rather than by compiling, which is why criterion 4 matters: captions printed literal brackets, the appendix body was silently dropped (a code-mode block returns only its last expression), and front matter consumed chapter numbers so "Wstęp" became chapter 2. All three are fixed and each now has a scenario.
 
-Approximations remain and are marked in the source: the font is New Computer Modern rather than Times New Roman (TYP-006), several spacings are converted from "line spaces" to em units, and the annex label is right-aligned in the text block rather than placed in the page margin.
+Approximations remain and are marked in the source: the font is TeX Gyre Termes rather than Times New Roman (TYP-006) — a Times clone, so the *shape* matches, but it is narrower and the body now fits about 92 characters per line where SRC-002 asks for ~70, which a test pins as a recorded deviation; several spacings are converted from "line spaces" to em units; and the annex label is right-aligned in the text block rather than placed in the page margin.
 <!-- SECTION:NOTES:END -->
