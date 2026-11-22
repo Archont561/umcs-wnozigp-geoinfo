@@ -27,7 +27,7 @@ Replace or extend the dummy Typst main only after its public contract, source re
 - [x] #1 The implementation traces to accepted SPEC-SOURCE and SPEC-TYP requirements. `lib.typ` cites `SRC-001`–`SRC-026` at the point each rule is implemented, and the public API table in SPEC-TYP matches the exported functions one-for-one.
 - [x] #2 Compiler minimum, imported packages, and user instructions are documented and tested. `typst.toml` declares `compiler = "0.15.1"`, which is the version actually run (TYP-005). No third-party package is imported, so TYP-003 is satisfied trivially. `packages/typst/README.md` documents the API, the limitations and the local `--package-path` workflow.
 - [x] #3 Fixtures and maintainer-only outputs are excluded from any package offer. The release tarball was built locally and inspected: it contains `lib.typ`, `typst.toml`, `README.md` and `LICENSE` only. `release.yml` now asserts the presence of `lib.typ` and `typst.toml`, not just the absence of fixtures.
-- [ ] #4 Human review confirms rendered output; smoke compilation alone is insufficient. **Still open, and not mine to close**: the pages were rendered and inspected by the agent that wrote the code, which is not independent review.
+- [ ] #4 Human review confirms rendered output; smoke compilation alone is insufficient. **Still open, and not mine to close**: the pages were rendered and inspected by the agent that wrote the code, which is not independent review. The faculty question that stands behind it is **F-1** in [REVIEWERS](../docs/doc-9%20-%20REVIEWERS-%E2%80%94-Open-reviewer-questions.md).
 <!-- AC:END -->
 
 ## Implementation Plan

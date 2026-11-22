@@ -107,6 +107,10 @@ Hitting ~70 characters would need a face about **31 % wider than Times**, and
 without contradicting the face, the size, or the margins — all of which the
 source states more precisely than the approximations it hedges with "~".
 
+The question this raises is put to the faculty as **F-1** in [REVIEWERS](doc-9%20-%20REVIEWERS-%E2%80%94-Open-reviewer-questions.md); until it
+is answered the reading below stands as a maintainer decision, not as the
+source's.
+
 **Consequence, recorded rather than resolved.** The 12 pt, 1.5 spacing and the
 2.5 cm margins are treated as the normative instructions, and the ~30/~70
 figures as a description of the page the author had in mind. A build that makes
@@ -132,4 +136,4 @@ arithmetically backwards, and was rejected on that basis.
 
 ## Required task output
 
-TASK-1's evidence work is complete: the source set, applicability window, 49-record matrix, conflicts, and reviewer questions are recorded. The applicability answer is conditional (ADR-10) and the review is single-person (ADR-9). A 2026-11-21 review of the embedded samples upgraded SRC-041 from unobtained to partly located and added SRC-045..SRC-048. SRC-049 records the university's identity book as the authority for the bundled logo asset, which is provenance rather than a faculty requirement: SRC-045 governs the page's form, SRC-049 governs the mark on it. SRC-039 is recorded but deliberately not pursued (ADR-15): the source delegates AI conditions to a faculty policy this repository does not track, so the template stays silent on AI-use compliance.
+TASK-1's evidence work is complete: the source set, applicability window, 49-record matrix, conflicts, and reviewer questions are recorded. The applicability answer is conditional (ADR-10) and the review is single-person (ADR-9). A 2026-11-21 review of the embedded samples upgraded SRC-041 from unobtained to partly located and added SRC-045..SRC-048. SRC-049 records the university's identity book as the authority for the bundled logo asset, which is provenance rather than a faculty requirement: SRC-045 governs the page's form, SRC-049 governs the mark on it. The questions those records leave open are collected in [REVIEWERS](doc-9%20-%20REVIEWERS-%E2%80%94-Open-reviewer-questions.md): F-1 (the page targets above), F-2 (SRC-040, whether markup typesetting is accepted at all), F-3 (the 2026/27 cohort), F-4 (SRC-042 and ADR-17), U-1 (the logo's redistribution) and V-1 (the Vale preset). SRC-039 is recorded but deliberately not pursued (ADR-15): the source delegates AI conditions to a faculty policy this repository does not track, so the template stays silent on AI-use compliance.

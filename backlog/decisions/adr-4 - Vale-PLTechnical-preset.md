@@ -22,4 +22,5 @@ The user supplied `Vale_PLTechnical_preset.zip.txt` and specified that Vale must
 
 - `pixi install --locked` retrieves Vale from the configured Conda channels. No `vale sync` is required for the local styles.
 - Any rule changes require review, test examples, and an update to SPEC-EDIT.
-- TASK-7 and TASK-3 track editorial-policy and redistribution review.
+- TASK-7 and TASK-3 track editorial-policy and redistribution review. The
+  redistribution question is put to the preset's author as **V-1** in [REVIEWERS](../docs/doc-9%20-%20REVIEWERS-%E2%80%94-Open-reviewer-questions.md).

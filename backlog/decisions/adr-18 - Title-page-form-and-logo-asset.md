@@ -49,6 +49,12 @@ This engages two existing rules. ADR-7 clause 4 says not to infer a licence for 
    is the property a wider face breaks.
 6. **Keep the extra fields out of the sample's fixed blocks.** The sample has no specialisation line and fixes the bottom block at exactly three lines, so a specialisation is printed as a second identifier line beside the rule rather than appended to that block.
 
+## Open question
+
+Whether this repository may redistribute the mark is put to Centrum Promocji
+UMCS as **U-1** in [REVIEWERS](../docs/doc-9%20-%20REVIEWERS-%E2%80%94-Open-reviewer-questions.md). Attribution and the applicable rules are settled; the
+permission is not.
+
 ## Consequences
 
 - The title page now matches the faculty's sample page for page, but the sample is a *form*, not a licence: the logo's redistribution terms are unresolved and a release must settle them before the asset ships in an archive. Attribution is now correct and specific — UMCS, shortened logotype, university grey, identity book 2024 v02 — which is what the question to Centrum Promocji UMCS needs, and it does not itself grant permission: publishing a download is not a redistribution licence and the site reserves all rights.
