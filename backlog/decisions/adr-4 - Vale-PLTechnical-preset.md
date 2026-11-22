@@ -28,11 +28,16 @@ none needs to, because what the preset takes from them is advice about writing
 rather than text. The rule tokens and messages are original to this
 repository.
 
-That underwrites decision 5 — the rules can ship under MIT — but it is a
-maintainer's reading rather than a licence text, so it is put to the author for
-confirmation as V-1 in the reviewer ledger. If the tokens turn out to be
-transcribed from a third party's list, decision 5's basis fails and the rules
-must be rewritten or removed.
+That underwrites decision 5 — the rules can ship under MIT — and the author
+confirmed it on 2026-11-22, stating that the rules were written by them from the
+guidance. **Decision 5 is therefore satisfied and no longer gates anything.**
+
+The confirmation is an assertion of authorship by the repository's own copyright
+holder rather than third-party review, which is the single-person limitation ADR-9
+already records for the evidence ledger. It is recorded as such in
+[REVIEWERS](../docs/doc-9%20-%20REVIEWERS-%E2%80%94-Open-reviewer-questions.md)
+under *Answered*: it is the best available evidence, and nothing inside this
+repository could have produced better.
 
 Separately, and regardless of licensing: the preset applies the guidance to
 technical and academic prose, where several of its rules are wrong or
@@ -45,4 +50,10 @@ all.
 - `pixi install --locked` retrieves Vale from the configured Conda channels. No `vale sync` is required for the local styles.
 - Any rule changes require review, test examples, and an update to SPEC-EDIT.
 - TASK-7 and TASK-3 track editorial-policy and redistribution review. The
-  redistribution question is put to the preset's author as **V-1** in [REVIEWERS](../docs/doc-9%20-%20REVIEWERS-%E2%80%94-Open-reviewer-questions.md).
+  redistribution question (V-1) was answered on 2026-11-22 and is closed; see
+  [REVIEWERS](../docs/doc-9%20-%20REVIEWERS-%E2%80%94-Open-reviewer-questions.md)
+  under *Answered*. TASK-3's only remaining open criterion is U-1, which does
+  not block a release (ADR-19).
+- If the rules are ever found to contain transcribed third-party text, decision 5
+  fails and the affected rules must be rewritten or removed. Nothing currently
+  asserts that they do.

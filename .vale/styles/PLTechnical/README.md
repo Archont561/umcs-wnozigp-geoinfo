@@ -19,7 +19,9 @@ Polish plain-language guidance published on `gov.pl` (Ministry of Digital
 Affairs, Civil Service, accessibility and editorial pages — listed in
 [`SPEC-EDIT`](../../../backlog/docs/doc-7%20-%20SPEC-EDIT-%E2%80%94-Editorial-quality-and-Vale.md)).
 **That guidance is the only source**: nothing here comes from another style
-guide, another Vale style, or a third party's checklist.
+guide, another Vale style, or a third party's checklist. The author confirmed on
+2026-11-22 that the rules were written by them from it, which is what lets MIT
+cover the files while the guidance stays a citation.
 They are not an official artefact of any ministry: the guidance says nothing
 about Vale, the tokens and patterns are ours, and the rule messages are our own
 sentences. They are MIT-licensed with the rest of the repository.
