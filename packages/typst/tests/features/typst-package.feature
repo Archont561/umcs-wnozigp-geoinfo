@@ -62,3 +62,9 @@ Feature: The Typst package renders the faculty's structural rules
     When I query the document counters
     And I measure a line of body text at the document's own settings
     Then the measured characters per line is about 92
+
+  Scenario: A page holds about 39 lines at the source's own settings
+    Given the Typst package has a demo main
+    When I query the document counters
+    And I measure a line of body text at the document's own settings
+    Then a page holds about 39 lines

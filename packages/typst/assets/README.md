@@ -85,7 +85,9 @@ The package also sets the **body** in Termes rather than `New Computer Modern`,
 because SRC-002 asks for Times New Roman and Termes is its metric-compatible
 clone. That substitution has a cost the package records rather than hides:
 Termes is narrower, so a line of body text holds about 92 characters where the
-source asks for ~70. A test pins the measured value.
+source asks for ~70 — a figure the source's own 12 pt and 2.5 cm margins make
+unreachable (SPEC-SOURCE records the arithmetic). A test pins the measured
+value.
 
 The package does not vendor a sans: the sample's heading face (LMSans10-Bold)
 cannot be selected through Typst 0.15, which exposes only the wider
