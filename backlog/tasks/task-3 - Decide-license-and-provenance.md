@@ -37,5 +37,10 @@ Review the attachment and source references, collect ownership facts, and record
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
+The two open criteria are questions addressed to parties who are not in this
+repository, and they are written out in [REVIEWERS](../docs/doc-9%20-%20REVIEWERS-%E2%80%94-Open-reviewer-questions.md): **U-1** (may the UMCS logotype be
+redistributed) and **V-1** (the PLTechnical preset's terms). Neither can be
+closed from inside.
+
 ADR-14 mirrors MIT into each package so standalone tarballs carry terms. ADR-7 selects MIT for original repository code and documentation, superseding ADR-5's licensing point. ADR-4 records the Vale provisioning choice and still gates public redistribution of the supplied rules, which MIT does not cover.
 <!-- SECTION:NOTES:END -->
