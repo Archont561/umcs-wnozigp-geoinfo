@@ -22,6 +22,21 @@ Feature: The title page reproduces the faculty's sample form
     When I render the title page and measure its bands of ink
     Then every field starts to the right of the rule
 
+  Scenario: The title is set at the sample's size and face
+    Given the demo thesis compiled to a PDF
+    When I render the title page and measure its bands of ink
+    Then the title is taller than the fields around it, at the sample's size
+
+  Scenario: The university stays on two lines
+    Given the demo thesis compiled to a PDF
+    When I render the title page and measure its bands of ink
+    Then the university heading occupies exactly two lines
+
+  Scenario: A long title does not run into the English title
+    Given the demo thesis compiled to a PDF
+    When I render the title page and measure its bands of ink
+    Then every line of the two titles is separated from the next
+
   Scenario: The city and year close the page
     Given the demo thesis compiled to a PDF
     When I render the title page and measure its bands of ink

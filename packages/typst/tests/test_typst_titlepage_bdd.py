@@ -44,9 +44,19 @@ LOGO_TOP_PT = 70.5
 
 #: The fields are indented 13.5 pt past the rule, so their ink begins at 132.5.
 FIELD_LEFT_PT = 132.5
-FIELD_TOLERANCE_PT = 2.0
+#: Three points, because the measurement is of *ink* and every face puts a
+#: different left side bearing in front of its first glyph. The sample itself
+#: varies by a point between its own lines for the same reason.
+FIELD_TOLERANCE_PT = 3.0
 
 CITY_TOP_PT = 736.7
+
+#: The sample sets the title at 24.79 pt and the fields at 11.96 pt. Its cap
+#: height is 16.4 pt for the title, so anything near the body's 8 pt means the
+#: size was never applied.
+TITLE_SIZE_PT = 24.79
+TITLE_MIN_CAP_PT = 12.0
+FIELD_MAX_CAP_PT = 12.0
 
 
 @pytest.fixture(scope="module")
@@ -109,7 +119,9 @@ def measure_bands(page_png: Path) -> tuple[list[Band], float]:
         int((RULE_X_PT - 2) / scale),
         int((RULE_X_PT + 2) / scale),
     )
-    return ink_bands(image, exclude_columns=rule_columns), scale
+    # A 3 px gap keeps consecutive 20 pt lines apart: the sample's two heading
+    # lines are 24.5 pt apart, which is only 3 px at this resolution.
+    return ink_bands(image, gap=2, exclude_columns=rule_columns), scale
 
 
 @when("I measure the vertical rule on the title page", target_fixture="rule")
@@ -183,6 +195,86 @@ def fields_are_indented(bands: tuple[list[Band], float]) -> None:
             f"a field starts at {band.left * scale:.1f} pt, expected "
             f"{FIELD_LEFT_PT} pt (13.5 pt past the rule)"
         )
+
+
+@then("the title is taller than the fields around it, at the sample's size")
+def title_has_its_own_size(bands: tuple[list[Band], float]) -> None:
+    rows, scale = bands
+    # The title sits between the album number and the English title, and a
+    # 24.79 pt line is visibly taller than the 11.96 pt fields. Measuring ink
+    # height rather than querying the source is what caught the original bug:
+    # the size argument only positioned the line and never set the type.
+    above_body = [b for b in rows if b.top * scale > 400]
+    title = max(
+        (b for b in above_body if b.top * scale < 460),
+        key=lambda b: b.bottom - b.top,
+    )
+    height_pt = (title.bottom - title.top) * scale
+    assert height_pt >= TITLE_MIN_CAP_PT, (
+        f"the title's ink is {height_pt:.1f} pt tall; at {TITLE_SIZE_PT} pt it "
+        f"should be over {TITLE_MIN_CAP_PT} pt, so it is probably still being "
+        "drawn at the body's size"
+    )
+
+
+@then("the university heading occupies exactly two lines")
+def university_is_two_lines(bands: tuple[list[Band], float]) -> None:
+    rows, scale = bands
+    # The sample breaks the university after "Curie-Skłodowskiej" and sets
+    # "w Lublinie" on the second line. Counting bands is not enough to catch a
+    # face that is too wide: "w Lublinie" is short, so a wide face pushes the
+    # *faculty* line down and the count still reads two. The assertion is
+    # therefore on which words are where — line one runs long, line two is the
+    # short one, and nothing sits between line two and the faculty.
+    heading = [b for b in rows if 150 < b.top * scale < 225]
+    assert len(heading) == 2, (
+        "the university heading is "
+        f"{len(heading)} lines, not the sample's two: "
+        f"{[(round(b.top * scale, 1), round(b.right * scale, 1)) for b in heading]}"
+    )
+    first, second = heading
+    assert (first.right - first.left) > 2 * (second.right - second.left), (
+        "the university's first line is not the long one: "
+        f"widths {(first.right - first.left) * scale:.0f} pt and "
+        f"{(second.right - second.left) * scale:.0f} pt"
+    )
+    # "w Lublinie" is 94 pt wide in the sample's face and the heading starts at
+    # 119.5 pt, so the second line must end near 214 pt. A wider face overruns.
+    second_right = second.right * scale
+    assert abs(second_right - 214) <= 12, (
+        f"the university's second line ends at {second_right:.1f} pt; the "
+        "sample ends it at 214 pt, so the face in use is too wide"
+    )
+    # The faculty line is 17 pt and must clear the heading, not overlap it.
+    faculty = [b for b in rows if 225 <= b.top * scale < 260]
+    assert len(faculty) == 1, f"expected one faculty line, got {len(faculty)}"
+
+
+@then("every line of the two titles is separated from the next")
+def titles_have_a_gap(bands: tuple[list[Band], float]) -> None:
+    rows, scale = bands
+    # The demo's title is too long for one line at 24.79 pt, so it wraps and the
+    # English title must come below it as a line of its own. The layout that
+    # broke this computed the English baseline from the assumption that the
+    # title is one line, which drew it *over* the second line: the two fused
+    # into a single band 23 pt tall. Counting bands is therefore not enough
+    # either, because fusing looks like fewer lines rather than a small gap.
+    # The discriminator is the English line's own height: 14.35 pt type puts
+    # about 11 pt of ink on the page, while a fused band carries two lines.
+    # 545 pt is below the English title and above the diploma block, so the
+    # window holds the title and the English title and nothing else.
+    region = [b for b in rows if 420 < b.top * scale < 545]
+    assert len(region) >= 2, f"expected the two titles, got {len(region)} band(s)"
+    english = region[-1]
+    english_height = (english.bottom - english.top) * scale
+    above = region[-2]
+    gap = (english.top - above.bottom) * scale
+    assert english_height < 16 and gap > 18, (
+        f"the English title's band is {english_height:.1f} pt tall and sits "
+        f"{gap:.1f} pt below the line above it; a separate 14.35 pt line is "
+        "about 11 pt tall, so a taller band means the English title is being "
+        "drawn over the last line of the title"
+    )
 
 
 @then("the last band of ink is the city and year, near the bottom")

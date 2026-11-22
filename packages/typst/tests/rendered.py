@@ -29,14 +29,23 @@ _CHANNELS = {0: 1, 2: 3, 4: 2, 6: 4}
 #: ``fonts/`` directory. Typst only looks there when told to, and a render
 #: without them silently substitutes a serif — which changes the title page's
 #: metrics, so every measurement below would be taken from the wrong document.
-FONT_DIR = Path(__file__).resolve().parents[3] / ".pixi" / "envs" / "default" / "fonts"
+ROOT = Path(__file__).resolve().parents[3]
+PACKAGE_FONTS = ROOT / "packages" / "typst" / "assets" / "fonts"
+ENV_FONTS = ROOT / ".pixi" / "envs" / "default" / "fonts"
 
 
 def typst_env() -> dict[str, str]:
-    """Return an environment that lets Typst find the fonts this repo ships."""
+    """Return an environment that lets Typst find every font this repo ships.
+
+    Both directories matter: the package vendors TeX Gyre Termes for the title
+    page, and the environment supplies the sans for the heading. A render that
+    finds only one of them substitutes the other face and the title page's
+    measurements no longer describe the file that ships.
+    """
     env = dict(os.environ)
-    if FONT_DIR.is_dir():
-        env["TYPST_FONT_PATHS"] = str(FONT_DIR)
+    paths = [str(path) for path in (PACKAGE_FONTS, ENV_FONTS) if path.is_dir()]
+    if paths:
+        env["TYPST_FONT_PATHS"] = os.pathsep.join(paths)
     return env
 
 
@@ -182,7 +191,7 @@ def ink_bands(
 
 
 def render_bands(
-    source: Path, work: Path, page: int = 1, ppi: int = 72
+    source: Path, work: Path, page: int = 1, ppi: int = 72, gap: int = 6
 ) -> tuple[int, int, list[Band]]:
     """Compile ``source`` and return ``(width_px, height_px, bands)``."""
     target = work / "page.png"
@@ -209,4 +218,4 @@ def render_bands(
         raise AssertionError(result.stderr)
     image = target.read_bytes()
     width, height, _, _ = decode_png(image)
-    return width, height, ink_bands(image)
+    return width, height, ink_bands(image, gap=gap)

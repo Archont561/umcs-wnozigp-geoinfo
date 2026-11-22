@@ -24,7 +24,7 @@ rumdl = ">=0.3.5,<0.4"
 # the environment ships DejaVu Sans and Ubuntu under its own `fonts/`; without
 # it every build silently falls back to a serif and the cover's metrics drift.
 [activation.env]
-TYPST_FONT_PATHS = "$PIXI_PROJECT_ROOT/.pixi/envs/default/fonts"
+TYPST_FONT_PATHS = "$PIXI_PROJECT_ROOT/packages/typst/assets/fonts:$PIXI_PROJECT_ROOT/.pixi/envs/default/fonts"
 
 [pypi-dependencies]
 alint = ">=0.22,<1"

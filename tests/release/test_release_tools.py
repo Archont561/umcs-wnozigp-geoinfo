@@ -71,6 +71,8 @@ def test_required_entries_include_licence_and_declared_extras() -> None:
         "typst/lib.typ",
         "typst/typst.toml",
         "typst/assets/umcs-logo.png",
+        "typst/assets/fonts/TeXGyreTermes-Regular.otf",
+        "typst/assets/fonts/LICENSE-GUST.txt",
     )
     assert archive_tool.required_entries("latex") == ("latex/LICENSE",)
 
@@ -106,6 +108,8 @@ def test_built_archives_exclude_fixtures_and_keep_the_deliverable(
     assert "typst/typst.toml" in typst_entries
     assert "typst/LICENSE" in typst_entries
     assert "typst/assets/umcs-logo.png" in typst_entries
+    assert "typst/assets/fonts/TeXGyreTermes-Regular.otf" in typst_entries
+    assert "typst/assets/fonts/LICENSE-GUST.txt" in typst_entries
     assert not any(entry.startswith("typst/tests/") for entry in typst_entries)
     assert not any(entry.startswith("typst/main.") for entry in typst_entries)
 
