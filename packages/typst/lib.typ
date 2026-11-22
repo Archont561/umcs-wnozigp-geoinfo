@@ -299,13 +299,18 @@
   if type(source) == str and source.trim() == "" {
     panic(kind + ": `source` must not be empty (SRC-022)")
   }
-  // SRC-016/SRC-019: 10 pt italic, left aligned, after the object.
-  block(above: 0.5em, below: 1em, width: 100%)[
+  // SRC-016/SRC-019: 10 pt italic, left aligned, after the object. Spacing is
+  // explicit for the same reason as the caption: a block's `above`/`below` is
+  // discarded at a container boundary, which made the gap between a source
+  // line and the next paragraph vary from illustration to illustration.
+  v(0.5em, weak: false)
+  block(width: 100%)[
     #set text(size: 10pt, style: "italic")
     #set par(first-line-indent: 0pt, leading: 0.65em)
     #set align(left)
     #source
   ]
+  v(0.75em, weak: false)
 }
 
 #let register-illustration(kind, n, caption) = {
@@ -318,6 +323,32 @@
   )) <umcs-illustration>]
 }
 
+/// Caption styling shared by the three illustration classes.
+///
+/// The source is silent on horizontal alignment for illustrations, so centred
+/// is a maintainer choice, recorded in SPEC-TYP. Table and listing sources
+/// stay left aligned because SRC-016 says so explicitly.
+#let illustration-caption(prefix, n, caption, gap: 0.5em) = {
+  // Spacing is an explicit, non-weak `v()`, not `block(above: …)`: a block's
+  // own spacing is discarded when it starts a container, which made the
+  // caption collide with the object beneath it. A weak `v()` additionally
+  // collapses against paragraph spacing, which produced the uneven gaps
+  // between captions and following paragraphs.
+  v(gap, weak: false)
+  // `width: 100%` as well: a bare `block` shrinks to its content, and
+  // `set align(center)` then has nothing to centre within.
+  block(width: 100%)[
+    #set text(size: 10pt, weight: "bold")
+    #set par(first-line-indent: 0pt, leading: 0.65em, justify: false)
+    #set align(center)
+    #prefix #n: #caption
+  ]
+}
+
+/// Centres the object inside the text block without forcing a width, so a
+/// `#rect(width: 40%)` or a narrow `#table` sits in the middle of the line.
+#let illustration-body(body) = align(center, body)
+
 /// A figure (*rycina*): caption below in 10 pt bold, source below that.
 #let figure-with-source(
   body,
@@ -329,19 +360,20 @@
     let n = kind-counter("rycina").get().first()
     let s = strings.pl.figure
     register-illustration("rycina", n, caption)
-    block(breakable: false)[
-      #block(width: 100%)[#body]
-      #if caption != none {
-        // SRC-018: caption below, 10 pt bold, single spacing.
-        block(above: 0.5em, below: 0cm)[
-          #set text(size: 10pt, weight: "bold")
-          #set par(first-line-indent: 0pt, leading: 0.65em)
-          #s #n: #caption
-        ]
-      }
+    // `width: 100%` is required: an unbreakable block shrinks to its content,
+    // so an inner `align(center)` would have no free width and the object
+    // would sit flush left instead of centred.
+    block(breakable: false, width: 100%)[
+      // SRC-018: caption below, 10 pt bold, single spacing. Centring is a
+      // maintainer choice; the source does not state an alignment.
+      #illustration-body[#body]
+      #if caption != none { illustration-caption(s, n, caption) }
+      // The source line belongs inside the unbreakable block: left outside it,
+      // a page break could strand "opracowanie własne" alone at the top of the
+      // next page, separated from the illustration it annotates.
+      #source-line("rycina", source)
     ]
   }
-  source-line("rycina", source)
 }
 
 /// A table: bold 10 pt title above (SRC-015), italic 10 pt source below (SRC-016).
@@ -355,22 +387,19 @@
     let n = kind-counter("tabela").get().first()
     let s = strings.pl.table
     register-illustration("tabela", n, caption)
-    block(breakable: false)[
-      #if caption != none {
-        block(above: 1.5em, below: 0.5em)[
-          #set text(size: 10pt, weight: "bold")
+    // `width: 100%`: see the note in `figure-with-source`.
+    block(breakable: false, width: 100%)[
+      #if caption != none { illustration-caption(s, n, caption, gap: 1.5em) }
+      #align(center)[
+        #block[
+          #set text(size: 10pt)
           #set par(first-line-indent: 0pt, leading: 0.65em)
-          #s #n: #caption
+          #body
         ]
-      }
-      #block(width: 100%)[
-        #set text(size: 10pt)
-        #set par(first-line-indent: 0pt, leading: 0.65em)
-        #body
       ]
+      #source-line("tabela", source)
     ]
   }
-  source-line("tabela", source)
 }
 
 /// A listing: source code or a data extract, numbered with its own sequence.
@@ -387,22 +416,20 @@
     let n = kind-counter("listing").get().first()
     let s = strings.pl.listing
     register-illustration("listing", n, caption)
-    block(breakable: false)[
-      #if caption != none {
-        block(above: 1.5em, below: 0.5em)[
-          #set text(size: 10pt, weight: "bold")
-          #set par(first-line-indent: 0pt, leading: 0.65em)
-          #s #n: #caption
-        ]
-      }
+    // `width: 100%`: see the note in `figure-with-source`.
+    block(breakable: false, width: 100%)[
+      #if caption != none { illustration-caption(s, n, caption, gap: 1.5em) }
+      // The caption is centred but the code itself stays left aligned: a
+      // centred code block would misalign its own indentation.
       #block(width: 100%)[
         #set text(size: 9pt)
-        #set par(first-line-indent: 0pt, leading: 0.65em)
+        #set par(first-line-indent: 0pt, leading: 0.65em, justify: false)
+        #set align(left)
         #body
       ]
+      #source-line("listing", source)
     ]
   }
-  source-line("listing", source)
 }
 
 /// Attribution strings from SRC-020 / SRC-047, so the punctuation is not a
