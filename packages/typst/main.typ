@@ -66,7 +66,8 @@ pokazuje schemat postępowania.
   caption: [Schemat postępowania badawczego],
   source: own-work("dane własne"),
 )[
-  #rect(width: 100%, height: 3cm, stroke: 0.5pt, fill: luma(245))
+  // 70 % wide on purpose: a full-width object would hide the centring.
+  #rect(width: 70%, height: 3cm, stroke: 0.5pt, fill: luma(245))
 ]
 
 Zestawienie zbiorów danych przedstawia tabela poniżej.
@@ -93,7 +94,8 @@ klasa „fotografia” i jej spis nie są w tej wersji przewidziane.
   caption: [Punkt kontrolny nr 3 w dolinie Bystrzycy],
   source: after("dokumentacja własna"),
 )[
-  #rect(width: 100%, height: 3cm, stroke: 0.5pt, fill: luma(245))
+  // 70 % wide on purpose: a full-width object would hide the centring.
+  #rect(width: 70%, height: 3cm, stroke: 0.5pt, fill: luma(245))
 ]
 
 Listing poniżej pokazuje fragment kodu obliczeniowego.
