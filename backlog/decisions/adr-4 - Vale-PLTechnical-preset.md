@@ -18,6 +18,26 @@ The user supplied `Vale_PLTechnical_preset.zip.txt` and specified that Vale must
 4. Preserve the preset's stated limits and source references in SPEC-EDIT. Do not present it as an official language standard, a full grammar checker, or a compliance tool.
 5. Do not redistribute the rules publicly until their ownership and license terms are reviewed; the attachment had no license file.
 
+## Provenance (recorded 2026-11-22)
+
+The maintainer states that the preset is custom-made from the Polish
+plain-language guidance on `gov.pl`. SPEC-EDIT records the five pages, and one
+finding matters for this decision: **none of them states a licence**, and none
+needs to, because what the preset takes from them is advice about writing rather
+than text. The rule tokens and messages are original to this repository.
+
+That underwrites decision 5 — the rules can ship under MIT — but it is a
+maintainer's reading rather than a licence text, so it is put to the author for
+confirmation as V-1 in the reviewer ledger. If the tokens turn out to be
+transcribed from a third party's list, decision 5's basis fails and the rules
+must be rewritten or removed.
+
+Separately, and regardless of licensing: the preset applies the guidance to
+technical and academic prose, where several of its rules are wrong or
+over-strict. SPEC-EDIT records which rules were weakened and why, including that
+`UnitSpacing` — the only rule that can fail CI — has no basis in the guidance at
+all.
+
 ## Consequences
 
 - `pixi install --locked` retrieves Vale from the configured Conda channels. No `vale sync` is required for the local styles.

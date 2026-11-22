@@ -18,11 +18,15 @@ W dniu dzisiejszym wykonano pomiar.
 
 W okresie czasu zebrano dane.
 
-## Verb phrases — expected: 1 suggestion, on the heading only
+## Verb phrases — expected: 4 suggestions — the heading, the heading phrase in prose, and both passive forms
 
 ## Dokonano analizy wyników
 
 Dokonano analizy wyników.
+
+Została przeprowadzona analiza ryzyka.
+
+Zostały przeprowadzone analizy.
 
 ## Unit spacing — expected: 4 warnings (20cm, 5kg, 20°C, 20cm again)
 
@@ -47,5 +51,7 @@ Krótkie zdanie jest poprawne.
 ## Clean control — expected: 0 findings
 
 Pomiar wykonano 12 maja. Wynik zapisano w tabeli 3.
+
+Przeprowadzono analizę ryzyka, a wynik zapisano w tabeli 4.
 
 Próbkę opisano w rozdziale drugim.

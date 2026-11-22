@@ -4,4 +4,10 @@ level: suggestion
 ignorecase: true
 tokens:
   - 'dokona(?:no|ć|liśmy|łem|ła|ł) (?:oceny|analizy|porównania|pomiaru|sprawdzenia|wyboru)'
-  - 'przeprowadzo(?:no|na) została (?:analiza|ocena|weryfikacja)'
+  # The passive construction, not the active. The previous pattern here was
+  # 'przeprowadzo(?:no|na) została analiza', which can only match ungrammatical
+  # Polish ("Przeprowadzono została analiza"); every real sentence — including
+  # "Została przeprowadzona analiza", the form the guidance actually names —
+  # passed silently. Verified 2026-11-22 against both forms.
+  - 'zosta(?:ła|ły|ło) przeprowadzo(?:na|ne|ny) (?:analiza|analizy|ocena|oceny|weryfikacja|weryfikacje)'
+  - 'zosta(?:ła|ły|ło) dokonana? (?:analiza|analizy|ocena|oceny)'

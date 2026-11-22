@@ -47,7 +47,7 @@ backlog-list = { cmd = "bunx --no-install backlog task list --plain", depends-on
   "bun-install",
 ] }
 test-smoke = "pytest -q -m integration packages/latex/tests packages/typst/tests"
-test-tools = "pytest -q tests/release"
+test-tools = "pytest -q tests/release tests/vale"
 release-archive = "python tools/release/archive.py"
 release-publish = "python tools/release/publish.py"
 vale-demo = "vale --config=.vale.ini --output=JSON --no-exit examples/vale/preset-demo.md"

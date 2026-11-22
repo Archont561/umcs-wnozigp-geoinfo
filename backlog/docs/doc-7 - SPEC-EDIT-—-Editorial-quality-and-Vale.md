@@ -8,8 +8,8 @@ updated_date: '2026-11-21 18:37'
 
 ## SPEC-EDIT — Editorial quality and Vale
 
-**Status:** Draft (rules measured and documented; licence review open)  
-**Version:** 0.2  
+**Status:** Draft (rules measured, provenance and departures documented, licence reading recorded for confirmation)  
+**Version:** 0.3  
 **Related decisions:** ADR-4, ADR-5, ADR-9, ADR-13  
 **Related tasks:** TASK-7, TASK-10  
 **Milestone:** M-2
@@ -25,6 +25,73 @@ Use the supplied PLTechnical Vale preset as a conservative Polish technical-pros
 - `lint-vale` runs with `--minAlertLevel=warning`, so suggestion-level findings are reported but do not fail the gate; warnings do.
 - Rules apply to Markdown and plain text only. There is no LaTeX or Typst prose extractor, so the preset does **not** check thesis body text.
 - Two fixtures exist: `examples/vale/preset-demo.md` (advisory demo) and `examples/vale/rule-cases.md` (expectation fixture, see below).
+
+## Provenance: the gov.pl plain-language guidance
+
+The preset is a **maintainer-written** set of Vale rules derived from the Polish
+public-administration plain-language guidance published on `gov.pl`, not an
+official artefact of any ministry. The relevant pages, all retrieved
+2026-11-22:
+
+| Source | What it supplies |
+| --- | --- |
+| <https://www.gov.pl/web/cyfryzacja/prosty-jezyk> | The Ministry of Digital Affairs guidance, including the `w dniu dzisiejszym → dzisiaj` and `dedykowany → przeznaczony` examples |
+| <https://www.gov.pl/web/sluzbacywilna/prosty-jezyk> | The Civil Service 21-point rule set: short sentences, no verbal nouns, no passive voice, no participles |
+| <https://www.gov.pl/web/dostepnosc-cyfrowa/prosty-jezyk> | The accessibility framing |
+| <https://www.gov.pl/web/cyfryzacja-badania-i-projektowanie/proste-jak-jezyk> | The CIO's 10 rules, incl. the four-syllable/foreign-origin definition of a hard word |
+| <https://www.gov.pl/web/redakcyjne-abc/prosty-jezyk> | Editorial practice for administrative text |
+
+**None of these pages states a licence.** They are public guidance and are
+cited here as the basis for rules that are themselves original to this
+repository: the tokens and regular expressions were written here, the examples
+the guidance gives were not copied wholesale, and the rule messages are our own
+sentences. That is what makes the six YAML files MIT-licensable while the
+guidance stays a citation — but it is a maintainer's reading, not a legal
+opinion, and it is why V-1 in the reviewer ledger asks the author to confirm
+it rather than assuming it.
+
+### Where the preset departs from the guidance it cites
+
+This matters more than the provenance. The guidance is written for
+**administrative correspondence addressed to the public**; this preset lints
+**technical and academic prose**. Several rules were therefore deliberately
+weakened, and one is weaker than its own stated basis suggests:
+
+- **Passive voice is not checked.** The Civil Service rules forbid it (point
+  11); academic and technical writing uses it legitimately and constantly
+  (method sections, procedural descriptions). Shipped as a rule, it would fire
+  on nearly every page.
+- **Verbal nouns are not checked as a class.** The guidance forbids `–anie`,
+  `–enie`, `–cie` nouns (points 13, 5). `VerbPhrases` covers three specific
+  phrases (`dokonano oceny`, …), not the class.
+- **Participles and `nieosobowe` forms are not checked** (points 12, 14).
+- **Sentence length is 30 tokens, not the guidance's 15–20 words.** `superior`
+  technical sentences carrying qualifiers are routinely 25–30 words; a 20-token
+  limit would make the gate unusable on this repository's own prose. The rule
+  message says so explicitly, which is the right way to record a policy choice.
+- **`UnitSpacing` has no basis in the plain-language guidance at all.** It is an
+  editorial convention this repository added. It is the only rule at `warning`
+  level, i.e. the only one that can fail CI, which is a notable asymmetry: the
+  rule with the weakest external basis is the one with teeth.
+
+Two rules do track the guidance closely: `Bureaucratic` implements the
+`w dniu dzisiejszym → dzisiaj` example and its neighbours, and `Pleonasms`
+implements the concision advice.
+
+| Rule | Guidance it derives from |
+| --- | --- |
+| `Bureaucratic` | Ministry of Digital Affairs: `w dniu dzisiejszym → dzisiaj`; "unikaj przesady, patosu i podniosłego stylu (zamiast np. niniejszy – ten)" |
+| `Pleonasms` | "Unikaj zbędnych słów. Pisz zwięźle" (all pages) |
+| `VerbPhrases` | Civil Service points 10 and 13: prefer verbs, avoid `–anie`/`–enie`/`–cie` nouns |
+| `LongSentences` | Civil Service point 7 and CIO rule 2: 15–20 words; relaxed here to 30 tokens |
+| `UnitSpacing` | **None.** A local editorial convention, added by this repository |
+
+### What this means for the ledger
+
+The rules are a **technical-prose profile inspired by** the guidance, not an
+implementation of it. Calling them "PLTechnical" is accurate; calling them
+"gov.pl's rules" would not be, and the READMEs must not. ADR-4 records the same
+conclusion from the provisioning side.
 
 ## Measured rule behaviour
 
@@ -58,6 +125,22 @@ Additional measured behaviour: `%` is deliberately excluded from the pattern, so
 2. **A clean control section** expects zero findings, so a rule that starts matching everything is caught.
 
 A first draft of this fixture asserted `20°C` and `20 cm` behaved one way and the run disagreed; the expectations were corrected against the output rather than the output being argued with. That is the intended workflow.
+
+### A rule that matched nothing, found on 2026-11-22
+
+Writing the provenance section above prompted a re-measurement, which found that
+`VerbPhrases`' second pattern could never match real Polish. It read
+`przeprowadzo(?:no|na) została (?:analiza|ocena|weryfikacja)`, which only matches
+the ungrammatical "Przeprowadzono została analiza". Every real sentence passed
+silently — including **"Została przeprowadzona analiza"**, the passive
+construction the guidance names as the thing to avoid.
+
+Nothing caught it because the fixture's `VerbPhrases` section only exercised the
+`dokonano` pattern, and no test compared the fixture's findings to a number. Both
+gaps are now closed: the pattern covers the real passive forms, the fixture
+exercises them, and `tests/vale/test_vale_preset.py` asserts the exact finding
+count per rule plus both directions of the passive/active distinction. Reverting
+the pattern fails two tests.
 
 ## Included rule intent
 

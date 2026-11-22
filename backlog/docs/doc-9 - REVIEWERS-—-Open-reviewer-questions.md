@@ -133,22 +133,32 @@ embedded copy, so "use the official file" is itself an answer worth having.
 Address: the repository owner, who supplied `Vale_PLTechnical_preset.zip.txt`
 and is the only party known to have it.
 
-### V-1. What are the redistribution terms of the PLTechnical rules?
+### V-1. Confirm the licence reading for the PLTechnical rules
 
-The supplied archive contains a `.vale.ini`, five rule files and a README, and
-**no licence file** (ADR-4). The rules are committed to this public repository
-under `.vale/styles/PLTechnical/`. Five files, all small: `Bureaucratic`,
-`LongSentences`, `Pleonasms`, `UnitSpacing`, `VerbPhrases`.
+**Updated 2026-11-22.** The maintainer states the preset is custom-made from
+the Polish plain-language guidance published on `gov.pl`. That changes this from
+an unknown into a reading that needs one confirmation.
 
-> Who owns these rules, and under what terms may they be redistributed? If the
-> answer is unknown or restrictive, should they stay committed (making this a
-> private-use repository) or be removed and replaced with a short note telling a
-> reader how to supply their own preset?
+The reading: the gov.pl pages state no licence, and they do not need to,
+because what was taken from them is *guidance* — advice about how to write.
+Advice is not copyrightable subject matter; only its expression is. The six YAML
+files hold tokens and regular expressions written for this repository, with
+rule messages in our own words, so the files are original work and MIT can
+cover them. The guidance is cited as the basis, in SPEC-EDIT.
 
-**Why it matters:** it is now the *only* remaining file in the repository whose
-terms are unknown — with the logotype no longer bundled, nothing else is — and
-it gates TASK-3 criterion 2. **Closes:** TASK-3
-criterion 2, ADR-4's fifth decision.
+> Does that reading hold — were the rule tokens and messages written for this
+> preset rather than copied from a gov.pl document or a third party's
+> checklist — and is there any source other than the gov.pl pages that the
+> preset draws on?
+
+**Why it matters:** if the tokens were transcribed from someone else's list,
+the MIT grant over them is wrong and the rules need rewriting or removing. The
+answer is one sentence and closes the question; it does not need a lawyer.
+**Closes:** TASK-3 criterion 2, ADR-4's fifth decision.
+
+Note that this is now the *only* file in the repository whose terms rest on a
+reading rather than a licence text, because the logotype is no longer bundled
+(ADR-19).
 
 ## What this document does not do
 
