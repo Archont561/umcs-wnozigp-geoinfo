@@ -64,10 +64,13 @@ def test_exclusion_rules(package: str, relative: Path, excluded: bool) -> None:
 
 
 def test_required_entries_include_licence_and_declared_extras() -> None:
+    # The cover page embeds this asset, so the archive has to carry it or the
+    # packaged thesis renders a title page with no header.
     assert archive_tool.required_entries("typst") == (
         "typst/LICENSE",
         "typst/lib.typ",
         "typst/typst.toml",
+        "typst/assets/umcs-logo.png",
     )
     assert archive_tool.required_entries("latex") == ("latex/LICENSE",)
 
@@ -102,6 +105,7 @@ def test_built_archives_exclude_fixtures_and_keep_the_deliverable(
     assert "typst/lib.typ" in typst_entries
     assert "typst/typst.toml" in typst_entries
     assert "typst/LICENSE" in typst_entries
+    assert "typst/assets/umcs-logo.png" in typst_entries
     assert not any(entry.startswith("typst/tests/") for entry in typst_entries)
     assert not any(entry.startswith("typst/main.") for entry in typst_entries)
 

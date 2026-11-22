@@ -110,6 +110,13 @@
 
 #let quote-list(xs) = xs.map(x => "`" + x + "`").join(", ")
 
+/// The faculty's sample cover sets the university, the faculty and the fields
+/// in a sans face and the thesis title in a serif one. Typst's bundled fonts
+/// include DejaVu Sans but not a Computer Modern Sans, so the sans is DejaVu
+/// here; a submission may override the constant with Arial or Helvetica
+/// alongside `font: "Times New Roman"`.
+#let cover-font = "Ubuntu"
+
 #let validate-meta(meta) = {
   if type(meta) != dictionary {
     panic("umcs-thesis: `meta` must be a dictionary, got " + str(type(meta)))
@@ -201,6 +208,36 @@
 
 /// The normalised title page, field order per the Annex 1 sample (SRC-045).
 /// Carries no page number (SRC-008).
+///
+/// The geometry is measured from the faculty's own sample rather than chosen:
+/// the logo's ink starts 52 pt from the left edge and 70.5 pt from the top, the
+/// university and faculty are sans and sit on a 119.5 pt left edge, a 1 pt rule
+/// runs from x = 118 pt between 292.9 pt and 709.2 pt below the top edge, and
+/// every field is indented 13.5 pt past that rule.
+///
+/// The page is laid out with `place` at absolute positions rather than as a
+/// flow, because a title page is a fixed form: its fields do not reflow, and
+/// the sample's own coordinates are the only defensible source for where each
+/// one belongs. `cover-line` takes the distance from the top of the page to the
+/// top of the line's ink, which is the baseline the sample records minus the
+/// face's ascent.
+#let cover-line(dy, x: 133pt, body) = place(
+  top + left,
+  dx: x,
+  dy: dy,
+  block(body),
+)
+
+// A4 height, used to convert the sample's baselines (measured up from the
+// bottom edge, as PDF coordinates are) into distances from the top.
+#let a4-height = 841.89pt
+
+#let cover-page-baseline(baseline-from-bottom, size, x: 133pt, body) = {
+  // The ratio is measured, not guessed: at 11.96 pt the serif's ascent puts the
+  // ink 9.1 pt above the baseline, and it scales with the size.
+  cover-line(a4-height - baseline-from-bottom - 0.760 * size, x: x, body)
+}
+
 #let coverpage(meta, cycle, language: "pl") = {
   let s = strings.at(language)
   let cycle-name = if language == "en" {
@@ -208,48 +245,69 @@
   } else {
     cycle-names-pl.at(cycle)
   }
-  set par(first-line-indent: 0pt, leading: 0.5em)
-  page(numbering: none)[
-    #set align(center)
-    #v(1.2cm)
-    #text(size: 14pt, weight: "bold")[
-      #s.university \
-      #s.university2
-    ]
-    #v(0.8cm)
-    #text(size: 13pt)[#s.faculty]
+  // SRC-012 lists the programme, not the specialisation, and the sample
+  // carries one line only, so a specialisation is printed after the fields.
+  let programme = meta.at("programme", default: "")
+  let specialisation = meta.at("specialisation", default: "")
 
-    #v(1.5cm)
-    #set text(size: 12pt)
-    #s.programme: #meta.at("programme", default: "—") \
-    #s.specialisation: #meta.at("specialisation", default: "—")
+  page(margin: 0pt, numbering: none)[
+    #set par(first-line-indent: 0pt, leading: 1.2em, justify: false)
+    #set text(size: 11.96pt)
 
-    #v(2.0cm)
-    #text(size: 14pt, weight: "bold")[#meta.author]
+    #place(top + left, dx: 52pt, dy: 70.5pt, image(
+      "assets/umcs-logo.png",
+      width: 245.4pt,
+    ))
+    // The rule does not start under the logo: in the sample it begins level
+    // with the "Kierunek" line and ends just below "pod kierunkiem".
+    #place(top + left, dx: 118pt, dy: 292.9pt, box(
+      width: 1pt,
+      height: 416.3pt,
+      fill: black,
+    ))
 
-    #v(0.4cm)
-    #text(size: 12pt)[#s.album: #meta.album]
+    // The university and the faculty: sans, bold, at the sample's sizes and
+    // with the sample's own line break.
+    #cover-page-baseline(659.2pt, 20.66pt, x: 119.5pt, text(
+      size: 20.66pt,
+      weight: "bold",
+      font: cover-font,
+    )[Uniwersytet Marii Curie-Skłodowskiej])
+    #cover-page-baseline(634.7pt, 20.66pt, x: 119.5pt, text(
+      size: 20.66pt,
+      weight: "bold",
+      font: cover-font,
+    )[w Lublinie])
+    #cover-page-baseline(598.8pt, 17.22pt, x: 119.5pt, text(
+      size: 17.22pt,
+      weight: "bold",
+      font: cover-font,
+    )[Wydział Nauk O Ziemi i Gospodarki Przestrzennej])
 
-    #v(2.0cm)
-    #text(size: 15pt, weight: "bold")[#meta.title]
-    #v(0.3cm)
-    #text(size: 13pt, style: "italic")[#meta.at("title-en")]
-
-    #v(1.8cm)
-    #text(size: 12pt)[
-      #s.thesis (#cycle-name)
-      #linebreak()
+    // The fields. Serif, at the sample's sizes and intervals.
+    #cover-page-baseline(525.5pt, 11.96pt)[#s.programme: #programme]
+    // The sample has no specialisation field, so it is printed as a second
+    // identifier line rather than appended to the three-line bottom block,
+    // which the sample fixes at exactly three lines.
+    #if specialisation != "" {
+      cover-page-baseline(503.0pt, 11.96pt)[
+        #s.specialisation: #specialisation
+      ]
+    }
+    #cover-page-baseline(475.5pt, 17.22pt)[#meta.author]
+    #cover-page-baseline(452.7pt, 11.96pt)[#s.album: #meta.album]
+    #cover-page-baseline(388.5pt, 24.79pt)[#meta.title]
+    #cover-page-baseline(352.6pt, 14.35pt)[#meta.at("title-en")]
+    #cover-page-baseline(274.3pt, 11.96pt)[#s.thesis (#cycle-name)]
+    #cover-page-baseline(252.6pt, 11.96pt)[
       #s.written-in #meta.department
-      #linebreak()
+    ]
+    #cover-page-baseline(230.9pt, 11.96pt)[
       #s.supervised-by #meta.supervisor
     ]
-
-    #v(1fr)
-    #text(size: 12pt, weight: "bold")[
-      #upper(meta.at("city", default: "Lublin")) #meta.at(
-        "year",
-        default: "2027",
-      )
+    // City and year, below the rule.
+    #cover-page-baseline(95.7pt, 11.96pt)[
+      #meta.at("city", default: "Lublin") #meta.at("year", default: "2027")
     ]
   ]
 }
