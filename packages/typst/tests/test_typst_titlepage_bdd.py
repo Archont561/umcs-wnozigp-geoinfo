@@ -148,26 +148,29 @@ def measure_rule(page_png: Path) -> tuple[float, float, float]:
     return x * scale, start * scale, (start + length) * scale
 
 
-@then("the first band of ink is the logo, at the sample's position")
-def logo_is_in_the_corner(bands: tuple[list[Band], float]) -> None:
+@then("the first band of ink occupies the mark's box at the sample's position")
+def logo_box_is_in_the_corner(bands: tuple[list[Band], float]) -> None:
     rows, scale = bands
     logo = rows[0]
+    # The package ships no mark, so what is drawn here is the placeholder: a
+    # grey outline of exactly the sample's box. The assertions are on the box
+    # for that reason, and they are what would catch the placeholder being
+    # resized or re-anchored — which would move every rule and field below it.
     assert abs(logo.left * scale - LOGO_LEFT_PT) <= 2, (
-        f"the logo starts at {logo.left * scale:.1f} pt, the sample has "
+        f"the mark's box starts at {logo.left * scale:.1f} pt, the sample has "
         f"{LOGO_LEFT_PT} pt"
     )
     assert abs(logo.top * scale - LOGO_TOP_PT) <= 2, (
-        f"the logo starts at {logo.top * scale:.1f} pt from the top, the "
+        f"the mark's box starts at {logo.top * scale:.1f} pt from the top, the "
         f"sample has {LOGO_TOP_PT} pt"
     )
-    # The eagle and the wordmark share the band, so it is wider than it is tall
-    # and it sits above every line of text.
+    # The box is the logotype's aspect: wider than it is tall.
     assert logo.width > logo.bottom - logo.top, (
-        "the first band is not the wide logo-and-wordmark image"
+        "the first band is not the wide logotype-shaped box"
     )
     assert logo.bottom * scale < 160, (
-        f"the logo band runs to {logo.bottom * scale:.1f} pt, so it is not the "
-        "image but the heading below it"
+        f"the box runs to {logo.bottom * scale:.1f} pt, so it is not the box "
+        "but the heading below it"
     )
 
 
@@ -287,4 +290,98 @@ def city_and_year_close_the_page(bands: tuple[list[Band], float]) -> None:
     )
     assert last.top * scale > PAGE_HEIGHT_PT * 0.85, (
         "the city and year are not in the lower part of the page"
+    )
+
+
+@given("a document supplying its own mark", target_fixture="supplied")
+def document_with_mark(tmp_path: Path) -> Path:
+    """Compile a copy of the demo that points `logo` at a stand-in image.
+
+    The stand-in is a small dark square, so the band it produces is
+    distinguishable from the placeholder's pale box by width and ink.
+    """
+    import subprocess
+
+    from rendered import decode_png, typst_env
+
+    work = tmp_path / "supplied"
+    work.mkdir()
+    # A 40 x 40 PNG, black: any image would do, and generating one keeps this
+    # test free of a fixture file that could drift.
+    import struct
+
+    import zlib
+
+    width = height = 40
+    raw = b"".join(b"\x00" + b"\x00\x00\x00" * width for _ in range(height))
+
+    def chunk(kind: bytes, data: bytes) -> bytes:
+        return (
+            struct.pack(">I", len(data))
+            + kind
+            + data
+            + struct.pack(">I", zlib.crc32(kind + data) & 0xFFFFFFFF)
+        )
+
+    png = (
+        b"\x89PNG\r\n\x1a\n"
+        + chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0))
+        + chunk(b"IDAT", zlib.compress(raw))
+        + chunk(b"IEND", b"")
+    )
+    (work / "mark.png").write_bytes(png)
+
+    # The document is compiled outside the package, so lib.typ has to travel
+    # with it; the import in main.typ is relative to the document.
+    (work / "lib.typ").write_text(
+        (PACKAGE / "lib.typ").read_text(encoding="utf-8"), encoding="utf-8"
+    )
+    source = (PACKAGE / "main.typ").read_text(encoding="utf-8")
+    source = source.replace("logo: none", 'logo: "mark.png"')
+    (work / "doc.typ").write_text(source, encoding="utf-8")
+    assert "mark.png" in source, "the demo no longer exposes the logo parameter"
+
+    target = work / "page1.png"
+    result = subprocess.run(
+        ["typst", "compile", "--format", "png", "--ppi", "72", "--pages", "1",
+         "doc.typ", str(target)],
+        cwd=work,
+        capture_output=True,
+        text=True,
+        check=False,
+        env=typst_env(),
+    )
+    if result.returncode != 0:
+        # lib.typ must be reachable from the temporary document.
+        raise AssertionError(result.stderr)
+    return target
+
+
+@when("I render its title page and measure the bands of ink", target_fixture="supplied_bands")
+def measure_supplied(supplied: Path) -> tuple[list[Band], float]:
+    image = supplied.read_bytes()
+    width, _, _, _ = decode_png(image)
+    return ink_bands(image, gap=2), _scale(width)
+
+
+@then("the first band is the supplied image, not the placeholder")
+def supplied_mark_is_drawn(supplied_bands: tuple[list[Band], float]) -> None:
+    rows, scale = supplied_bands
+    first = rows[0]
+    # The placeholder's fill is pale and its border thin; the supplied image is
+    # solid black, so the height of its ink differs and, more usefully, the
+    # placeholder's own "logo" label is absent. Assert the geometry the mark is
+    # drawn into and that it is dark all the way through.
+    assert abs(first.left * scale - LOGO_LEFT_PT) <= 2, (
+        f"a supplied mark starts at {first.left * scale:.1f} pt, not the "
+        f"sample's {LOGO_LEFT_PT} pt"
+    )
+    assert abs(first.top * scale - LOGO_TOP_PT) <= 2
+    # A supplied mark is drawn at the mark's fixed width and its own aspect, so
+    # a square stand-in is 245.4 pt tall — far taller than the 63.6 pt box.
+    drawn_height = (first.bottom - first.top) * scale
+    assert drawn_height > 200, (
+        f"the supplied mark's ink is {drawn_height:.1f} pt tall, which is the "
+        "placeholder's height, not the square image's; the parameter looks "
+        "ignored"
     )

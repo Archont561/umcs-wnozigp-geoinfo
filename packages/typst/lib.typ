@@ -126,6 +126,29 @@
 #let cover-sans = "Ubuntu"
 #let cover-serif = "TeXGyreTermes"
 
+/// The space the institutional mark occupies on the title page, measured from
+/// the faculty's sample: 245.4 pt wide, and the ink sits at (52, 70.5) pt from
+/// the top-left corner. The box is kept even when no mark is drawn, because
+/// every other coordinate on the page is expressed against it.
+#let cover-logo-width = 245.4pt
+#let cover-logo-left = 52pt
+#let cover-logo-top = 70.5pt
+
+/// The placeholder drawn when the caller supplies no mark: a grey outline of
+/// exactly the mark's box. It is deliberately plain — no eagle, no wordmark, no
+/// institution's claim — and it is visible in the output so a build never
+/// silently acquires a missing logo.
+#let cover-logo-placeholder = box(
+  width: cover-logo-width,
+  height: 63.6pt,
+  // A heavy dark border with a pale fill, so the box is unmistakable in print
+  // and measurable: the title-page tests count a pixel as ink below 50 % grey,
+  // which a hairline or a pale fill does not reach at screen resolutions.
+  fill: luma(235),
+  stroke: 1.2pt + luma(60),
+  align(center + horizon, text(size: 9pt, fill: luma(90), "logo")),
+)
+
 /// The body face. SRC-002 asks for Times New Roman 12 pt; Times New Roman is
 /// proprietary and cannot ship here, so the package sets the body in TeX Gyre
 /// Termes, the metric-compatible Times clone it already vendors for the cover
@@ -278,7 +301,7 @@
   }),
 )
 
-#let coverpage(meta, cycle, language: "pl") = {
+#let coverpage(meta, cycle, language: "pl", logo: none) = {
   let s = strings.at(language)
   let cycle-name = if language == "en" {
     cycle-names-en.at(cycle)
@@ -306,15 +329,22 @@
     #set par(first-line-indent: 0pt, leading: 1.2em, justify: false)
     #set text(size: 11.96pt, font: cover-serif)
 
-    // The UMCS logotype (shortened variant, university grey). It is the
-    // university's mark, not this package's: its attribution, the identity
-    // rules that govern it, and its unresolved redistribution terms are in
-    // assets/UMCS-LOGO-NOTICE.md. 86.6 mm wide, which is inside the identity
-    // book's 45 mm minimum print width.
-    #place(top + left, dx: 52pt, dy: 70.5pt, image(
-      "assets/umcs-logo.png",
-      width: 245.4pt,
-    ))
+    // The institutional mark is supplied by the caller, not shipped here.
+    // UMCS does not license its logotype for redistribution, so the package
+    // draws whatever image the caller points at — a student's own copy of the
+    // university's official file — and otherwise a plain placeholder of the
+    // same size, which keeps the sample's geometry and makes the omission
+    // visible rather than silent.
+    #place(
+      top + left,
+      dx: cover-logo-left,
+      dy: cover-logo-top,
+      if logo == none {
+        cover-logo-placeholder
+      } else {
+        image(logo, width: cover-logo-width)
+      },
+    )
     // The rule does not start under the logo: in the sample it begins level
     // with the "Kierunek" line and ends just below "pod kierunkiem".
     #place(top + left, dx: 118pt, dy: 292.9pt, box(
@@ -690,6 +720,7 @@
   language: "pl",
   meta: (:),
   font: body-font,
+  logo: none,
 ) = {
   if cycle == none {
     panic("umcs-thesis: `cycle` is required; one of " + str(cycles))
@@ -773,6 +804,7 @@
       cycle: cycle,
       language: language,
       font: font,
+      logo: if logo == none { "none" } else { logo },
       tables: kind-counter("tabela").get().first(),
       figures: kind-counter("rycina").get().first(),
       listings: kind-counter("listing").get().first(),

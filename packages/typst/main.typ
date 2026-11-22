@@ -28,7 +28,11 @@
   meta: meta,
 )
 
-#coverpage(meta, "magisterska")
+// The package ships no institutional mark: point `logo` at your own copy of
+// the university's official logotype file. Left out, the title page draws a
+// placeholder of the same size, so the geometry is identical and the missing
+// mark is visible.
+#coverpage(meta, "magisterska", logo: none)
 #pagebreak()
 #contents()
 #pagebreak()

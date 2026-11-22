@@ -49,6 +49,10 @@ This engages two existing rules. ADR-7 clause 4 says not to infer a licence for 
    is the property a wider face breaks.
 6. **Keep the extra fields out of the sample's fixed blocks.** The sample has no specialisation line and fixes the bottom block at exactly three lines, so a specialisation is printed as a second identifier line beside the rule rather than appended to that block.
 
+> **Superseded in part by ADR-19.** The package no longer bundles the mark and
+> takes it as a `logo` parameter instead, so the redistribution question below
+> no longer blocks a release. The geometric and form decisions here stand.
+
 ## Open question
 
 Whether this repository may redistribute the mark is put to Centrum Promocji
