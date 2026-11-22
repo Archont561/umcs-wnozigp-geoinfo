@@ -47,9 +47,16 @@ EXCLUDED_FILE_SUFFIXES = (".pyc", ".pyo")
 #: is added to every package by :func:`required_entries`.
 PACKAGE_EXTRAS = {
     "latex": (),
-    # The cover page embeds the logo, so a tarball without it compiles to a
-    # page missing its header rather than failing loudly.
-    "typst": ("lib.typ", "typst.toml", "assets/umcs-logo.png"),
+    # The cover page embeds the logo and sets its fields in a vendored face, so
+    # a tarball without either compiles to a headerless page typeset in the
+    # wrong serif rather than failing loudly.
+    "typst": (
+        "lib.typ",
+        "typst.toml",
+        "assets/umcs-logo.png",
+        "assets/fonts/TeXGyreTermes-Regular.otf",
+        "assets/fonts/LICENSE-GUST.txt",
+    ),
 }
 
 

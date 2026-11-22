@@ -86,11 +86,21 @@ a sans face, a vertical rule beside the fields, and the city and year below it.
 The geometry is measured from that sample and pinned by a test that renders the
 page and measures the ink, so it cannot drift silently.
 
-Two things about it are worth knowing. The heading is set in **Ubuntu**, which
-the root Pixi environment ships; a build outside that environment needs
-`TYPST_FONT_PATHS` pointing at a directory with Ubuntu or DejaVu Sans, or the
-cover falls back to a serif. And the embedded logo is **third-party artwork** —
-see `assets/README.md` — which the package's MIT licence does not cover.
+Its fields and title are set in **TeX Gyre Termes**, the face the sample
+itself uses, which the package vendors under `assets/fonts/` with its GUST
+licence. Its heading is set in **Ubuntu**, from the root Pixi environment:
+Typst 0.15 cannot select the sample's LMSans10, and a wider face breaks the
+university onto three lines, so the narrowest available sans is the faithful
+choice and a test asserts the resulting break.
+
+Because two font directories are involved, `TYPST_FONT_PATHS` must list both.
+`pixi.toml` and the Typst build tool set it; a build outside Pixi needs it set
+by hand or the cover silently falls back and the geometry drifts.
+
+The embedded logo is **third-party artwork** whose redistribution terms are
+unresolved, and the vendored fonts are third-party too but under a licence that
+permits redistribution — see `assets/README.md`. Neither is covered by the
+package's MIT licence.
 
 ## Not published
 
@@ -118,4 +128,4 @@ pixi run --locked test-smoke     # 8 BDD scenarios for this package
 
 This package is released under the [MIT License](LICENSE), copyright (c) 2026 Archont561 — the same terms as the repository root (ADR-14). It covers this directory's original work only.
 
-One third-party file **is** bundled: `assets/umcs-logo.png`, the university's logo, needed because the title page reproduces the faculty's sample form. The MIT grant does not extend to it, and its redistribution terms are unresolved — see `assets/README.md` and ADR-18.
+Third-party files **are** bundled: `assets/umcs-logo.png`, the university's logo, and `assets/fonts/`, TeX Gyre Termes. The MIT grant extends to neither. The fonts' GUST licence permits redistribution; the logo's terms are unresolved — see `assets/README.md` and ADR-18.

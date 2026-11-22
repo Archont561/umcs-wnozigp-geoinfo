@@ -110,12 +110,21 @@
 
 #let quote-list(xs) = xs.map(x => "`" + x + "`").join(", ")
 
-/// The faculty's sample cover sets the university, the faculty and the fields
-/// in a sans face and the thesis title in a serif one. Typst's bundled fonts
-/// include DejaVu Sans but not a Computer Modern Sans, so the sans is DejaVu
-/// here; a submission may override the constant with Arial or Helvetica
-/// alongside `font: "Times New Roman"`.
-#let cover-font = "Ubuntu"
+/// The sample is typeset in Computer Modern. Its fields — including the title —
+/// are **TeXGyreTermes-Regular**, which the package vendors under
+/// `assets/fonts/` with its GUST licence because it is what makes the width of
+/// the reproduced title match the sample's instead of overflowing the margin.
+/// Its university and faculty lines are **LMSans10-Bold**, which Typst 0.15
+/// cannot select by that name: it exposes only `New Computer Modern` (a
+/// different, wider design) and silently ignores `Latin Modern Sans`. So the
+/// heading keeps `Ubuntu`, the narrowest sans the environment ships, because
+/// only a narrow face keeps the sample's two-line break instead of wrapping to
+/// three.
+///
+/// That one substitution is asserted, not assumed: the title-page scenarios
+/// require the university block to stay two lines.
+#let cover-sans = "Ubuntu"
+#let cover-serif = "TeXGyreTermes"
 
 #let validate-meta(meta) = {
   if type(meta) != dictionary {
@@ -218,25 +227,42 @@
 /// The page is laid out with `place` at absolute positions rather than as a
 /// flow, because a title page is a fixed form: its fields do not reflow, and
 /// the sample's own coordinates are the only defensible source for where each
-/// one belongs. `cover-line` takes the distance from the top of the page to the
-/// top of the line's ink, which is the baseline the sample records minus the
-/// face's ascent.
-#let cover-line(dy, x: 133pt, body) = place(
-  top + left,
-  dx: x,
-  dy: dy,
-  block(body),
-)
-
+/// one belongs.
+///
+/// Each line takes the distance from the top of the page to the top of its ink,
+/// computed from the sample's baseline. `size` does two things and both are
+/// needed: it sets the type size, and it converts the baseline to a top offset
+/// through the face's ascent. An earlier version used it only for the offset,
+/// which drew the title at the body's 12 pt instead of 24.79 pt.
 // A4 height, used to convert the sample's baselines (measured up from the
 // bottom edge, as PDF coordinates are) into distances from the top.
 #let a4-height = 841.89pt
 
-#let cover-page-baseline(baseline-from-bottom, size, x: 133pt, body) = {
-  // The ratio is measured, not guessed: at 11.96 pt the serif's ascent puts the
-  // ink 9.1 pt above the baseline, and it scales with the size.
-  cover-line(a4-height - baseline-from-bottom - 0.760 * size, x: x, body)
-}
+// 0.760 is the ratio measured on the sample's own faces: at 11.96 pt the
+// ascender puts the ink 9.1 pt above the baseline, and that scales with size.
+// Widths are explicit because `place` otherwise offers unbounded room, so a
+// long title would run past the margin instead of wrapping where the sample's
+// would.
+//
+// Titles and bottom block: the sample's text ends at x = 510.4 pt and these
+// blocks start at 133 pt, so 377 pt reaches the same right edge.
+#let cover-width = 377pt
+// Headings: the sample starts them at 119.5 pt and its faculty line ends at
+// 510 pt, i.e. 391 pt. Ubuntu is about 3.5 % wider than the sample's LMSans10,
+// so the substitute needs 405 pt for the same words; allowing 420 pt keeps the
+// faculty on the one line the sample gives it, which matters more than ending
+// at the sample's exact x — a wrapped faculty line reads as a different form.
+#let cover-heading-width = 420pt
+
+#let cover-page-baseline(baseline-from-bottom, size, body) = place(
+  top + left,
+  dx: 133pt,
+  dy: a4-height - baseline-from-bottom - 0.760 * size,
+  block(width: cover-width, {
+    set text(size: size, font: cover-serif)
+    body
+  }),
+)
 
 #let coverpage(meta, cycle, language: "pl") = {
   let s = strings.at(language)
@@ -250,9 +276,21 @@
   let programme = meta.at("programme", default: "")
   let specialisation = meta.at("specialisation", default: "")
 
+  // The heading is placed by its own coordinates rather than through
+  // `cover-page-baseline`, because it sits on a different left edge.
+  let heading(baseline, size, body) = place(
+    top + left,
+    dx: 119.5pt,
+    dy: a4-height - baseline - 0.760 * size,
+    block(width: cover-heading-width, {
+      set text(size: size, weight: "bold", font: cover-sans)
+      body
+    }),
+  )
+
   page(margin: 0pt, numbering: none)[
     #set par(first-line-indent: 0pt, leading: 1.2em, justify: false)
-    #set text(size: 11.96pt)
+    #set text(size: 11.96pt, font: cover-serif)
 
     #place(top + left, dx: 52pt, dy: 70.5pt, image(
       "assets/umcs-logo.png",
@@ -268,21 +306,9 @@
 
     // The university and the faculty: sans, bold, at the sample's sizes and
     // with the sample's own line break.
-    #cover-page-baseline(659.2pt, 20.66pt, x: 119.5pt, text(
-      size: 20.66pt,
-      weight: "bold",
-      font: cover-font,
-    )[Uniwersytet Marii Curie-Skłodowskiej])
-    #cover-page-baseline(634.7pt, 20.66pt, x: 119.5pt, text(
-      size: 20.66pt,
-      weight: "bold",
-      font: cover-font,
-    )[w Lublinie])
-    #cover-page-baseline(598.8pt, 17.22pt, x: 119.5pt, text(
-      size: 17.22pt,
-      weight: "bold",
-      font: cover-font,
-    )[Wydział Nauk O Ziemi i Gospodarki Przestrzennej])
+    #heading(659.2pt, 20.66pt)[Uniwersytet Marii Curie-Skłodowskiej]
+    #heading(634.7pt, 20.66pt)[w Lublinie]
+    #heading(598.8pt, 17.22pt)[Wydział Nauk O Ziemi i Gospodarki Przestrzennej]
 
     // The fields. Serif, at the sample's sizes and intervals.
     #cover-page-baseline(525.5pt, 11.96pt)[#s.programme: #programme]
@@ -296,8 +322,24 @@
     }
     #cover-page-baseline(475.5pt, 17.22pt)[#meta.author]
     #cover-page-baseline(452.7pt, 11.96pt)[#s.album: #meta.album]
-    #cover-page-baseline(388.5pt, 24.79pt)[#meta.title]
-    #cover-page-baseline(352.6pt, 14.35pt)[#meta.at("title-en")]
+    // The two titles share one placed block so the gap between them is a
+    // property of the block and not of two independent baselines: in the
+    // sample both are one line, but a title long enough to wrap must push the
+    // English one down by its own height rather than run into it.
+    #place(
+      top + left,
+      dx: 133pt,
+      dy: a4-height - 388.5pt - 0.760 * 24.79pt,
+      block(width: cover-width, {
+        set par(leading: 1.05em)
+        set text(size: 24.79pt, font: cover-serif)
+        meta.title
+        // 21 pt is the sample's ink gap between the two titles.
+        v(9pt)
+        set text(size: 14.35pt)
+        meta.at("title-en")
+      }),
+    )
     #cover-page-baseline(274.3pt, 11.96pt)[#s.thesis (#cycle-name)]
     #cover-page-baseline(252.6pt, 11.96pt)[
       #s.written-in #meta.department
