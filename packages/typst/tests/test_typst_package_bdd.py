@@ -242,3 +242,75 @@ def first_chapter_is_one(chapters: list[dict]) -> None:
     assert numbered[0]["title"]["text"] == "Wstęp", numbered[0]
     numbers = [c["number"] for c in numbered]
     assert numbers == sorted(numbers), f"chapter numbers are not monotonic: {numbers}"
+
+
+#: Characters per line, measured, not quoted. SRC-002 asks for ~70 at 12 pt
+#: and 1.5 spacing; no face available to Typst reaches that at A4 with 2.5 cm
+#: margins, so the value is pinned here and the deviation is documented rather
+#: than asserted away. 92 is Termes's; 84 was New Computer Modern's.
+CHARS_PER_LINE = 92
+
+#: The 160 mm measure, in points: A4 minus the 2.5 cm margins on both sides.
+MEASURE_PT = (210 - 50) / 10 / 2.54 * 72
+
+
+def measure_text(spec: str, sample: str) -> float:
+    """Return the width in points of ``sample`` set with ``spec``.
+
+    ``spec`` is Typst markup for the `text` set rule, so the measurement uses
+    the package's own size rather than a number written here twice.
+    """
+    with tempfile.TemporaryDirectory() as tmp:
+        work = Path(tmp)
+        source = work / "probe.typ"
+        source.write_text(
+            '#set page(width: 30cm, height: 6cm, margin: 0pt)\n'
+            "#context [\n"
+            f"  #metadata(measure(text({spec}, {sample})).width / 1pt) <probe>\n"
+            "]\n",
+            encoding="utf-8",
+        )
+        return query("probe", source)[0]
+
+
+@then("the body face is the vendored Times substitute")
+def body_face_is_termes(counters: dict) -> None:
+    # The face reaches the test through the document's own metadata, so this
+    # fails if the default drifts even when the demo still compiles.
+    assert counters["font"] == "TeXGyreTermes", (
+        f"the body is set in {counters['font']!r}; SRC-002 asks for Times New "
+        "Roman and TeXGyreTermes is the vendored substitute (TYP-006)"
+    )
+
+
+@then("the body face is not the wider Computer Modern")
+def body_face_is_not_computer_modern(counters: dict) -> None:
+    # New Computer Modern was the previous default. It is about 6 % wider per
+    # character, which is the whole reason this scenario exists.
+    assert counters["font"] != "New Computer Modern"
+
+
+#: A 93-character Polish sentence, used as the yardstick for line length.
+LINE_SAMPLE = (
+    '"W pracy przedstawiono analizę zmian pokrycia terenu w zlewni '
+    'Bystrzycy w latach 2000-2020."'
+)
+
+
+@when("I measure a line of body text at the document's own settings", target_fixture="line")
+def measure_line(counters: dict) -> dict:
+    # The probe uses the face the document reports, not a name written here, so
+    # it measures the face actually in use and cannot drift from it.
+    width = measure_text(f'size: 12pt, font: "{counters["font"]}"', LINE_SAMPLE)
+    return {"chars": 93 * MEASURE_PT / width, "face": counters["font"]}
+
+
+@then("the measured characters per line is about 92")
+def characters_per_line_is_about_92(line: dict) -> None:
+    chars = line["chars"]
+    assert abs(chars - CHARS_PER_LINE) <= 3, (
+        f"the body fits {chars:.1f} characters per line at the document's "
+        f"settings, not the pinned {CHARS_PER_LINE}; if the face or the measure "
+        "changed, confirm SRC-002's ~70-character target is still as close as "
+        "it was and update this number deliberately"
+    )

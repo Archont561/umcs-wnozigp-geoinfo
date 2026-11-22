@@ -85,7 +85,8 @@ Typst has no `\listoffigures` equivalent that distinguishes three counters, so t
 ## Language and fonts
 
 - Default language `pl` (`SRC-037`); Polish hyphenation and label strings are package data, not a dependency.
-- **Times New Roman is the required body face (`SRC-002`) and is proprietary.** Typst cannot use a font that is not installed, and the repository bundles none. The package therefore takes a `font` parameter defaulting to `"New Computer Modern"` (Typst's built-in serif) and documents that a submission must set `font: "Times New Roman"` where that font exists. This is a documented substitution, not silent compliance.
+- **Times New Roman is the required body face (`SRC-002`) and is proprietary.** It cannot ship here. The package takes a `font` parameter that defaults to `body-font`, which is **TeX Gyre Termes** — the metric-compatible Times clone the package already vendors under its GUST licence for the title page. A submission may still pass `font: "Times New Roman"` where that font exists, and both paths are documented substitutions rather than silent compliance (TYP-006).
+- **The substitution is measured, not assumed.** Termes is *narrower* than the `New Computer Modern` it replaced, so the substitution moved line length away from `SRC-002`'s ~70 characters rather than toward it: about 92 against 84 at A4 with 2.5 cm margins. No face available to Typst reaches 70 at 12 pt and this measure, so the package pins the measured value in a test and records the deviation here. Choosing a Times-metrics face for the *shape* of the page and reporting the line length honestly is the position; silently matching the sample's word count is not available.
 - Verified in this environment: the root Pixi environment ships 31 font files and **none of them is Times or a Times metric clone**, so a faithful build cannot be produced locally. Recorded as open question 1.
 
 ## Compiler version
